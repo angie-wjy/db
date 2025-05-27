@@ -1,0 +1,33 @@
+# Laravel specific files
+/vendor
+/node_modules
+/public/storage
+/public/hot
+
+# Laravel logs
+/storage/logs
+
+# Laravel cache
+/bootstrap/cache
+
+# Laravel compiled files
+/storage/framework/views
+/storage/framework/sessions
+/storage/framework/cache
+
+# Laravel env file
+/.env
+
+# IDE files
+/.idea
+/.vscode
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Other files
+.env.example
+phpunit.xml
+phpunit.xml.dist
+README.md

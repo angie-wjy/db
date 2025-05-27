@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100)->nullable();
             $table->integer('price')->nullable();
-            $table->integer('stock')->nullable();
             $table->string('description', 100)->nullable();
             $table->string('image', 500)->nullable();
             $table->timestamp('created_at')->nullable();

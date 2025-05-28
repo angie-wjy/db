@@ -180,7 +180,9 @@ body[data-background-color="dark"] .demo-icon .icon-class {
     text-align: center; }
     .row-demo-grid [class^="col"] .card-body {
       background: #ddd; }
-
+.btn {
+  color: black;
+}
 .btnSwitch button[data-color="white"] {
   background-color: #fff; }
 .btnSwitch button[data-color="grey"] {

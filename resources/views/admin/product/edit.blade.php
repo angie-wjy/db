@@ -56,13 +56,6 @@
                                 </div>
                                 <div class="col">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text">Stok</span>
-                                        <input type="number" class="form-control" id="stock" name="stock"
-                                            value="{{ old('stock', $product->stock) }}">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="input-group mb-3">
                                         <span class="input-group-text">Category</span>
                                         <select class="form-select" id="category" name="category_id">
                                             @foreach ($categories as $category)

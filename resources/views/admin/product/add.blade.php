@@ -71,16 +71,6 @@
                                                     <p class="alert alert-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">Stock</span>
-                                                    <input type="number" class="form-control" id="stock"
-                                                        name="stock">
-                                                </div>
-                                                @error('name')
-                                                    <p class="alert alert-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="input-group mb-3">

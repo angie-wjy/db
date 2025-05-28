@@ -80,7 +80,6 @@ class AdminController extends Controller
                 'code' => 'required|string|max:5',
                 'name' => 'required|string|max:255',
                 'price' => 'required|numeric|min:0',
-                'stock' => 'required|integer|min:0',
                 'description' => 'nullable|string|max:1000',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'categories_id' => 'required|exists:categories,id',
@@ -129,7 +128,6 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
             'description' => 'nullable|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'required|exists:categories,id',

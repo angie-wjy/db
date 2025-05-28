@@ -1,0 +1,27 @@
+:root {
+  --primary-color: #FFD600;
+  --secondary-color: #D32F2F;
+  --text: #212121;
+  --text-highlight: #D32F2F;
+  --text-hover: #B71C1C;
+  --header-font: "Playfair Display", serif;
+  --primary-background: #F5F5F5;
+  --secondary-background: #F9F9F9;
+}
+
+.btn-primary{
+  background-color: var(--primary-color) !important;
+  color: var(--text) !important;
+}
+
+.btn-secondary{
+  background-color: var(--secondary-color) !important;
+  color: var(--text) !important;
+}
+
+.gg-menu-right, .gg-more-vertical-alt {
+  color: var(--text-highlight);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}

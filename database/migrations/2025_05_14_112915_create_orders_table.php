@@ -31,8 +31,8 @@ return new class extends Migration
 
 
             // Foreign keys
-            $table->foreign('customers_id')->references('id')->on('customers');
-            $table->foreign('employees_id')->references('id')->on('employees');
+            $table->foreign('customers_id')->references('id')->on('users');
+            $table->foreign('employees_id')->references('id')->on('users');
             $table->foreign('admins_id')->references('id')->on('users');
             $table->foreign('branches_id')->references('id')->on('branches');
         });

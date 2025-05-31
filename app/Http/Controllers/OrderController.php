@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -72,13 +71,15 @@ class OrderController extends Controller
         return view('customer.checkout', compact('order'));
     }
 
+    public function CheckOutSuccess()
+    {
+        return view('customer.checkout-success');
+    }
+
 
     public function index()
     {
         $orders = Order::all();
-        $customers = Customer::all();
-        $employees = Employee::all();
-        // return response()->json($orders);
         return view('admin.order.index', compact('orders'));
     }
 }

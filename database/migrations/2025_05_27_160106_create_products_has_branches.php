@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('products_has_branches', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('products_id')->constrained()->onDelete('cascade');
+            $table->foreignId('branches_id')->constrained()->onDelete('cascade');
             $table->integer('stock')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreignId('products_id')->constrained()->onDelete('cascade');
-            $table->foreignId('branches_id')->constrained()->onDelete('cascade');
         });
     }
 

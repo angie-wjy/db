@@ -67,7 +67,6 @@ class ProductController extends Controller
         }
         session()->put('cart', $cart);
         return view('customer.product.detail', compact('product'));
-        // return response()->json(['message' => 'Product added to cart successfully']);
     }
 
     public function ByCategory($slug)

@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Bundle;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductsHasBranches;
 use App\Models\ProductsHasBundles;
 use App\Models\ProductSize;
 use App\Models\ProductTheme;
@@ -157,6 +158,31 @@ class AdminController extends Controller
             return redirect()->route('admin.product.index');
         } catch (\Exception $e) {
             return redirect()->route('admin.product.index')->with('error', 'Failed to delete product: ' . $e->getMessage());
+        }
+    }
+
+    public function ProductBranchIndex() {
+        return view('admin.product_branch.index');
+    }
+
+    public function ProductBranchAdd() {
+        $products = Product::all();
+        $branches = Branch::all();
+        return view('admin.product_branch.add', compact('products', 'branches'));
+    }
+
+    public function ProductBranchCreate(Request $request) {
+        try {
+            $request->validate([
+                'products_id' => 'required|exists:products,id',
+                'branches_id' => 'required|exists:branches,id',
+                'stock' => 'required|numeric|min:0',
+            ]);
+
+            $productBranch = ProductsHasBranches::create($request->all());
+            return redirect()->route('admin.product_branch.index')->with('success', 'Product branch created successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Failed to create product branch: ' . $th->getMessage());
         }
     }
 

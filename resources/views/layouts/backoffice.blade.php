@@ -102,6 +102,12 @@
                                         </a>
                                     </li>
                                     <li
+                                        class="nav-item {{ request()->routeIs('admin.product_branch.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.product_branch.index') }}">
+                                            <span class="sub-item">Branch Product</span>
+                                        </a>
+                                    </li>
+                                    <li
                                         class="nav-item {{ request()->routeIs('admin.product.category.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.product.category.index') }}">
                                             <span class="sub-item">Categories</span>

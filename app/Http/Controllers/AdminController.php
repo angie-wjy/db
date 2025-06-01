@@ -161,17 +161,22 @@ class AdminController extends Controller
         }
     }
 
-    public function ProductBranchIndex() {
-        return view('admin.product_branch.index');
+    public function ProductBranchIndex()
+    {
+        $producthasbranches = ProductsHasBranches::with(['product', 'branch'])->get();
+
+        return view('admin.product.branch.index', compact('producthasbranches'));
     }
 
-    public function ProductBranchAdd() {
+    public function ProductBranchAdd()
+    {
         $products = Product::all();
         $branches = Branch::all();
-        return view('admin.product_branch.add', compact('products', 'branches'));
+        return view('admin.product.branch.add', compact('products', 'branches'));
     }
 
-    public function ProductBranchCreate(Request $request) {
+    public function ProductBranchCreate(Request $request)
+    {
         try {
             $request->validate([
                 'products_id' => 'required|exists:products,id',
@@ -180,9 +185,52 @@ class AdminController extends Controller
             ]);
 
             $productBranch = ProductsHasBranches::create($request->all());
-            return redirect()->route('admin.product_branch.index')->with('success', 'Product branch created successfully');
+            return redirect()->route('admin.product.branch.index')->with('success', 'Product branch created successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Failed to create product branch: ' . $th->getMessage());
+        }
+    }
+
+    public function ProductBranchEdit($id)
+    {
+        try {
+            $productBranch = ProductsHasBranches::with(['product', 'branch'])->findOrFail($id);
+            $products = Product::all();
+            $branches = Branch::all();
+
+            return view('admin.product.branch.edit', compact('productBranch', 'products', 'branches'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.product.branch.index')->with('error', 'Failed to load product branch: ' . $e->getMessage());
+        }
+    }
+
+    public function ProductBranchUpdate(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'products_id' => 'required|exists:products,id',
+                'branches_id' => 'required|exists:branches,id',
+                'stock' => 'required|numeric|min:0',
+            ]);
+
+            $productBranch = ProductsHasBranches::findOrFail($id);
+            $productBranch->update($request->all());
+
+            return redirect()->route('admin.product.branch.index')->with('success', 'Product branch updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.product.branch.index')->with('error', 'Failed to update product branch: ' . $e->getMessage());
+        }
+    }
+
+    public function ProductBranchDelete($id)
+    {
+        try {
+            $productBranch = ProductsHasBranches::findOrFail($id);
+            $productBranch->delete();
+
+            return redirect()->route('admin.product.branch.index')->with('success', 'Product branch deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.product.branch.index')->with('error', 'Failed to delete product branch: ' . $e->getMessage());
         }
     }
 
@@ -307,7 +355,6 @@ class AdminController extends Controller
         try {
             // dd($request->latitude);
             $request->validate([
-                'name' => 'required|string|max:255',
                 'mall' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'latitude' => 'required|string|max:45',
@@ -337,7 +384,6 @@ class AdminController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
                 'mall' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'latitude' => 'required|string|max:45',

@@ -40,7 +40,7 @@
                         <div class="table-responsive">
                             <div class="row p-3">
                                 <div class="col">
-                                    <form action="{{ route('admin.product_branch.create') }}" method="post"
+                                    <form action="{{ route('admin.product.branch.create') }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
@@ -65,7 +65,7 @@
                                                     <select class="form-select" aria-label="Default select example"
                                                         id="branch" name="branches_id">
                                                         @foreach ($branches as $branch)
-                                                            <option value="{{ $branch->id }}">{{ $branch->name }}
+                                                            <option value="{{ $branch->id }}">{{ $branch->mall }}
                                                             </option>
                                                         @endforeach
                                                     </select>

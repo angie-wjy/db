@@ -22,7 +22,6 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|string|max:100',
             'mall' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
             'latitude' => 'nullable|string|max:45',

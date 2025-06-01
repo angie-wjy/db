@@ -46,16 +46,6 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text">Name</span>
-                                                    <input type="text" class="form-control" id="name"
-                                                        name="name">
-                                                </div>
-                                                @error('price')
-                                                    <p class="alert alert-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="col">
-                                                <div class="input-group mb-3">
                                                     <span class="input-group-text">Mall</span>
                                                     <input type="text" class="form-control" id="mall"
                                                         name="mall">

@@ -14,7 +14,6 @@ class Branch extends Model
 
     protected $fillable = [
         'id',
-        'name',
         'mall',
         'address',
         'latitude',

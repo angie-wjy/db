@@ -42,14 +42,14 @@
                             @csrf
                             @method('PUT')
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Nama</span>
+                                <span class="input-group-text">Name</span>
                                 <input type="text" class="form-control" id="name" name="name"
                                     value="{{ old('name', $product->name) }}">
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text">Harga</span>
+                                        <span class="input-group-text">Price</span>
                                         <input type="text" class="form-control" id="price" name="price"
                                             value="{{ old('price', $product->price) }}">
                                     </div>
@@ -70,10 +70,10 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" placeholder="deskripsi" name="description" id="description" style="height: 100px">{{ old('description', $product->description) }}</textarea>
-                                <label for="floatingTextarea2">Deskripsi</label>
+                                <label for="floatingTextarea2">Description</label>
                             </div>
                             <div class="mb-3">
-                                <label style="font-weight: bold;">Gambar</label>
+                                <label style="font-weight: bold;">Image</label>
                                 <input class="form-control" type="file" id="image" name="image">
                                 @if ($product->image)
                                     <img src="{{ asset('storage/' . $product->image) }}" alt="Gambar Produk" width="100"

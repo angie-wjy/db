@@ -103,7 +103,7 @@
                                     </li>
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.product_branch.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.product_branch.index') }}">
+                                        <a href="{{ route('admin.product.branch.index') }}">
                                             <span class="sub-item">Branch Product</span>
                                         </a>
                                     </li>

@@ -119,12 +119,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/product/theme/update/{id}', [AdminController::class, 'ThemeUpdate'])->name('admin.product.theme.update');
     Route::delete('/admin/product/theme/{id}', [AdminController::class, 'ThemeDelete'])->name('admin.product.theme.delete');
 
-    Route::get('/admin/product/branch/index', [AdminController::class, 'ProductBranchIndex'])->name('admin.product_branch.index');
-    Route::get('/admin/product/branch/add', [AdminController::class, 'ProductBranchAdd'])->name('admin.product_branch.add');
-    Route::post('/admin/product/branch/create', [AdminController::class, 'ProductBranchCreate'])->name('admin.product_branch.create');
-    // Route::get('/admin/product/branch/edit/{id}', [AdminController::class, 'ProductBranchEdit'])->name('admin.product_branch.edit');
-    // Route::put('/admin/product/branch/update/{id}', [AdminController::class, 'ProductBranchUpdate'])->name('admin.product_branch.update');
-    // Route::delete('/admin/product/branch/{id}', [AdminController::class, 'ProductBranchDelete'])->name('admin.product_branch.delete');
+    Route::get('/admin/product/branch/index', [AdminController::class, 'ProductBranchIndex'])->name('admin.product.branch.index');
+    Route::get('/admin/product/branch/add', [AdminController::class, 'ProductBranchAdd'])->name('admin.product.branch.add');
+    Route::post('/admin/product/branch/create', [AdminController::class, 'ProductBranchCreate'])->name('admin.product.branch.create');
+    Route::get('/admin/product/branch/edit/{id}', [AdminController::class, 'ProductBranchEdit'])->name('admin.product.branch.edit');
+    Route::put('/admin/product/branch/update/{id}', [AdminController::class, 'ProductBranchUpdate'])->name('admin.product.branch.update');
+    Route::delete('/admin/product/branch/{id}', [AdminController::class, 'ProductBranchDelete'])->name('admin.product.branch.delete');
 
     Route::get('/admin/product/size/index', [AdminController::class, 'SizeIndex'])->name('admin.product.size.index');
     Route::get('/admin/product/size/add', [AdminController::class, 'SizeAdd'])->name('admin.product.size.add');

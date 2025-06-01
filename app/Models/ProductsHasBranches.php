@@ -22,11 +22,21 @@ class ProductsHasBranches extends Model
         'stock'
     ];
 
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany(Product::class, 'products_has_branches', 'id', 'product_id')
-            ->withPivot('stock');
+        return $this->belongsTo(Product::class, 'products_id');
     }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branches_id');
+    }
+
+    // public function products()
+    // {
+    //     return $this->belongsToMany(Product::class, 'products_has_branches', 'id', 'product_id')
+    //         ->withPivot('stock');
+    // }
 
     // public function mainProduct()
     // {

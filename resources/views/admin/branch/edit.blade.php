@@ -42,12 +42,6 @@
                             @method('PUT')
 
                             <div class="form-group">
-                                <label for="name">Branch Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    value="{{ old('name', $branch->name) }}" required>
-                            </div>
-
-                            <div class="form-group">
                                 <label for="mall">Mall</label>
                                 <input type="text" class="form-control" id="mall" name="mall"
                                     value="{{ old('mall', $branch->mall) }}" required>

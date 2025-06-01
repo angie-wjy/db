@@ -42,7 +42,6 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
                                             <th>Mall</th>
                                             <th>Address</th>
                                             <th>Latitude</th>
@@ -54,7 +53,6 @@
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
                                             <th>Mall</th>
                                             <th>Address</th>
                                             <th>Latitude</th>
@@ -67,7 +65,6 @@
                                         @foreach ($branches as $branch)
                                             <tr>
                                                 <td>{{ $branch->id }}</td>
-                                                <td>{{ $branch->name }}</td>
                                                 <td>{{ $branch->mall }}</td>
                                                 <td>{{ $branch->address }}</td>
                                                 <td>{{ $branch->latitude }}</td>

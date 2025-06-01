@@ -26,6 +26,11 @@ class Order extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function delivery()
+    {
+        return $this->hasOne(Delivery::class, 'orders_id');
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');

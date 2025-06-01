@@ -3,28 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Delivery;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     public function CheckOutForm()
     {
-        $cart = session('cart') ?? [];
-        return view('customer.checkout', compact('cart'));
+        $order = Order::with('delivery')
+            ->where('customers_id', Auth::id())
+            ->latest()
+            ->first();
+
+        if (!$order) {
+            return redirect()->back()->with('error', 'Belum ada order untuk ditampilkan.');
+        }
+
+        return view('customer.checkout', compact('order'));
     }
 
     public function CheckOut(Request $request)
     {
         $request->validate([
             'delivery_method' => 'required|in:pickup,delivery',
-            // Kalau pakai pickup, wajib pilih branch_id
             'branch_id' => $request->delivery_method == 'pickup' ? 'required|exists:branches,id' : 'nullable',
         ]);
 
         $cart = session('cart', []);
-
         if (empty($cart)) {
             return redirect()->back()->with('error', 'Keranjang belanja kosong.');
         }
@@ -34,6 +41,7 @@ class OrderController extends Controller
             $totalHarga += $item['price'] * $item['quantity'];
         }
 
+        // Simpan order
         $order = new Order();
         $order->date = now();
         $order->total = $totalHarga;
@@ -43,31 +51,29 @@ class OrderController extends Controller
         $order->customers_id = Auth::id();
         $order->admins_id = null;
         $order->employees_id = null;
-
-        // Kalau delivery method pickup, isi branches_id dengan input branch_id
-        if ($request->delivery_method == 'pickup') {
-            $order->branches_id = $request->branch_id; // wajib valid dan tidak null
-        } else {
-            // Kalau delivery, bisa isi dengan branch default atau 0 (tapi harus valid)
-            // Atau kalau db tidak boleh null, isi branch default misal 1
-            $order->branches_id = 1; // sesuaikan dengan branch default
-        }
-
+        $order->branches_id = $request->delivery_method === 'pickup' ? $request->branch_id : 1; // Sesuaikan default branch ID
         $order->created_id = Auth::id();
         $order->updated_id = Auth::id();
         $order->deleted_id = null;
-
         $order->save();
+
+        // Simpan data delivery
+        $delivery = new Delivery();
+        $delivery->type = $request->delivery_method;
+        $delivery->status = 'on progress'; // default status
+        $delivery->resi = null;
+        $delivery->orders_id = $order->id;
+        $delivery->save();
 
         session()->forget('cart');
 
-        return redirect()->route('customer.checkout.success')->with('success', 'Order berhasil dibuat!');
+        return redirect()->route('customer.checkout.show', $order->id)
+            ->with('success', 'Order berhasil dibuat!');
     }
-
 
     public function ShowCheckOut($orderId)
     {
-        $order = Order::with('deliveryOption')->findOrFail($orderId);
+        $order = Order::with('delivery')->findOrFail($orderId);
         return view('customer.checkout', compact('order'));
     }
 
@@ -75,7 +81,6 @@ class OrderController extends Controller
     {
         return view('customer.checkout-success');
     }
-
 
     public function index()
     {

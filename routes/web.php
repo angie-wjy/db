@@ -70,8 +70,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
-
-
     Route::get('/product/search', [ProductController::class, 'search']);
     Route::get('/product/category/{code?}', [ProductController::class, 'byCategory']);
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');

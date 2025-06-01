@@ -91,7 +91,7 @@
         @yield('content')
     </div>
 
-    <footer class="section_container footer_container">
+    {{-- <footer class="section_container footer_container">
         <div class="footer_col">
             <h4>CONTACT INFO</h4>
             <p>
@@ -134,7 +134,7 @@
                 <img src="assets/instagram-6.jpg" alt="instagram" />
             </div>
         </div>
-    </footer>
+    </footer> --}}
 </body>
 <script src="/assets/js/setting-demo2.js"></script>
 <script>

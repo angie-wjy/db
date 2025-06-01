@@ -110,7 +110,9 @@ class AdminController extends Controller
         // return view('admin.product.edit', compact('product'));
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        return view('admin.product.edit', compact('product', 'categories'));
+        $themes = ProductTheme::all();
+        $sizes = ProductSize::all();
+        return view('admin.product.edit', compact('product', 'categories', 'themes', 'sizes'));
         // try {
         //     $product = Product::findOrFail($id);
         //     $product->update($request->all());

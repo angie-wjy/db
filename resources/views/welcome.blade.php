@@ -38,7 +38,7 @@
                 </a>
             </div>
         @endauth
-    
+
         <ul class="nav_links">
             <li class="link"><a href="#">Home</a></li>
             <li class="link dropdown">

@@ -51,7 +51,7 @@ class OrderController extends Controller
         $order->customers_id = Auth::id();
         $order->admins_id = null;
         $order->employees_id = null;
-        $order->branches_id = $request->delivery_method === 'pickup' ? $request->branch_id : 1; // Sesuaikan default branch ID
+        $order->branches_id = $request->delivery_method === 'pickup' ? $request->branch_id : 1;
         $order->created_id = Auth::id();
         $order->updated_id = Auth::id();
         $order->deleted_id = null;
@@ -60,7 +60,7 @@ class OrderController extends Controller
         // Simpan data delivery
         $delivery = new Delivery();
         $delivery->type = $request->delivery_method;
-        $delivery->status = 'on progress'; // default status
+        $delivery->status = 'on progress';
         $delivery->resi = null;
         $delivery->orders_id = $order->id;
         $delivery->save();
@@ -80,11 +80,5 @@ class OrderController extends Controller
     public function CheckOutSuccess()
     {
         return view('customer.checkout-success');
-    }
-
-    public function index()
-    {
-        $orders = Order::all();
-        return view('admin.order.index', compact('orders'));
     }
 }

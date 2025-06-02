@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('resi', 45)->nullable();
             $table->unsignedBigInteger('orders_id');
 
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
+            $table->unsignedBigInteger('created_id')->nullable();
+            $table->unsignedBigInteger('updated_id')->nullable();
+            $table->unsignedBigInteger('deleted_id')->nullable();
+
             // Foreign key constraint to 'orders' table
             $table->foreign('orders_id')->references('id')->on('orders')->onDelete('cascade');
         });

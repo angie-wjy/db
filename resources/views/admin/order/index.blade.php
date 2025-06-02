@@ -43,7 +43,7 @@
                                     <th>Date</th>
                                     <th>Total</th>
                                     <th>Status</th>
-                                    <th>Branch ID</th>
+                                    {{-- <th>Branch ID</th> --}}
                                     <th>Customer ID</th>
                                     <th>Employee ID</th>
                                     <th>Created At</th>
@@ -56,7 +56,7 @@
                                     <th>Date</th>
                                     <th>Total</th>
                                     <th>Status</th>
-                                    <th>Branch ID</th>
+                                    {{-- <th>Branch ID</th> --}}
                                     <th>Customer ID</th>
                                     <th>Employee ID</th>
                                     <th>Created At</th>
@@ -82,20 +82,20 @@
                                                 <span class="badge bg-secondary">{{ ucfirst($order->status) }}</span>
                                             @endif
                                         </td>
-                                        <td>{{ $order->branch_id }}</td>
+                                        {{-- <td>{{ $order->branch_id }}</td> --}}
                                         <td>{{ $order->customers_id }}</td>
                                         <td>{{ $order->employee_id }}</td>
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</td>
                                         <td>
-                                            <a href="{{ route('admin.order.invoice.index', $order->id) }}" target="_blank">
-                                                <button class="btn btn-secondary btn-sm">Invoice</button>
+                                            {{-- <a href="{{ route('admin.order.invoice.index', $order->id) }}" target="_blank">
+                                                <button class="btn btn-secondary btn-sm">Invoice</button> --}}
                                             </a>
                                             <a href="{{ route('admin.order.show', $order->id) }}">
                                                 <button class="btn btn-info btn-sm">View</button>
                                             </a>
-                                            <a href="{{ route('admin.order.edit', $order->id) }}">
+                                            {{-- <a href="{{ route('admin.order.edit', $order->id) }}">
                                                 <button class="btn btn-primary btn-sm">Edit</button>
-                                            </a>
+                                            </a> --}}
                                         </td>
                                     </tr>
                                 @endforeach

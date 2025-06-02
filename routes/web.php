@@ -132,6 +132,18 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/admin/product/size/{id}', [AdminController::class, 'SizeDelete'])->name('admin.product.size.delete');
 
     Route::get('/admin/order/index', [AdminController::class, 'OrderIndex'])->name('admin.order.index');
+    Route::get('/admin/order/show/{id}', [AdminController::class, 'OrderShow'])->name('admin.order.show');
+    Route::get('/admin/order/new/index', [AdminController::class, 'OrderNewIndex'])->name('admin.order.new.index');
+    Route::put('/admin/orders/{order}/approve', [AdminController::class, 'OrderApprove'])->name('admin.order.approve');
+
+    Route::get('/admin/order/check/index', [AdminController::class, 'OrderCheckIndex'])->name('admin.order.check.index');
+    Route::get('/admin/order/pack/index', [AdminController::class, 'OrderPackIndex'])->name('admin.order.pack.index');
+    Route::put('/order/{id}/pack', [AdminController::class, 'OrderPacked'])->name('admin.order.pack');
+    Route::get('/admin/order/send/index', [AdminController::class, 'OrderSendIndex'])->name('admin.order.send.index');
+    Route::put('/order/{id}/approve-shipping', [AdminController::class, 'OrderAccShip'])->name('admin.order.approveShipping');
+    Route::put('/order/{id}/reject-shipping', [AdminController::class, 'OrderRejectShip'])->name('admin.order.rejectShipping');
+
+
 
     Route::get('/admin/user/index', [AdminController::class, 'UserIndex'])->name('admin.user.index');
     Route::get('/admin/user/add', [AdminController::class, 'UserAdd'])->name('admin.user.add');

@@ -8,6 +8,7 @@
     <link rel="icon" href="../assets/logo_smile.png" type="image/x-icon" />
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+
     <script>
         WebFont.load({
             google: {
@@ -129,12 +130,54 @@
                             </div>
                         </li>
 
-                        <li class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.order.index') }}">
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#ddorders">
                                 <i class="fas fa-pen-square"></i>
-                                <p>Order</p>
+                                <p>Orders</p>
+                                <span class="caret"></span>
                             </a>
+                            <div class="collapse" id="ddorders">
+                                <ul class="nav nav-collapse">
+                                    <li class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.index') }}">
+                                            <span class="sub-item">All Order</span>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item {{ request()->routeIs('admin.order.new.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.new.index') }}">
+                                            <span class="sub-item">New Request Order</span>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item {{ request()->routeIs('admin.order.check.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.check.index') }}">
+                                            <span class="sub-item">Check Order</span>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item {{ request()->routeIs('admin.order.pack.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.pack.index') }}">
+                                            <span class="sub-item">Pack Order</span>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item {{ request()->routeIs('admin.order.send.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.send.index') }}">
+                                            <span class="sub-item">Send Order</span>
+                                        </a>
+                                    </li>
+                                    <li
+                                        class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.index') }}">
+                                            <span class="sub-item">Completed Order</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
+
+
                         <li class="nav-item {{ request()->routeIs('admin.branch.index') ? 'active' : '' }}">
                             <a href="{{ route('admin.branch.index') }}">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -143,6 +186,8 @@
                         </li>
                     </ul>
                 </div>
+                </li>
+                </ul>
             </div>
         </div>
         <!-- End Sidebar -->

@@ -627,6 +627,80 @@ class AdminController extends Controller
         // return view('admin.order.index');
     }
 
+    public function OrderShow($id)
+    {
+        $order = Order::with(['customer', 'orderDetails.product'])->findOrFail($id);
+        return view('admin.orders.show', compact('order'));
+    }
+
+    public function OrderNewIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'new')->get();
+        return view('admin.order.new.index', compact('orders'));
+    }
+
+    public function OrderApprove($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'processed';
+        $order->is_ready_stock = true;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order approved and moved to processed!');
+    }
+
+    public function OrderCheckIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'check')->get();
+        return view('admin.order.check.index', compact('orders'));
+    }
+
+    public function OrderPackIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'pack')->get();
+        return view('admin.order.pack.index', compact('orders'));
+    }
+
+    public function OrderPacked($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->is_packed = true;
+        $order->status = 'packed';
+        $order->save();
+
+        return redirect()->route('admin.send-orders.index')->with('success', 'Order marked as packed and ready to send!');
+    }
+
+    public function OrderSendIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'send')->get();
+        return view('admin.order.send.index', compact('orders'));
+    }
+
+    public function OrderAccShip($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'approved_shipping';
+        $order->save();
+
+        return back()->with('success', 'Shipping approved successfully.');
+    }
+
+    public function OrderRejectShip($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'shipping_rejected';
+        $order->save();
+
+        return back()->with('success', 'Shipping has been rejected.');
+    }
+
+    public function showApproveShipping()
+    {
+        $orders = Order::where('status', 'packed')->get();
+        return view('admin.orders.approve-shipping', compact('orders'));
+    }
+
     public function UserIndex(Request $request)
     {
         $users = User::all();

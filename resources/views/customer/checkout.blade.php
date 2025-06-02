@@ -31,12 +31,12 @@
             <div class="card-header">Ringkasan Pembayaran</div>
             <div class="card-body">
                 <p><strong>Total Pembayaran:</strong>
-                    Rp{{ number_format($order->total_price + $order->deliveryOption->price, 0, ',', '.') }}
+                    {{-- Rp{{ number_format($order->total_price + $order->deliveryOption->price, 0, ',', '.') }} --}}
                 </p>
             </div>
         </div>
 
         <!-- Tombol lanjut pembayaran -->
-        <a href="{{ route('payment.page', $order->id) }}" class="btn btn-primary">Lanjut ke Pembayaran</a>
+        {{-- <a href="{{ route('payment.page', $order->id) }}" class="btn btn-primary">Lanjut ke Pembayaran</a> --}}
     </div>
 @endsection

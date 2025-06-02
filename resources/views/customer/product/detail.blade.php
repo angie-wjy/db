@@ -29,7 +29,7 @@
                                     style="max-width: 6rem; border-radius: 5px;">
                                 <button type="submit" class="btn btn-warning"
                                     style="border-radius: 5px; font-weight: bold; padding-left: 20px; padding-right: 20px;">
-                                    <i class="ri-shopping-cart-line"> Add to cart</i>
+                                    <i class="ri-shopping-cart-line">Add to cart</i>
                                 </button>
                             </div>
                         </form>

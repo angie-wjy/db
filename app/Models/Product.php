@@ -46,6 +46,13 @@ class Product extends Model
     public function bundles()
     {
         return $this->belongsToMany(Bundle::class, 'products_has_bundles', 'products_id', 'bundles_id')
-                    ->withPivot('quantity');
+            ->withPivot('quantity');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'orders_has_products', 'products_id', 'orders_id')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 }

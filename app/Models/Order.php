@@ -50,4 +50,11 @@ class Order extends Model
     {
         return $this->hasMany(Invoice::class, 'order_id');
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'orders_has_products', 'orders_id', 'products_id')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
+    }
 }

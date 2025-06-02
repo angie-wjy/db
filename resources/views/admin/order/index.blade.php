@@ -93,51 +93,51 @@
     </div>
 
     {{-- Modal Section --}}
-    @foreach ($orders as $order)
-        <tr>
-            <td>{{ $order->id }}</td>
-            <td>{{ \Carbon\Carbon::parse($order->date)->format('d-m-Y') }}</td>
-            <td>Rp{{ number_format($order->total, 0, ',', '.') }}</td>
+    @foreach ($orders as $o)
+        {{-- <tr>
+            <td>{{ $o->id }}</td>
+            <td>{{ \Carbon\Carbon::parse($o->date)->format('d-m-Y') }}</td>
+            <td>Rp{{ number_format($o->total, 0, ',', '.') }}</td>
             <td>
-                @if ($order->status == 'new')
+                @if ($o->status == 'new')
                     <span class="badge bg-primary">New</span>
-                @elseif($order->status == 'processed')
+                @elseif($o->status == 'processed')
                     <span class="badge bg-warning text-dark">Processed</span>
-                @elseif($order->status == 'completed')
+                @elseif($o->status == 'completed')
                     <span class="badge bg-success">Completed</span>
-                @elseif($order->status == 'cancelled')
+                @elseif($o->status == 'cancelled')
                     <span class="badge bg-danger">Cancelled</span>
                 @else
-                    <span class="badge bg-secondary">{{ ucfirst($order->status) }}</span>
+                    <span class="badge bg-secondary">{{ ucfirst($o->status) }}</span>
                 @endif
             </td>
-            <td>{{ $order->customers_id }}</td>
-            <td>{{ $order->employee_id }}</td>
-            <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</td>
+            <td>{{ $o->customers_id }}</td>
+            <td>{{ $o->employee_id }}</td>
+            <td>{{ \Carbon\Carbon::parse($o->created_at)->format('d-m-Y H:i') }}</td>
             <td>
                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#orderDetailModal{{ $order->id }}">
+                    data-bs-target="#oDetailModal{{ $o->id }}">
                     View
                 </button>
             </td>
-        </tr>
+        </tr> --}}
 
         {{-- Modal untuk order ini --}}
-        <div class="modal fade" id="orderDetailModal{{ $order->id }}" tabindex="-1"
-            aria-labelledby="orderDetailModalLabel{{ $order->id }}" aria-hidden="true">
+        <div class="modal fade" id="orderDetailModal{{ $o->id }}" tabindex="-1"
+            aria-labelledby="orderDetailModalLabel{{ $o->id }}" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="orderDetailModalLabel{{ $order->id }}">
-                            Order #{{ $order->id }} Details
+                        <h5 class="modal-title" id="orderDetailModalLabel{{ $o->id }}">
+                            Order #{{ $o->id }} Details
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p><b>Customer:</b> {{ $order->customer->name ?? '-' }}</p>
-                        <p><b>Phone:</b> {{ $order->customer->phone ?? '-' }}</p>
-                        <p><b>Order Date:</b> {{ \Carbon\Carbon::parse($order->date)->format('d-m-Y') }}</p>
-                        <p><b>Order Number:</b> {{ $order->id }}</p>
+                        <p><b>Customer:</b> {{ $o->customer->name ?? '-' }}</p>
+                        <p><b>Phone:</b> {{ $o->customer->phone ?? '-' }}</p>
+                        <p><b>Order Date:</b> {{ \Carbon\Carbon::parse($o->date)->format('d-m-Y') }}</p>
+                        <p><b>Order Number:</b> {{ $o->id }}</p>
 
                         <table class="table table-bordered">
                             <thead>
@@ -149,24 +149,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($order->products as $product)
+                                @foreach ($o->products as $p)
                                     <tr>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->pivot->quantity }}</td>
-                                        <td>Rp{{ number_format($product->pivot->price, 0, ',', '.') }}</td>
-                                        <td>Rp{{ number_format($product->pivot->price * $product->pivot->quantity, 0, ',', '.') }}
+                                        <td>{{ $p->name }}</td>
+                                        <td>{{ $p->pivot->quantity }}</td>
+                                        <td>Rp{{ number_format($p->pivot->price, 0, ',', '.') }}</td>
+                                        <td>Rp{{ number_format($p->pivot->price * $p->pivot->quantity, 0, ',', '.') }}
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
                         <p><b>Total:</b> Rp{{ number_format($order->total, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-
-
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#multi-filter-select').DataTable({
+                "order": [
+                    [0, "desc"]
+                ],
+                "columnDefs": [{
+                    "targets": [7],
+                    "orderable": false
+                }]
+            });
+        });
+    </script>

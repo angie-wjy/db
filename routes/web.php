@@ -95,6 +95,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/product/edit/{id}', [AdminController::class, 'ProductEdit'])->name('admin.product.edit');
     Route::put('/admin/product/update/{id}', [AdminController::class, 'ProductUpdate'])->name('admin.product.update');
     Route::delete('/admin/product/{id}', [AdminController::class, 'ProductDelete'])->name('admin.product.delete');
+    Route::get('/admin/products/restock/{id}', [ProductController::class, 'RestockForm'])->name('admin.product.restock.form');
+    Route::post('/admin/products/restock', [ProductController::class, 'RestockStore'])->name('admin.product.restock.store');
+
 
     Route::get('/admin/product/bundle/index', [AdminController::class, 'BundleIndex'])->name('admin.product.bundle.index');
     Route::get('/admin/product/bundle/add', [AdminController::class, 'BundleAdd'])->name('admin.product.bundle.add');

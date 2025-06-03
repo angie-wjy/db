@@ -42,6 +42,7 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Price</th>
+                                    <th>Stock</th>
                                     <th>Desc</th>
                                     <th>Image</th>
                                     <th>Created At</th>
@@ -53,6 +54,7 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Price</th>
+                                    <th>Stock</th>
                                     <th>Desc</th>
                                     <th>Image</th>
                                     <th>Created At</th>
@@ -65,12 +67,18 @@
                                         <td>{{ $product->code }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ number_format($product->price, 0, ',', '.') }}</td>
-                                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $product->description }}</td>
+                                        <td>{{ $product->stock }}</td>
+                                        <td
+                                            style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{ $product->description }}</td>
                                         <td><img src='{{ Storage::url($product->image) }}' width="150px"></td>
                                         <td>{{ $product->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <a href="{{ route('admin.product.edit', $product->id) }}">
                                                 <button class="btn btn-primary">Edit</button>
+                                            </a>
+                                            <a href="{{ route('admin.product.restock.form', $product->id) }}">
+                                                <button class="btn btn-warning">Restock</button>
                                             </a>
                                             <form action="{{ route('admin.product.delete', $product->id) }}" method="POST"
                                                 style="display:inline;">

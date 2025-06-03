@@ -76,4 +76,25 @@ class ProductController extends Controller
 
         return view('products.byCategory', compact('category', 'products'));
     }
+
+    public function RestockForm($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('admin.product.restock', compact('product'));
+    }
+
+    public function RestockStore(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+
+        $product->stock += $request->quantity;
+        $product->save();
+
+        return redirect()->route('admin.product.index')->with('success', 'Product restocked successfully.');
+    }
 }

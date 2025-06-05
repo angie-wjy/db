@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -12,6 +13,7 @@ class CartController extends Controller
     public function CartIndex(Request $request)
     {
         $dataCart = null;
-        return view('customer.cart', compact('dataCart'));
+        $branches = Branch::all();
+        return view('customer.cart', compact('dataCart', 'branches'));
     }
 }

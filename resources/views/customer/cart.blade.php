@@ -217,37 +217,63 @@
                             <div id="deliveryForm"
                                 style="display: none; margin-top: 1rem; background: #fff; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 0 8px rgba(0,0,0,0.2);">
                                 <h5><strong>Option Delivery</strong></h5>
-                                <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
-                                    @csrf
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="delivery_method" id="pickup"
-                                            value="pickup" required>
-                                        <label class="form-check-label" for="pickup">Pick Up</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="delivery_method" id="delivery"
-                                            value="delivery" required>
-                                        <label class="form-check-label" for="delivery">Delivery</label>
-                                    </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="pickup" value="pickup"  required>
+                                    <label class="form-check-label" for="pickup">Pick Up</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="delivery" value="delivery" required>
+                                    <label class="form-check-label" for="delivery">Delivery</label>
+                                </div>
 
-                                    <button type="submit" class="btn btn-primary mt-3" disabled
-                                        id="selectBtn">Select</button>
-                                </form>
+                                <button type="submit" class="btn btn-primary mt-3" disabled
+                                    id="selectBtn">Select</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
+
+            {{-- pickup modal --}}
+            <div class="modal fade" id="pickupModal" tabindex="-1" aria-labelledby="pickupModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pickupModalLabel">Cabang</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        
+                        <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
+                            @csrf
+                            <div class="modal-body">
+                                <p class="text-center">Pick Up</p>z
+                                <select name="branch" id="branches" class="form-control">
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="pickup">Pick Up</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         @endif
+        {{-- input hidden csrf --}}
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         $(function() {
             var data = @json($dataCart);
             var dataToShow = [];
             var totalharga = 0;
+
 
             $('input[name="cbox"]').on('change', function() {
                 if ($(this).prop('checked')) {
@@ -289,12 +315,48 @@
         })
 
         $(document).ready(function() {
+            var data_branches = @json($branches);
+            var div_branches = $("#branches");
+            function pickup(){
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var user_location = L.latLng(position.coords.latitude, position.coords.longitude);
+
+                        console.log("data_branches", data_branches);
+                        for (const key in data_branches) {
+                            const branch = data_branches[key];
+                            console.log("branch", branch);
+                            var branch_location = L.latLng(branch.latitude, branch.longitude);
+
+                            var distance = user_location.distanceTo(branch_location);
+                            distance     = (distance / 1000).toFixed(2) + ' km';
+
+                            div_branches.append("<option value='" + branch.id + "'>" + branch.mall + " (" + distance + ") </option>");
+                        }
+                    }, function(error) {
+                        console.log('Tidak dapat memperoleh lokasi Anda: ' + error.message);
+                    });
+                } else {
+                    console.log('Geolocation tidak didukung di browser ini.');
+                }
+            }
+
             $('#optionDelivery').on('click', function() {
                 $('#deliveryForm').slideToggle();
             });
 
             $('input[name="delivery_method"]').on('change', function() {
                 $('#selectBtn').prop('disabled', false);
+            });
+
+            $('#selectBtn').on('click', function() {
+                if ($('input[name="delivery_method"]:checked').val() == 'pickup') {
+                    $('#pickupModal').modal('show');
+                    pickup();
+                }
+                if ($('input[name="delivery_method"]:checked').val() == 'delivery') {
+                    $('#deliveryForm').submit();
+                }
             });
         });
     </script>

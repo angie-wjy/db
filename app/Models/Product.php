@@ -49,6 +49,12 @@ class Product extends Model
             ->withPivot('quantity');
     }
 
+    public function branches()
+    {
+        return $this->belongsToMany(Branch::class, 'products_has_branches', 'products_id', 'branches_id')
+            ->withPivot('stock');
+    }
+
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'orders_has_products', 'products_id', 'orders_id')

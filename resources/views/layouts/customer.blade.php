@@ -69,6 +69,13 @@
                     </span>
                     <span>
                         <a href="/cart"><i class="ri-shopping-bag-line">Cart</i></a>
+                        @php $cart = session('cart'); @endphp
+                        @if ($cart)
+                            <span class="badge badge-danger"
+                                style="position: absolute;">
+                                {{ array_sum(array_column($cart, 'quantity')) }}
+                            </span>
+                        @endif
                     </span>
                     <span>
                         <form action="{{ route('signout') }}" method="POST">

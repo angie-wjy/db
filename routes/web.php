@@ -56,6 +56,8 @@ Route::get('/customer/home', function () {
 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/cart', [CartController::class, 'CartIndex']);
+    Route::post('/customer/address/create', [CustomerController::class, 'AddressAdd'])->name('customer.address.create');
+    Route::get('/customer/address/index', [CustomerController::class, 'AddressIndex'])->name('customer.address.index');
 
     Route::post('/customer/product/add/{id}', [ProductController::class, 'ProductAdd'])->name('customer.product.add');
 

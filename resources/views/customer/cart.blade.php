@@ -150,8 +150,7 @@
                                     <div class="card cart-card">
                                         <div class="row g-0">
                                             <div class="col-md-4 cart-image-container">
-                                                <img src="{{ Storage::url($d['image']) }}" class="img-fluid cart-image"
-                                                    alt="...">
+                                                <img src="{{ Storage::url($d['image']) }}" class="img-fluid cart-image" alt="...">
                                             </div>
                                             <div class="col-md-8 d-flex align-items-center">
                                                 <div class="card-body cart-details w-100">
@@ -165,8 +164,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="d-flex align-items-center cart-actions">
-                                                            <form
-                                                                action="{{ route('cart.remove', ['product_id' => $d['id']]) }}"
+                                                            <form action="{{ route('cart.remove', ['product_id' => $d['id']]) }}"
                                                                 method="POST" class="me-2">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -174,8 +172,7 @@
                                                                     <i class="ri-delete-bin-6-line"></i>
                                                                 </button>
                                                             </form>
-                                                            <form action="/cart/minus/{{ $d['id'] }}" method="post"
-                                                                class="me-1">
+                                                            <form action="/cart/minus/{{ $d['id'] }}" method="post" class="me-1">
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-secondary">
                                                                     <i class="ri-subtract-fill"></i>
@@ -217,18 +214,19 @@
                             <div id="deliveryForm"
                                 style="display: none; margin-top: 1rem; background: #fff; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 0 8px rgba(0,0,0,0.2);">
                                 <h5><strong>Option Delivery</strong></h5>
-                                
+
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="delivery_method" id="pickup" value="pickup"  required>
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="pickup"
+                                        value="pickup" required>
                                     <label class="form-check-label" for="pickup">Pick Up</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="delivery_method" id="delivery" value="delivery" required>
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="delivery"
+                                        value="delivery" required>
                                     <label class="form-check-label" for="delivery">Delivery</label>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mt-3" disabled
-                                    id="selectBtn">Select</button>
+                                <button type="submit" class="btn btn-primary mt-3" disabled id="selectBtn">Select</button>
                             </div>
                         </div>
 
@@ -244,8 +242,8 @@
                             <h5 class="modal-title" id="pickupModalLabel">Cabang</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        
-                        <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
+
+                        <form action="{{ route('customer.checkout') }}" method="POST" id="pickupMethodForm">
                             @csrf
                             <div class="modal-body">
                                 <p class="text-center">Pick Up</p>z
@@ -260,6 +258,60 @@
                     </div>
                 </div>
             </div>
+
+            {{-- devlivery modal --}}
+            <div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deliveryModalLabel">Delivery</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-center">Delivery</p>
+                                {{-- select address --}}
+                                <select name="address" id="selected_address" class="form-control">
+                                </select>
+                                {{-- button add new address --}}
+                                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#addAddressModal">Add New Address</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="delivery">Delivery</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- new address modal --}}
+            <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addressForm">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         @endif
         {{-- input hidden csrf --}}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -269,16 +321,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        $(function() {
+        $(function () {
             var data = @json($dataCart);
             var dataToShow = [];
             var totalharga = 0;
 
 
-            $('input[name="cbox"]').on('change', function() {
+            $('input[name="cbox"]').on('change', function () {
                 if ($(this).prop('checked')) {
                     var val = $(this).val();
-                    var filtered = data.filter(function(d) {
+                    var filtered = data.filter(function (d) {
                         return d.id == val;
                     });
                     totalharga += filtered[0]['jumlah'] * filtered[0]['price'];
@@ -293,13 +345,13 @@
                 if (dataToShow.length != 0) {
                     $('#item_detail').empty();
                     $('#item_detail').append("<p> Detail item :</p> ")
-                    $.each(dataToShow, function(idx, d) {
+                    $.each(dataToShow, function (idx, d) {
                         var tot = d.jumlah * d.price;
                         $('#item_detail').append("<p style='font-size: 0.9rem;'><strong> -> " + d
                             .name + "</strong>,  <strong>" + d.price.toString().replace(
                                 /\B(?=(\d{3})+(?!\d))/g, ",") + "</strong> X <strong> " + d
-                            .jumlah + " Pcs  = " + tot.toString().replace(
-                                /\B(?=(\d{3})+(?!\d))/g, ",") + "</strong></p>")
+                                .jumlah + " Pcs  = " + tot.toString().replace(
+                                    /\B(?=(\d{3})+(?!\d))/g, ",") + "</strong></p>")
                     });
                     $('#item_detail').append(
                         "<h5 class='ps-3 position-absolute bottom-0 start-0' >Harga total : Rp. <strong>" +
@@ -314,26 +366,26 @@
             });
         })
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             var data_branches = @json($branches);
             var div_branches = $("#branches");
-            function pickup(){
+            function pickup() {
+                div_branches.empty();
                 if ('geolocation' in navigator) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
                         var user_location = L.latLng(position.coords.latitude, position.coords.longitude);
 
                         console.log("data_branches", data_branches);
                         for (const key in data_branches) {
                             const branch = data_branches[key];
-                            console.log("branch", branch);
                             var branch_location = L.latLng(branch.latitude, branch.longitude);
 
                             var distance = user_location.distanceTo(branch_location);
-                            distance     = (distance / 1000).toFixed(2) + ' km';
+                            distance = (distance / 1000).toFixed(2) + ' km';
 
                             div_branches.append("<option value='" + branch.id + "'>" + branch.mall + " (" + distance + ") </option>");
                         }
-                    }, function(error) {
+                    }, function (error) {
                         console.log('Tidak dapat memperoleh lokasi Anda: ' + error.message);
                     });
                 } else {
@@ -341,22 +393,76 @@
                 }
             }
 
-            $('#optionDelivery').on('click', function() {
+            $('#optionDelivery').on('click', function () {
                 $('#deliveryForm').slideToggle();
             });
 
-            $('input[name="delivery_method"]').on('change', function() {
+            $('input[name="delivery_method"]').on('change', function () {
                 $('#selectBtn').prop('disabled', false);
             });
 
-            $('#selectBtn').on('click', function() {
+            $('#selectBtn').on('click', function () {
                 if ($('input[name="delivery_method"]:checked').val() == 'pickup') {
                     $('#pickupModal').modal('show');
                     pickup();
                 }
                 if ($('input[name="delivery_method"]:checked').val() == 'delivery') {
-                    $('#deliveryForm').submit();
+                    // show modal
+                    $('#deliveryModal').modal('show');
+                    address_get();
                 }
+            });
+
+            function address_get() {
+                // get address
+                // reset selected_address
+                $('#selected_address').empty();
+                $.ajax({
+                    url: "{{ route('customer.address.index') }}",
+                    type: "GET",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        var data = response;
+                        for (const key in data) {
+                            const d = data[key];
+                            $('#selected_address').append("<option value='" + d.id + "'>" + d.address + "</option>");
+                        }
+                    },
+                    error: function (xhr) {
+                        // Tangani error (misalnya validasi gagal)
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
+            }
+
+            $('#addressForm').on('submit', function (e) {
+                e.preventDefault(); // Mencegah form submit default
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ route('customer.address.create') }}",
+                    type: "POST",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        // Tangani respon sukses
+                        alert('Address berhasil disimpan!');
+                        $('#addressForm')[0].reset();
+                        // Contoh: tutup modal
+                        $('#addressModal').modal('hide');
+                        // Contoh: refresh data yang muncul di halaman (jika perlu)
+                        location.reload();
+                    },
+                    error: function (xhr) {
+                        // Tangani error (misalnya validasi gagal)
+                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                    }
+                });
             });
         });
     </script>

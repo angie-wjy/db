@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\CustomerHasAddress;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -80,5 +81,18 @@ class CustomerController extends Controller
 
         $customer->delete();
         return response()->json(['message' => 'Customer deleted successfully']);
+    }
+
+    public function AddressAdd(Request $request)
+    {
+        $data = $request->all();
+        $data['customer_id'] = auth()->user()->id;
+        $customer_has_address = CustomerHasAddress::create($data);
+        return response()->json($customer_has_address);
+    }
+
+    public function AddressIndex(){
+        $customer_has_address = CustomerHasAddress::where('customer_id', auth()->user()->id)->get();
+        return response()->json($customer_has_address);
     }
 }

@@ -63,7 +63,7 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category deleted successfully']);
     }
 
-    public function showBySlug($slug)
+    public function ShowBySlug($slug)
     {
         $category = Category::where('slug', $slug)->first();
         if (!$category) {

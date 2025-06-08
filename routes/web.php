@@ -77,7 +77,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
     Route::get('/category/{slug}', [CategoryController::class, 'showBySlug']);
-    Route::get('/category/{slug}', [CategoryController::class, 'showBySlug'])->name('category.show');
+    Route::get('/category/{slug}', [CategoryController::class, 'ShowBySlug'])->name('category.show');
 });
 
 // Admin routes

@@ -140,7 +140,7 @@ class AdminController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
-        $product->category_id = $request->category_id;
+        $product->categories_id = $request->category_id;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -150,6 +150,8 @@ class AdminController extends Controller
 
             $product->update(['image' => $imagePath]);
         }
+
+        $product->save();
 
         // return redirect()->back()->with('success', 'Product updated successfully');
         return redirect()->route('admin.product.index')->with('success', 'Product updated successfully');

@@ -73,7 +73,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
     Route::get('/product/search', [ProductController::class, 'search']);
-    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('product.category');
+    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
     Route::get('/category/{slug}', [CategoryController::class, 'showBySlug']);

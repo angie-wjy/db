@@ -136,7 +136,12 @@ class AdminController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        $product->update($request->all());
+        // $product->update($request->all());
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();

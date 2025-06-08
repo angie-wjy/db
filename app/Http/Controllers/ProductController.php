@@ -43,7 +43,7 @@ class ProductController extends Controller
     public function ProductDetail($id)
     {
         $product = Product::with('category', 'branches')->findOrFail($id);
-        
+
         return view('customer.product.detail', compact('product'));
     }
 
@@ -75,7 +75,7 @@ class ProductController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = Product::where('category_id', $category->id)->get();
 
-        return view('products.byCategory', compact('category', 'products'));
+        return view('customer.product.category', compact('category', 'products'));
     }
 
     public function RestockForm($id)

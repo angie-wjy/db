@@ -73,10 +73,9 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
     Route::get('/product/search', [ProductController::class, 'search']);
-    Route::get('/product/category/{code?}', [ProductController::class, 'byCategory']);
+    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('product.category');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
-    Route::get('/category/{slug}', [ProductController::class, 'ByCategory']);
     Route::get('/category/{slug}', [CategoryController::class, 'showBySlug']);
     Route::get('/category/{slug}', [CategoryController::class, 'showBySlug'])->name('category.show');
 });

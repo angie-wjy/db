@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text">Harga</span>
+                                        <span class="input-group-text">Price</span>
                                         <input type="text" class="form-control" id="price" name="price"
                                             value="{{ old('price', $product->price) }}">
                                     </div>
@@ -65,7 +65,7 @@
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
                                                     {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->brand }}
+                                                    {{ $category->name }}
                                                 </option>
                                             @endforeach
                                         </select>

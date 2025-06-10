@@ -76,7 +76,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
-    Route::get('/category/{slug}', [CategoryController::class, 'showBySlug']);
     Route::get('/category/{slug}', [CategoryController::class, 'ShowBySlug'])->name('category.show');
 });
 

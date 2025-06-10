@@ -20,8 +20,10 @@ class CategoryController extends Controller
             'id' => 'required|integer|unique:categories,id',
             'name' => 'required|string|max:100',
         ]);
+        $create_data = $request->all();
+        $create_data['slug'] = str_replace(' ', '-', strtolower($request->name));
 
-        $category = Category::create($request->all());
+        $category = Category::create($create_data);
         return response()->json($category, 201);
     }
 
@@ -46,8 +48,10 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
         ]);
+        $edited_data = $request->all();
+        $edited_data['slug'] = str_replace(' ', '-', strtolower($request->name));
 
-        $category->update($request->all());
+        $category->update($edited_data);
         return response()->json($category);
     }
 

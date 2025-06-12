@@ -17,7 +17,7 @@
                         <p class="card-text" style="font-weight: bold; font-size: 2rem; color: #e60012;">
                             Rp.{{ number_format($product->price, 0, 0, '.') }}</p>
 
-                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ $product->branches[0]->pivot->stock }}</p>
+                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p>
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Description</p>
                         <p class="card-text" style="font-size: 1.1rem; color: #777; line-height: 1.6;">
                             {{ $product->description }}

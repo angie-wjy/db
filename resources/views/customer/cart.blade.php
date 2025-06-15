@@ -248,9 +248,10 @@
 
                         <form action="{{ route('customer.checkout') }}" method="POST" id="pickupMethodForm">
                             @csrf
+                            <input type="hidden" name="delivery_method" value="pick up">
                             <div class="modal-body">
                                 <p class="text-center">Pick Up</p>
-                                <select name="branch" id="branches" class="form-control">
+                                <select name="branch_id" id="branches" class="form-control">
                                     @foreach ($branches as $b)
                                         <option value="{{ $b->id }}">{{ $b->mall }}</option>
                                     @endforeach
@@ -270,6 +271,8 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
+                        @csrf
+                        <input type="hidden" name="delivery_method" value="delivery">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="deliveryModalLabel">Delivery</h5>
@@ -439,7 +442,7 @@
                         var data = response;
                         for (const key in data) {
                             const d = data[key];
-                            $('#selected_address').append("<option value='" + d.id + "'>" + d.address +
+                            $('#selected_address').append("<option value='" + d.address + "'>" + d.address +
                                 "</option>");
                         }
                     },

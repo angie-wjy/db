@@ -27,8 +27,8 @@ class OrderController extends Controller
     public function CheckOut(Request $request)
     {
         $request->validate([
-            'delivery_method' => 'required|in:pickup,delivery',
-            'branch_id' => $request->delivery_method == 'pickup' ? 'required|exists:branches,id' : 'nullable',
+            'delivery_method' => 'required|in:pick up,delivery',
+            'branch_id' => $request->delivery_method == 'pick up' ? 'required|exists:branches,id' : 'nullable',
         ]);
 
         $cart = session('cart', []);
@@ -51,7 +51,7 @@ class OrderController extends Controller
         $order->customers_id = Auth::id();
         $order->admins_id = null;
         $order->employees_id = null;
-        $order->branches_id = $request->delivery_method === 'pickup' ? $request->branch_id : 1;
+        $order->branches_id = $request->delivery_method === 'pick up' ? $request->branch_id : 1;
         $order->created_id = Auth::id();
         $order->updated_id = Auth::id();
         $order->deleted_id = null;
@@ -60,6 +60,7 @@ class OrderController extends Controller
         // Simpan data delivery
         $delivery = new Delivery();
         $delivery->type = $request->delivery_method;
+        $delivery->address = isset($request->address) ? $request->address : null;
         $delivery->status = 'on progress';
         $delivery->resi = null;
         $delivery->orders_id = $order->id;

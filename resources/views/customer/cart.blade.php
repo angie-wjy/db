@@ -441,7 +441,8 @@
                         var data = response;
                         for (const key in data) {
                             const d = data[key];
-                            $('#selected_address').append("<option value='" + d.address + "'>" + d.address +
+                            $('#selected_address').append("<option value='" + d.address + "'>" + d
+                                .address +
                                 "</option>");
                         }
                     },

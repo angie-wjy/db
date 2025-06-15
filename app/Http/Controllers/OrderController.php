@@ -46,12 +46,20 @@ class OrderController extends Controller
         $order->deleted_id = null;
         $order->save();
 
-        foreach ($cart as $productId => $item) {
-            $order->products()->attach($productId, [
+        // foreach ($cart as $products_id => $item) {
+        //     $order->products()->attach($products_id, [
+        //         'quantity' => $item['quantity'],
+        //         'price' => $item['price'],
+        //     ]);
+        // }
+
+        foreach ($cart as $item) {
+            $order->products()->attach($item['id'], [
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
         }
+
 
         // Simpan data delivery
         $delivery = new Delivery();
@@ -96,12 +104,11 @@ class OrderController extends Controller
             ->first();
 
         if (!$order) {
-            return redirect()->route('customer.checkout.form')->with('error', 'Order tidak ditemukan.');
+            return redirect()->route('customer.checkout')->with('error', 'Order tidak ditemukan.');
         }
 
         return view('customer.checkout', compact('order'));
     }
-
 
     public function CheckOutSuccess()
     {

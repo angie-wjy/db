@@ -24,6 +24,10 @@ class Order extends Model
         'employees_id'
     ];
 
+    protected $attributes = [
+        'status' => 'new',
+    ];
+
     protected $dates = ['deleted_at'];
 
     public function delivery()

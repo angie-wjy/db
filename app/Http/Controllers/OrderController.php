@@ -10,20 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function CheckOutForm()
-    {
-        $order = Order::with('delivery')
-            ->where('customers_id', Auth::id())
-            ->latest()
-            ->first();
-
-        if (!$order) {
-            return redirect()->back()->with('error', 'Belum ada order untuk ditampilkan.');
-        }
-
-        return view('customer.checkout', compact('order'));
-    }
-
     public function CheckOut(Request $request)
     {
         $request->validate([
@@ -72,11 +58,40 @@ class OrderController extends Controller
             ->with('success', 'Order berhasil dibuat!');
     }
 
-    public function ShowCheckOut($orderId)
+    public function CheckOutForm()
     {
-        $order = Order::with('delivery')->findOrFail($orderId);
+        $order = Order::with('delivery')
+            ->where('customers_id', Auth::id())
+            ->latest()
+            ->first();
+
+        if (!$order) {
+            return redirect()->back()->with('error', 'Belum ada order untuk ditampilkan.');
+        }
+
         return view('customer.checkout', compact('order'));
     }
+
+    // public function ShowCheckOut($orderId)
+    // {
+    //     $order = Order::with('delivery')->findOrFail($orderId);
+    //     return view('customer.checkout', compact('order'));
+    // }
+
+    public function ShowCheckOut($orderId)
+{
+    $order = Order::with(['delivery', 'orderDetails.product'])
+        ->where('id', $orderId)
+        ->where('customers_id', Auth::id())
+        ->first();
+
+    if (!$order) {
+        return redirect()->route('customer.checkout.form')->with('error', 'Order tidak ditemukan.');
+    }
+
+    return view('customer.checkout-detail', compact('order'));
+}
+
 
     public function CheckOutSuccess()
     {

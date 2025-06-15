@@ -12,6 +12,13 @@
                 <p><strong>Nomor Order:</strong> {{ $order->id }}</p>
                 <p><strong>Tanggal Order:</strong> {{ $order->created_at->format('d M Y') }}</p>
                 <p><strong>Total Harga Produk:</strong> Rp{{ number_format($order->total_price, 0, ',', '.') }}</p>
+
+                <hr>
+                <p><strong>Daftar Produk:</strong></p>
+                @foreach ($order->products as $product)
+                    <p>- {{ $product->name }} (Qty: {{ $product->pivot->quantity }}) -
+                        Rp{{ number_format($product->pivot->price, 0, ',', '.') }}</p>
+                @endforeach
             </div>
         </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Delivery;
@@ -21,6 +22,8 @@ class OrderController extends Controller
         if (empty($cart)) {
             return redirect()->back()->with('error', 'Keranjang belanja kosong.');
         }
+
+        $cartItems = Cart::where('user_id', auth()->id())->with('product')->get();
 
         $totalHarga = 0;
         foreach ($cart as $item) {
@@ -42,6 +45,13 @@ class OrderController extends Controller
         $order->updated_id = Auth::id();
         $order->deleted_id = null;
         $order->save();
+
+        foreach ($cart as $productId => $item) {
+            $order->products()->attach($productId, [
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
 
         // Simpan data delivery
         $delivery = new Delivery();
@@ -79,18 +89,18 @@ class OrderController extends Controller
     // }
 
     public function ShowCheckOut($orderId)
-{
-    $order = Order::with(['delivery', 'orderDetails.product'])
-        ->where('id', $orderId)
-        ->where('customers_id', Auth::id())
-        ->first();
+    {
+        $order = Order::with(['delivery', 'orderDetails.product'])
+            ->where('id', $orderId)
+            ->where('customers_id', Auth::id())
+            ->first();
 
-    if (!$order) {
-        return redirect()->route('customer.checkout.form')->with('error', 'Order tidak ditemukan.');
+        if (!$order) {
+            return redirect()->route('customer.checkout.form')->with('error', 'Order tidak ditemukan.');
+        }
+
+        return view('customer.checkout', compact('order'));
     }
-
-    return view('customer.checkout-detail', compact('order'));
-}
 
 
     public function CheckOutSuccess()

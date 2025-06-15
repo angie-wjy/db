@@ -18,7 +18,7 @@ class OrdersHasBundles extends Model
         'price'
     ];
 
-    public $timestamps = false; // Karena tidak ada kolom created_at & updated_at
+    public $timestamps = false;
 
     public function order()
     {

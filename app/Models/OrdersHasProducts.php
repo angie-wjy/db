@@ -17,15 +17,15 @@ class OrdersHasProducts extends Model
         'quantity',
     ];
 
-    public $timestamps = false; // Karena tabel tidak memiliki created_at & updated_at
+    public $timestamps = false;
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'orders_id');
     }
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'products_id');
     }
 }

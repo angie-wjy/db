@@ -636,8 +636,10 @@ class AdminController extends Controller
 
     public function OrderShow($id)
     {
-        $order = Order::with(['customer', 'orderDetails.product'])->findOrFail($id);
-        return view('admin.orders.show', compact('order'));
+        // $order = Order::with(['customer', 'orderDetails.product'])->findOrFail($id);
+        // return view('admin.orders.show', compact('order'));
+        $order = Order::with(['products', 'delivery'])->findOrFail($id);
+        return view('customer.checkout', compact('order'));
     }
 
     public function OrderNew(Request $request)

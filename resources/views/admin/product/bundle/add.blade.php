@@ -67,7 +67,7 @@
                                             <option value="">-- Select Product --</option>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->name }} (Stock:
-                                                    {{ $product->stock }})</option>
+                                                    {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }})</option>
                                             @endforeach
                                         </select>
                                     </div>

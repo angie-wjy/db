@@ -251,7 +251,7 @@ class AdminController extends Controller
 
     public function BundleAdd(Request $request)
     {
-        $products = Product::all();
+        $products = Product::with('branches')->get();
         return view('admin.product.bundle.add', compact('products'));
     }
 

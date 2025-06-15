@@ -336,7 +336,6 @@
             var dataToShow = [];
             var totalharga = 0;
 
-
             $('input[name="cbox"]').on('change', function() {
                 if ($(this).prop('checked')) {
                     var val = $(this).val();

@@ -67,8 +67,8 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/cart/minus/{product_id}', [CartItemController::class, 'CartMinus'])->name('cart.minus');
     Route::delete('/cart/remove/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
 
-    Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::post('/customer/checkout', [OrderController::class, 'CheckOut'])->name('customer.checkout');
+    Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
@@ -76,6 +76,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
+
     Route::get('/category/{slug}', [CategoryController::class, 'ShowBySlug'])->name('category.show');
 });
 
@@ -97,7 +98,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/admin/product/{id}', [AdminController::class, 'ProductDelete'])->name('admin.product.delete');
     Route::get('/admin/products/restock/{id}', [ProductController::class, 'RestockForm'])->name('admin.product.restock.form');
     Route::post('/admin/products/restock', [ProductController::class, 'RestockStore'])->name('admin.product.restock.store');
-
 
     Route::get('/admin/product/bundle/index', [AdminController::class, 'BundleIndex'])->name('admin.product.bundle.index');
     Route::get('/admin/product/bundle/add', [AdminController::class, 'BundleAdd'])->name('admin.product.bundle.add');
@@ -134,9 +134,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/product/size/update/{id}', [AdminController::class, 'SizeUpdate'])->name('admin.product.size.update');
     Route::delete('/admin/product/size/{id}', [AdminController::class, 'SizeDelete'])->name('admin.product.size.delete');
 
-    Route::get('/admin/order/index', [AdminController::class, 'OrderIndex'])->name('admin.order.index');
+    Route::get('/admin/order/index', [AdminController::class, 'OrderAll'])->name('admin.order.index');
     // Route::get('/admin/order/show/{id}', [AdminController::class, 'OrderShow'])->name('admin.order.show');
-    Route::get('/admin/order/new/index', [AdminController::class, 'OrderNewIndex'])->name('admin.order.new.index');
+    Route::get('/admin/order/new/index', [AdminController::class, 'OrderNew'])->name('admin.order.new.index');
     Route::put('/admin/orders/{order}/approve', [AdminController::class, 'OrderApprove'])->name('admin.order.approve');
 
     Route::get('/admin/order/check/index', [AdminController::class, 'OrderCheckIndex'])->name('admin.order.check.index');

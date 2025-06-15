@@ -627,7 +627,7 @@ class AdminController extends Controller
         }
     }
 
-    public function OrderIndex(Request $request)
+    public function OrderAll(Request $request)
     {
         $orders = Order::with('customer')->get();
         return view('admin.order.index', compact('orders'));
@@ -640,15 +640,30 @@ class AdminController extends Controller
         return view('admin.orders.show', compact('order'));
     }
 
-    public function OrderNewIndex(Request $request)
+    public function OrderNew(Request $request)
     {
         $orders = Order::with('customer')->where('status', 'new')->get();
         return view('admin.order.new.index', compact('orders'));
     }
 
+    // public function OrderApprove($id)
+    // {
+    //     $order = Order::findOrFail($id);
+    //     $order->status = 'processed';
+    //     $order->is_ready_stock = true;
+    //     $order->save();
+
+    //     return redirect()->back()->with('success', 'Order approved and moved to processed!');
+    // }
+
     public function OrderApprove($id)
     {
         $order = Order::findOrFail($id);
+
+        if ($order->status !== 'new') {
+            return redirect()->back()->with('error', 'Only new orders can be approved.');
+        }
+
         $order->status = 'processed';
         $order->is_ready_stock = true;
         $order->save();

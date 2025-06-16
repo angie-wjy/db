@@ -75,7 +75,6 @@ class OrderController extends Controller
             ]);
         }
 
-
         // Simpan data delivery
         $delivery = new Delivery();
         $delivery->type = $request->delivery_method;
@@ -202,5 +201,31 @@ class OrderController extends Controller
     public function CheckOutSuccess()
     {
         return view('customer.checkout-success');
+    }
+
+    public function Payment(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        if ($request->paid == true) {
+        $order->status = 'new';
+        $order->save();
+    }
+
+        if ($order->status !== 'pending') {
+            return redirect()->back()->with('error', 'Order sudah diproses atau dibatalkan.');
+        }
+
+        // Simpan bukti pembayaran
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/payment_proofs'), $filename);
+            $order->payment_proof = 'uploads/payment_proofs/' . $filename;
+        }
+
+        $order->status = 'paid';
+        $order->save();
+
+        return redirect()->route('customer.checkout.success')->with('success', 'Pembayaran berhasil dilakukan.');
     }
 }

@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <p><strong>Method:</strong> {{ $order->delivery->type ?? '-' }}</p>
                         <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p>
-                        <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p>
+                        {{-- <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p> --}}
 
                         @if ($order->delivery->type === 'delivery')
                             <p><strong>Address:</strong> {{ $order->delivery->address ?? '-' }}</p>

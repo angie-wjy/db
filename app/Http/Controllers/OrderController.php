@@ -118,6 +118,10 @@ class OrderController extends Controller
     public function Payment(Request $request, $orderId)
     {
         $order = Order::findOrFail($orderId);
+        if ($request->paid == true) {
+        $order->status = 'new';
+        $order->save();
+    }
 
         if ($order->status !== 'pending') {
             return redirect()->back()->with('error', 'Order sudah diproses atau dibatalkan.');

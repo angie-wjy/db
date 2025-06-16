@@ -56,32 +56,54 @@
                 </div>
 
                 {{-- Tombol Pembayaran --}}
-                <a class="btn btn-primary w-100" id="pay-button">Lanjut ke Pembayaran</a>
+                <a class="btn btn-primary w-100" id="pay-button">Next to Payment</a>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript"
-            src="https://app.sandbox.midtrans.com/snap/snap.js"
-            data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('midtrans.client_key') }}"></script>
 
     <script type="text/javascript">
-        document.getElementById('pay-button').onclick = function(){
+        document.getElementById('pay-button').onclick = function() {
             // SnapToken tersedia di variabel `snapToken` yang dilewatkan dari controller
             snap.pay('{{ $snapToken }}', {
-                onSuccess: function(result){
+                // onSuccess: function(result){
+                //     /* You may add your own implementation here */
+                //     alert("Pembayaran berhasil!"); console.log(result);
+                // },
+                onSuccess: function(result) {
+                    fetch("{{ route('payment.callback') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: JSON.stringify(result)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert("Pembayaran berhasil!");
+                            window.location.href =
+                            "{{ route('customer.checkout.success') }}"; // redirect ke halaman pesanan
+                        })
+                        .catch(error => {
+                            console.error("Error saat update status:", error);
+                            alert("Pembayaran berhasil, tapi gagal memperbarui status.");
+                        });
+                }
+
+                onPending: function(result) {
                     /* You may add your own implementation here */
-                    alert("Pembayaran berhasil!"); console.log(result);
+                    alert("Pembayaran tertunda!");
+                    console.log(result);
                 },
-                onPending: function(result){
+                onError: function(result) {
                     /* You may add your own implementation here */
-                    alert("Pembayaran tertunda!"); console.log(result);
+                    alert("Pembayaran gagal!");
+                    console.log(result);
                 },
-                onError: function(result){
-                    /* You may add your own implementation here */
-                    alert("Pembayaran gagal!"); console.log(result);
-                },
-                onClose: function(){
+                onClose: function() {
                     /* You may add your own implementation here */
                     alert('Anda menutup popup tanpa menyelesaikan pembayaran');
                 }

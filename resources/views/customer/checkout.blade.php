@@ -38,7 +38,7 @@
                     <div class="card-header bg-secondary text-white">Shipment</div>
                     <div class="card-body">
                         <p><strong>Method:</strong> {{ $order->delivery->type ?? '-' }}</p>
-                        <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p>
+                        {{-- <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p> --}}
                         {{-- <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p> --}}
 
                         @if ($order->delivery->type === 'delivery')

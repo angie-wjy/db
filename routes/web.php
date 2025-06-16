@@ -77,8 +77,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
-    Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-
     Route::get('/checkout/payment/{id}', [OrderController::class, 'Payment'])->name('customer.checkout.payment');
     Route::get('/product/search', [ProductController::class, 'search']);
     Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');

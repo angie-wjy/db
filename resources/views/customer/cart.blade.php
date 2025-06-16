@@ -482,4 +482,5 @@
             });
         });
     </script>
+
 @endsection

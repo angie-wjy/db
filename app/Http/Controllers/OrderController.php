@@ -8,9 +8,23 @@ use App\Models\Order;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        // Set your Merchant Server Key
+        Config::$serverKey = config('midtrans.server_key');
+        // Set to Development/Sandbox Environment (default: true)
+        Config::$isProduction = config('midtrans.is_production');
+        // Set sanitization on (default: true)
+        Config::$isSanitized = true;
+        // Set 3DS transaction for credit card (default: false)
+        Config::$is3ds = true;
+    }
+
     public function CheckOut(Request $request)
     {
         $request->validate([
@@ -108,7 +122,81 @@ class OrderController extends Controller
             return redirect()->route('customer.checkout')->with('error', 'Order tidak ditemukan.');
         }
 
-        return view('customer.checkout', compact('order'));
+        $total_amount = 0;
+        $item_detail = [];
+
+        foreach ($order->orderDetails as $orderDetail) {
+            $total_amount += $orderDetail->product->price * $orderDetail->quantity;
+
+            $item_detail[] = [
+                'id' => $orderDetail->product->id,
+                'price' => $orderDetail->product->price,
+                'quantity' => $orderDetail->quantity,
+                'name' => $orderDetail->product->name
+            ];
+        }
+
+        $user = Auth::user();
+
+        // Parameter transaksi
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(), // Pastikan order_id unik
+                'gross_amount' => $total_amount, // Jumlah transaksi
+            ),
+            'customer_details' => array(
+                'first_name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone
+            ),
+            // Opsional: item details
+            'item_details' => $item_detail,
+        );
+
+
+        $snapToken = Snap::getSnapToken($params);
+        return view('customer.checkout', compact('order', 'snapToken'));
+    }
+
+
+    public function notification(Request $request)
+    {
+        // Ini adalah endpoint untuk menerima notifikasi dari Midtrans (Webhook)
+        // Anda perlu memverifikasi notifikasi dan mengupdate status pesanan di database Anda.
+        // Contoh sederhana (perlu penanganan error dan keamanan lebih lanjut)
+
+        $notif = new \Midtrans\Notification();
+
+        $transactionStatus = $notif->transaction_status;
+        $orderId = $notif->order_id;
+        $fraudStatus = $notif->fraud_status;
+
+        // update order status
+        $order = Order::find($orderId);
+        $order->status = "paid";
+        $order->save();
+
+        error_log("Order ID: " . $orderId . " - Transaction Status: " . $transactionStatus . " - Fraud Status: " . $fraudStatus);
+
+        if ($transactionStatus == 'capture') {
+            if ($fraudStatus == 'challenge') {
+                // TODO set transaction status on your database to 'challenge'
+            } else if ($fraudStatus == 'accept') {
+                // TODO set transaction status on your database to 'success'
+            }
+        } else if ($transactionStatus == 'settlement') {
+            // TODO set transaction status on your database to 'success'
+        } else if ($transactionStatus == 'pending') {
+            // TODO set transaction status on your database to 'pending' / waiting payment
+        } else if ($transactionStatus == 'deny') {
+            // TODO set transaction status on your database to 'deny'
+        } else if ($transactionStatus == 'expire') {
+            // TODO set transaction status on your database to 'expire' / cancelled
+        } else if ($transactionStatus == 'cancel') {
+            // TODO set transaction status on your database to 'cancel'
+        }
+
+        return response('OK', 200);
     }
 
     public function CheckOutSuccess()

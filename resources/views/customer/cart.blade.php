@@ -216,7 +216,7 @@
                             <!-- Form pilihan metode pengiriman, awalnya disembunyikan -->
                             <div id="deliveryForm"
                                 style="display: none; margin-top: 1rem; background: #fff; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 0 8px rgba(0,0,0,0.2);">
-                                <h5><strong>Option Delivery</strong></h5>
+                                <h5><strong>Option Shipment</strong></h5>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="delivery_method" id="pickup"
@@ -228,11 +228,9 @@
                                         value="delivery" required>
                                     <label class="form-check-label" for="delivery">Delivery</label>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary mt-3" disabled id="selectBtn">Select</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -384,7 +382,7 @@
 
             function pickup() {
                 div_branches.empty();
-                if ('geolocation' in navigator) {
+                if ('   ' in navigator) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                         var user_location = L.latLng(position.coords.latitude, position.coords.longitude);
 

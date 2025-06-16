@@ -11,12 +11,12 @@
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">Detail Order</div>
                     <div class="card-body">
-                        <p><strong>Nomor Order:</strong> {{ $order->id }}</p>
-                        <p><strong>Tanggal Order:</strong> {{ $order->created_at->format('d M Y') }}</p>
-                        <p><strong>Total Harga Produk:</strong> Rp{{ number_format($order->total, 0, ',', '.') }}</p>
+                        <p><strong>Order Number:</strong> {{ $order->id }}</p>
+                        <p><strong>Order Date:</strong> {{ $order->created_at->format('d M Y') }}</p>
+                        <p><strong>Total Product Price:</strong> Rp{{ number_format($order->total, 0, ',', '.') }}</p>
 
                         <hr>
-                        <p><strong>Daftar Produk:</strong></p>
+                        <p><strong>Product List:</strong></p>
                         <ul class="list-group list-group-flush">
                             @foreach ($order->products as $product)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -35,24 +35,28 @@
             <!-- Kolom Kanan: Info Pengiriman + Ringkasan -->
             <div class="col-lg-4">
                 <div class="card mb-4">
-                    <div class="card-header bg-secondary text-white">Pengiriman</div>
+                    <div class="card-header bg-secondary text-white">Shipment</div>
                     <div class="card-body">
-                        <p><strong>Metode:</strong> {{ $order->delivery->type ?? '-' }}</p>
+                        <p><strong>Method:</strong> {{ $order->delivery->type ?? '-' }}</p>
                         <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p>
-                        <p><strong>Nomor Resi:</strong> {{ $order->delivery->resi ?? '-' }}</p>
+                        <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p>
+
+                        @if ($order->delivery->type === 'delivery')
+                            <p><strong>Address:</strong> {{ $order->delivery->address ?? '-' }}</p>
+                        @endif
                     </div>
                 </div>
 
                 <div class="card mb-4">
-                    <div class="card-header bg-success text-white">Ringkasan Pembayaran</div>
+                    <div class="card-header bg-success text-white">Payment Summary</div>
                     <div class="card-body">
-                        <p><strong>Total Pembayaran:</strong> Rp{{ number_format($order->total, 0, ',', '.') }}</p>
+                        <p><strong>Total Payment:</strong> Rp{{ number_format($order->total, 0, ',', '.') }}</p>
                         {{-- Jika ada ongkir: Rp{{ number_format($order->total + $order->deliveryOption->price, 0, ',', '.') }} --}}
                     </div>
                 </div>
 
                 {{-- Tombol Pembayaran --}}
-                {{-- <a href="{{ route('payment.page', $order->id) }}" class="btn btn-primary w-100">Lanjut ke Pembayaran</a> --}}
+                <a href="{{ route('customer.payment', $order->id) }}" class="btn btn-primary w-100">Next to Payment</a>
             </div>
         </div>
     </div>

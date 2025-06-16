@@ -69,6 +69,8 @@ Route::middleware(['auth:customer'])->group(function () {
 
     Route::post('/customer/checkout', [OrderController::class, 'CheckOut'])->name('customer.checkout');
     Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
+    Route::get('/customer/payment/{orderId}', [OrderController::class, 'Payment'])->name('customer.payment');
+    Route::post('/customer/payment/{orderId}', [OrderController::class, 'SubmitPayment'])->name('customer.payment.submit');
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 

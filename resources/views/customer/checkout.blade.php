@@ -91,8 +91,7 @@
                             console.error("Error saat update status:", error);
                             alert("Pembayaran berhasil, tapi gagal memperbarui status.");
                         });
-                }
-
+                },
                 onPending: function(result) {
                     /* You may add your own implementation here */
                     alert("Pembayaran tertunda!");

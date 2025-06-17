@@ -13,6 +13,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+Route::post('/notification', [OrderController::class, 'notification'])->name('midtrans.notification');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -54,7 +55,6 @@ Route::get('/customer/home', function () {
     return view('customer.home');
 })->name('customer.home');
 
-Route::post('/notification', [OrderController::class, 'notification'])->name('midtrans.notification');
 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/cart', [CartController::class, 'CartIndex']);

@@ -10,18 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Midtrans\Notification; // Pastikan ini ada
 
 class OrderController extends Controller
 {
     public function __construct()
-    {
-        // Set your Merchant Server Key
+    {   
         Config::$serverKey = config('midtrans.server_key');
-        // Set to Development/Sandbox Environment (default: true)
         Config::$isProduction = config('midtrans.is_production');
-        // Set sanitization on (default: true)
         Config::$isSanitized = true;
-        // Set 3DS transaction for credit card (default: false)
         Config::$is3ds = true;
     }
 
@@ -140,7 +137,7 @@ class OrderController extends Controller
         // Parameter transaksi
         $params = array(
             'transaction_details' => array(
-                'order_id' => rand(), // Pastikan order_id unik
+                'order_id' => $orderId, // Pastikan order_id unik
                 'gross_amount' => $total_amount, // Jumlah transaksi
             ),
             'customer_details' => array(
@@ -164,68 +161,50 @@ class OrderController extends Controller
         // Anda perlu memverifikasi notifikasi dan mengupdate status pesanan di database Anda.
         // Contoh sederhana (perlu penanganan error dan keamanan lebih lanjut)
 
-        $notif = new \Midtrans\Notification();
+        // Baris yang Anda maksud
+        try {
+            $notif = new Notification(); 
 
-        $transactionStatus = $notif->transaction_status;
-        $orderId = $notif->order_id;
-        $fraudStatus = $notif->fraud_status;
+            $transactionStatus = $notif->transaction_status;
+            $orderId = $notif->order_id;
+            $fraudStatus = $notif->fraud_status;
 
-        // update order status
-        $order = Order::find($orderId);
-        $order->status = "paid";
-        $order->save();
+            // update order status
+            $order = Order::find($orderId);
+            $order->status = "paid";
+            $order->save();
 
-        error_log("Order ID: " . $orderId . " - Transaction Status: " . $transactionStatus . " - Fraud Status: " . $fraudStatus);
-
-        if ($transactionStatus == 'capture') {
-            if ($fraudStatus == 'challenge') {
-                // TODO set transaction status on your database to 'challenge'
-            } else if ($fraudStatus == 'accept') {
-                // TODO set transaction status on your database to 'success'
-            }
-        } else if ($transactionStatus == 'settlement') {
-            // TODO set transaction status on your database to 'success'
-        } else if ($transactionStatus == 'pending') {
-            // TODO set transaction status on your database to 'pending' / waiting payment
-        } else if ($transactionStatus == 'deny') {
-            // TODO set transaction status on your database to 'deny'
-        } else if ($transactionStatus == 'expire') {
-            // TODO set transaction status on your database to 'expire' / cancelled
-        } else if ($transactionStatus == 'cancel') {
-            // TODO set transaction status on your database to 'cancel'
+            return response('OK', 200);
+        } catch (\Exception $e) {
+            Log::error('Error processing Midtrans notification: ' . $e->getMessage(), ['exception' => $e]);
+            // Kirim respons non-200 jika ada error serius (Midtrans mungkin akan retry)
+            return response('Error', 500);
         }
 
-        return response('OK', 200);
+        // error_log("Order ID: " . $orderId . " - Transaction Status: " . $transactionStatus . " - Fraud Status: " . $fraudStatus);
+
+        // if ($transactionStatus == 'capture') {
+        //     if ($fraudStatus == 'challenge') {
+        //         // TODO set transaction status on your database to 'challenge'
+        //     } else if ($fraudStatus == 'accept') {
+        //         // TODO set transaction status on your database to 'success'
+        //     }
+        // } else if ($transactionStatus == 'settlement') {
+        //     // TODO set transaction status on your database to 'success'
+        // } else if ($transactionStatus == 'pending') {
+        //     // TODO set transaction status on your database to 'pending' / waiting payment
+        // } else if ($transactionStatus == 'deny') {
+        //     // TODO set transaction status on your database to 'deny'
+        // } else if ($transactionStatus == 'expire') {
+        //     // TODO set transaction status on your database to 'expire' / cancelled
+        // } else if ($transactionStatus == 'cancel') {
+        //     // TODO set transaction status on your database to 'cancel'
+        // }
+
     }
 
     public function CheckOutSuccess()
     {
         return view('customer.checkout-success');
-    }
-
-    public function Payment(Request $request, $orderId)
-    {
-        $order = Order::findOrFail($orderId);
-        if ($request->paid == true) {
-        $order->status = 'new';
-        $order->save();
-    }
-
-        if ($order->status !== 'pending') {
-            return redirect()->back()->with('error', 'Order sudah diproses atau dibatalkan.');
-        }
-
-        // Simpan bukti pembayaran
-        if ($request->hasFile('payment_proof')) {
-            $file = $request->file('payment_proof');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/payment_proofs'), $filename);
-            $order->payment_proof = 'uploads/payment_proofs/' . $filename;
-        }
-
-        $order->status = 'paid';
-        $order->save();
-
-        return redirect()->route('customer.checkout.success')->with('success', 'Pembayaran berhasil dilakukan.');
     }
 }

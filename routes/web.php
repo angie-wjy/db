@@ -142,7 +142,6 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::get('/admin/order/index', [AdminController::class, 'OrderAll'])->name('admin.order.index');
     Route::get('/admin/order/show/{id}', [AdminController::class, 'OrderShow'])->name('admin.order.show');
-    Route::get('/admin/order/new/index', [AdminController::class, 'OrderNew'])->name('admin.order.new.index');
     Route::put('/admin/orders/{order}/approve', [AdminController::class, 'OrderApprove'])->name('admin.order.approve');
 
     Route::get('/admin/order/check/index', [AdminController::class, 'OrderCheckIndex'])->name('admin.order.check.index');

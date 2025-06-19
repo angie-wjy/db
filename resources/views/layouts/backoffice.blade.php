@@ -143,12 +143,12 @@
                                             <span class="sub-item">All Order</span>
                                         </a>
                                     </li>
-                                    <li
+                                    {{-- <li
                                         class="nav-item {{ request()->routeIs('admin.order.new.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.new.index') }}">
                                             <span class="sub-item">New Request Order</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.order.check.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.check.index') }}">

@@ -642,12 +642,6 @@ class AdminController extends Controller
         return view('customer.checkout', compact('order'));
     }
 
-    public function OrderNew(Request $request)
-    {
-        $orders = Order::with('customer')->where('status', 'new')->get();
-        return view('admin.order.new.index', compact('orders'));
-    }
-
     // public function OrderApprove($id)
     // {
     //     $order = Order::findOrFail($id);

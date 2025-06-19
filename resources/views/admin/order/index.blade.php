@@ -37,7 +37,7 @@
                                     <th>Total</th>
                                     <th>Status</th>
                                     <th>Customer ID</th>
-                                    <th>Employee ID</th>
+                                    {{-- <th>Employee ID</th> --}}
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -49,7 +49,7 @@
                                     <th>Total</th>
                                     <th>Status</th>
                                     <th>Customer ID</th>
-                                    <th>Employee ID</th>
+                                    {{-- <th>Employee ID</th> --}}
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -74,7 +74,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $order->customers_id }}</td>
-                                        <td>{{ $order->employee_id }}</td>
+                                        {{-- <td>{{ $order->employee_id }}</td> --}}
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"

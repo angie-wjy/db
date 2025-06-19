@@ -1,17 +1,12 @@
 @extends('layouts.customer')
-@section('title', 'Checkout')
+@section('title', 'Checkout Sukses')
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Checkout Berhasil</div>
-                <div class="card-body">
-                    <p>Terima kasih telah melakukan checkout. Pesanan Anda akan segera diproses.</p>
-                </div>
-            </div>
+    <div class="container py-5">
+        <h3 class="text-center text-success">Payment Successful!</h3>
+        <p class="text-center">Thank you! Your order is being processed.</p>
+        <div class="text-center">
+            <a href="{{ route('customer.orders') }}" class="btn btn-primary mt-3">View Order History</a>
         </div>
     </div>
-</div>
 @endsection

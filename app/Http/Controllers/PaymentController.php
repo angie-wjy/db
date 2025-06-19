@@ -2,26 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Illuminate\Http\Request;
+use Midtrans\Notification;
+use App\Models\Order;
 
 class PaymentController extends Controller
 {
     public function callback(Request $request)
     {
-        $orderId = $request->input('order_id'); // dari Snap response
-        $transactionStatus = $request->input('transaction_status');
+        $notif = new Notification();
 
-        if ($transactionStatus === 'capture' || $transactionStatus === 'settlement') {
-            $order = Order::find($orderId);
-            if ($order) {
-                $order->status = 'completed';
-                $order->save();
-                return response()->json(['success' => true]);
-            }
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $orderId = explode('-', $notif->order_id)[0]; // karena di controller kamu tambahkan uniqid
+        $fraud = $notif->fraud_status;
+
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return response()->json(['error' => 'Order not found'], 404);
         }
 
-        return response()->json(['success' => false]);
+        // Update status order
+        if ($transaction == 'capture') {
+            if ($type == 'credit_card') {
+                if ($fraud == 'challenge') {
+                    $order->status = 'pending';
+                } else {
+                    $order->status = 'paid';
+                }
+            }
+        } elseif ($transaction == 'settlement') {
+            $order->status = 'paid';
+        } elseif ($transaction == 'pending') {
+            $order->status = 'pending';
+        } elseif (in_array($transaction, ['deny', 'expire', 'cancel'])) {
+            $order->status = 'failed';
+        }
+
+        $order->save();
+
+        return response()->json(['message' => 'Payment status updated']);
     }
 }

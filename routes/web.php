@@ -75,6 +75,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::get('/customer/payment/{orderId}', [OrderController::class, 'Payment'])->name('customer.payment');
     Route::post('/customer/payment/{orderId}', [OrderController::class, 'SubmitPayment'])->name('customer.payment.submit');
+    Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
 
     Route::get('/checkout/payment/{id}', [OrderController::class, 'Payment'])->name('customer.checkout.payment');

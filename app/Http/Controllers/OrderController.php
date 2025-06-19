@@ -87,10 +87,23 @@ class OrderController extends Controller
             ->with('success', 'Order berhasil dibuat!');
     }
 
+    // public function CheckOutForm()
+    // {
+    //     $order = Order::with('delivery')
+    //         ->where('customers_id', Auth::id())
+    //         ->latest()
+    //         ->first();
+
+    //     if (!$order) {
+    //         return redirect()->back()->with('error', 'Belum ada order untuk ditampilkan.');
+    //     }
+
+    //     return view('customer.checkout', compact('order'));
+    // }
+
     public function CheckOutForm()
     {
-        $order = Order::with('delivery')
-            ->where('customers_id', Auth::id())
+        $order = Order::with(['delivery', 'products'])->where('customers_id', Auth::id())
             ->latest()
             ->first();
 
@@ -98,7 +111,28 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Belum ada order untuk ditampilkan.');
         }
 
-        return view('customer.checkout', compact('order'));
+        // Konfigurasi Midtrans
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = false; // ganti true kalau sudah live
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        // Data untuk Snap
+        $params = [
+            'transaction_details' => [
+                'order_id' => $order->id . '-' . uniqid(),
+                'gross_amount' => (int) $order->total,
+            ],
+            'customer_details' => [
+                'first_name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+            ]
+        ];
+
+        // Generate Snap Token
+        $snapToken = Snap::getSnapToken($params);
+
+        return view('customer.checkout', compact('order', 'snapToken'));
     }
 
     // public function ShowCheckOut($orderId)
@@ -222,4 +256,33 @@ class OrderController extends Controller
     {
         return view('customer.checkout-success');
     }
+<<<<<<< Updated upstream
+=======
+
+    public function Payment(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        if ($request->paid == true) {
+            $order->status = 'new';
+            $order->save();
+        }
+
+        if ($order->status !== 'pending') {
+            return redirect()->back()->with('error', 'Order sudah diproses atau dibatalkan.');
+        }
+
+        // Simpan bukti pembayaran
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/payment_proofs'), $filename);
+            $order->payment_proof = 'uploads/payment_proofs/' . $filename;
+        }
+
+        $order->status = 'paid';
+        $order->save();
+
+        return redirect()->route('customer.checkout.success')->with('success', 'Pembayaran berhasil dilakukan.');
+    }
+>>>>>>> Stashed changes
 }

@@ -40,7 +40,7 @@
         @endauth
 
         <ul class="nav_links">
-            <li class="link"><a href="#">Home</a></li>
+            <li class="link"><a href="/home">Home</a></li>
             <li class="link dropdown">
                 <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">

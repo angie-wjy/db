@@ -70,12 +70,12 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/cart/minus/{product_id}', [CartItemController::class, 'CartMinus'])->name('cart.minus');
     Route::delete('/cart/remove/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
 
+    Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
     Route::post('/customer/checkout', [OrderController::class, 'CheckOut'])->name('customer.checkout');
     Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::get('/customer/payment/{orderId}', [OrderController::class, 'Payment'])->name('customer.payment');
     Route::post('/customer/payment/{orderId}', [OrderController::class, 'SubmitPayment'])->name('customer.payment.submit');
     Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
-    Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
 
     Route::get('/checkout/payment/{id}', [OrderController::class, 'Payment'])->name('customer.checkout.payment');
     Route::get('/product/search', [ProductController::class, 'search']);
@@ -141,11 +141,14 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::delete('/admin/product/size/{id}', [AdminController::class, 'SizeDelete'])->name('admin.product.size.delete');
 
     Route::get('/admin/order/index', [AdminController::class, 'OrderAll'])->name('admin.order.index');
-    // Route::get('/admin/order/show/{id}', [AdminController::class, 'OrderShow'])->name('admin.order.show');
+    Route::get('/admin/order/show/{id}', [AdminController::class, 'OrderShow'])->name('admin.order.show');
     Route::get('/admin/order/new/index', [AdminController::class, 'OrderNew'])->name('admin.order.new.index');
     Route::put('/admin/orders/{order}/approve', [AdminController::class, 'OrderApprove'])->name('admin.order.approve');
 
     Route::get('/admin/order/check/index', [AdminController::class, 'OrderCheckIndex'])->name('admin.order.check.index');
+    Route::put('/admin/order/check/ready/{id}', [OrderController::class, 'OrderCheckReady'])->name('admin.order.check.ready');
+    Route::put('/admin/order/check/notready/{id}', [OrderController::class, 'OrderCheckNotReady'])->name('admin.order.check.notready');
+
     Route::get('/admin/order/pack/index', [AdminController::class, 'OrderPackIndex'])->name('admin.order.pack.index');
     Route::put('/order/{id}/pack', [AdminController::class, 'OrderPacked'])->name('admin.order.pack');
     Route::get('/admin/order/send/index', [AdminController::class, 'OrderSendIndex'])->name('admin.order.send.index');

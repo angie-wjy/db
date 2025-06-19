@@ -675,7 +675,7 @@ class AdminController extends Controller
 
     public function OrderCheckIndex(Request $request)
     {
-        $orders = Order::with('customer')->where('status', 'check')->get();
+        $orders = Order::with('customer')->where('status', 'paid')->get();
         return view('admin.order.check.index', compact('orders'));
     }
 

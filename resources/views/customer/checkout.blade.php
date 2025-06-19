@@ -73,24 +73,8 @@
                 //     alert("Pembayaran berhasil!"); console.log(result);
                 // },
                 onSuccess: function(result) {
-                    fetch("{{ route('payment.callback') }}", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                            },
-                            body: JSON.stringify(result)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert("Pembayaran berhasil!");
-                            window.location.href =
-                            "{{ route('customer.checkout.success') }}"; // redirect ke halaman pesanan
-                        })
-                        .catch(error => {
-                            console.error("Error saat update status:", error);
-                            alert("Pembayaran berhasil, tapi gagal memperbarui status.");
-                        });
+                    alert("Pembayaran berhasil!");
+                    window.location.href = "{{ route('customer.checkout.success') }}"; // redirect ke halaman pesanan
                 },
                 onPending: function(result) {
                     /* You may add your own implementation here */

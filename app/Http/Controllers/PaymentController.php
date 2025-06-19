@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-        public function callback(Request $request)
+    public function callback(Request $request)
     {
         $orderId = $request->input('order_id'); // dari Snap response
         $transactionStatus = $request->input('transaction_status');

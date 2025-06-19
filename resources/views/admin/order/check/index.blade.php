@@ -31,6 +31,7 @@
                                 <th>Order ID</th>
                                 <th>Customer</th>
                                 <th>Date</th>
+                                <th>Price</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -40,6 +41,7 @@
                                 <th>Order ID</th>
                                 <th>Customer</th>
                                 <th>Date</th>
+                                <th>Price</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -55,13 +57,13 @@
                                     <td>
                                         <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-info btn-sm">Lihat Detail</a>
 
-                                        <form action="{{ route('admin.order.ready', $order->id) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('admin.order.check.ready', $order->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-success btn-sm">Konfirmasi Siap</button>
                                         </form>
 
-                                        <form action="{{ route('admin.order.notready', $order->id) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('admin.order.check.notready', $order->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-warning btn-sm">Tandai Tidak Ready</button>

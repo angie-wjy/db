@@ -15,7 +15,7 @@ use Midtrans\Notification; // Pastikan ini ada
 class OrderController extends Controller
 {
     public function __construct()
-    {   
+    {
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
         Config::$isSanitized = true;
@@ -163,7 +163,7 @@ class OrderController extends Controller
 
         // Baris yang Anda maksud
         try {
-            $notif = new Notification(); 
+            $notif = new Notification();
 
             $transactionStatus = $notif->transaction_status;
             $orderId = $notif->order_id;
@@ -200,7 +200,22 @@ class OrderController extends Controller
         // } else if ($transactionStatus == 'cancel') {
         //     // TODO set transaction status on your database to 'cancel'
         // }
+    }
 
+    public function OrderCheckReady($orderId)
+    {
+        $order = Order::where('id', $orderId);
+        $order->update(['status' => 'checked']);
+        return redirect()->route('admin.order.check.index')
+            ->with('success', 'Order telah siap untuk diambil.');
+    }
+
+    public function OrderCheckNotReady($orderId)
+    {
+        $order = Order::where('id', $orderId);
+        $order->update(['status' => 'canceled']);
+        return redirect()->route('admin.order.check.index')
+            ->with('success', 'Order telah siap untuk diambil.');
     }
 
     public function CheckOutSuccess()

@@ -58,18 +58,18 @@ class OrderController extends Controller
         $order->deleted_id = null;
         $order->save();
 
-        // foreach ($cart as $products_id => $item) {
-        //     $order->products()->attach($products_id, [
-        //         'quantity' => $item['quantity'],
-        //         'price' => $item['price'],
-        //     ]);
-        // }
-
         foreach ($cart as $item) {
             $order->products()->attach($item['id'], [
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
+        }
+
+        // kurangi stok barang
+        foreach ($cart as $item) {
+            $product = $item['product'];
+            $product->quantity -= $item['quantity'];
+            $product->save();
         }
 
         // Simpan data delivery
@@ -191,11 +191,6 @@ class OrderController extends Controller
 
     public function notification(Request $request)
     {
-        // Ini adalah endpoint untuk menerima notifikasi dari Midtrans (Webhook)
-        // Anda perlu memverifikasi notifikasi dan mengupdate status pesanan di database Anda.
-        // Contoh sederhana (perlu penanganan error dan keamanan lebih lanjut)
-
-        // Baris yang Anda maksud
         try {
             $notif = new Notification();
 
@@ -215,25 +210,6 @@ class OrderController extends Controller
             return response('Error', 500);
         }
 
-        // error_log("Order ID: " . $orderId . " - Transaction Status: " . $transactionStatus . " - Fraud Status: " . $fraudStatus);
-
-        // if ($transactionStatus == 'capture') {
-        //     if ($fraudStatus == 'challenge') {
-        //         // TODO set transaction status on your database to 'challenge'
-        //     } else if ($fraudStatus == 'accept') {
-        //         // TODO set transaction status on your database to 'success'
-        //     }
-        // } else if ($transactionStatus == 'settlement') {
-        //     // TODO set transaction status on your database to 'success'
-        // } else if ($transactionStatus == 'pending') {
-        //     // TODO set transaction status on your database to 'pending' / waiting payment
-        // } else if ($transactionStatus == 'deny') {
-        //     // TODO set transaction status on your database to 'deny'
-        // } else if ($transactionStatus == 'expire') {
-        //     // TODO set transaction status on your database to 'expire' / cancelled
-        // } else if ($transactionStatus == 'cancel') {
-        //     // TODO set transaction status on your database to 'cancel'
-        // }
     }
 
     public function OrderCheckReady($orderId)
@@ -256,8 +232,6 @@ class OrderController extends Controller
     {
         return view('customer.checkout-success');
     }
-<<<<<<< Updated upstream
-=======
 
     public function Payment(Request $request, $orderId)
     {
@@ -284,5 +258,4 @@ class OrderController extends Controller
 
         return redirect()->route('customer.checkout.success')->with('success', 'Pembayaran berhasil dilakukan.');
     }
->>>>>>> Stashed changes
 }

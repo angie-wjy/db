@@ -15,24 +15,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::post('/notification', [OrderController::class, 'notification'])->name('midtrans.notification');
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Route::get('/', function () {
-//     $products = Product::take(3)->get();
-//     $categories = Category::with('products')->get();
-//     return view('welcome', compact('products', 'categories'));
-// });
-
-// Route::middleware('web')->group(function () {
-//     Route::get('/', function () {
-//         return view('welcome');
-//     });
-// });
 
 Route::get('/', function () {
-    $products = Product::take(3)->get();
+    // select 3 product topsell, table orders_has_products have product_id and qty, select product_id, sum(qty) as total_qty from orders_has_products group by product_id order by total_qty desc limit 3
+    $products = Product::withCount(['orders as total_qty' => function ($query) {
+        $query->select(DB::raw('SUM(quantity) as total_qty'));
+    }])->orderBy('total_qty', 'desc')->take(3)->get();
+    
     $categories = Category::with('products')->get();
     return view('welcome', compact('products', 'categories'));
 })->name('welcome');

@@ -47,10 +47,10 @@
                     Category
                 </a>
                 <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item py-2" href="{{ route('category.show', 'bantal') }}">Bantal</a>
-                    <a class="dropdown-item py-2" href="{{ route('category.show', 'boneka') }}">Boneka</a>
-                    <a class="dropdown-item py-2" href="{{ route('category.show', 'fancy') }}">Fancy</a>
-                    <a class="dropdown-item py-2" href="{{ route('category.show', 'tas') }}">Tas</a>
+                    {{-- for categories --}}
+                    @foreach ($categories as $category)
+                        <a class="dropdown-item py-2" href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
+                    @endforeach
                 </div>
             </li>
             <li class="link"><a href="#">Pages</a></li>

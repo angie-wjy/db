@@ -52,12 +52,12 @@
                     </div>
 
                     <div class="card-body">
-                        <p><strong>Method:</strong> {{ $order->delivery->type ?? '-' }}</p>
+                        <p><strong>Method:</strong> {{ $order->ship->type ?? '-' }}</p>
                         {{-- <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p> --}}
                         {{-- <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p> --}}
 
                         @if ($order->ship->type === 'delivery')
-                            <p><strong>Address:</strong> {{ $order->delivery->address ?? '-' }}</p>
+                            <p><strong>Address:</strong> {{ $order->ship->address ?? '-' }}</p>
                         @endif
                     </div>
                 </div>

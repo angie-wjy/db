@@ -244,9 +244,9 @@ class OrderController extends Controller
             ->with('success', 'Order telah siap untuk diambil.');
     }
 
-    public function CheckOutSuccess()
+    public function CheckOutSuccess(Request $request)
     {
-        return view('customer.checkout-success');
+        return view('customer.checkout-success', compact('order'));
     }
 
     public function Payment(Request $request, $orderId)

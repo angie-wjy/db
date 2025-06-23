@@ -20,8 +20,6 @@
             </div>
         </header>
 
-
-
         {{-- Order History --}}
         <div class="mt-12 pt-8 border-t border-gray-200">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">My Order History</h2>
@@ -93,7 +91,6 @@
         </div>
     </div>
 
-    {{-- Custom Styles --}}
     <style>
         .btn-gradient {
             background-image: linear-gradient(to right, #6366f1, #8b5cf6);

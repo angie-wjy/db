@@ -350,42 +350,6 @@
         </div>
     </section>
 
-    <section class="section_container blog_container">
-        <h2 class="section_header">
-            <p class="section_subheader">
-                Add a touch of charm to your collection with our latest tips, trends, and inspiration on fluffy
-                items,
-                bags, and accessories.
-            </p>
-            <div class="blog_grid">
-                <div class="blog_card">
-                    <img src="" alt="blog">
-                    <div class="blog_card_content">
-                        <h6>Timeless Elegance</h6>
-                        <h4>Mastering the Art of Capsule Wardrobes</h4>
-                        <p>12<sup>th</sup> August 2022</p>
-                    </div>
-                </div>
-                <div class="blog_card">
-                    <img src="" alt="blog">
-                    <div class="blog_card_content">
-                        <h6>Timeless Elegance</h6>
-                        <h4>Mastering the Art of Capsule Wardrobes</h4>
-                        <p>12<sup>th</sup> August 2022</p>
-                    </div>
-                </div>
-                <div class="blog_card">
-                    <img src="" alt="blog">
-                    <div class="blog_card_content">
-                        <h6>Timeless Elegance</h6>
-                        <h4>Mastering the Art of Capsule Wardrobes</h4>
-                        <p>12<sup>th</sup> August 2022</p>
-                    </div>
-                </div>
-            </div>
-        </h2>
-    </section>
-
     <footer class="section_container footer_container">
         <div class="footer_col">
             <h4>CONTACT INFO</h4>

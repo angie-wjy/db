@@ -129,14 +129,14 @@
             margin-bottom: 0.8rem;
         }
     </style>
-    <div class="content">
+    <div class="content"> <br><br>
         @php
             $cart = session('cart') ?? [];
         @endphp
 
         @if (empty($cart))
             <h1 style="text-align: center">
-                Masih belum ada item nih, yuk tambahkan
+                Oops, no items yet! Let’s add some now!
             </h1>
         @else
             <div class="cart_item_wrapper">

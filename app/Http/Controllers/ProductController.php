@@ -55,19 +55,23 @@ class ProductController extends Controller
         }
 
         $cart = session()->get('cart', []);
+        $amount = $request->input('amount', 1);
+
         if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+            $cart[$id]['quantity'] += $amount;
         } else {
             $cart[$id] = [
                 'id' => $product->id,
                 'name' => $product->name,
-                'quantity' => 1,
+                'quantity' => $amount,
                 'price' => $product->price,
                 'image' => $product->image,
             ];
         }
+
         session()->put('cart', $cart);
-        return view('customer.product.detail', compact('product'));
+        return redirect()->back()->with('success', 'Product has been successfully added to the cart!');
+        // return view('customer.product.detail', compact('product'));
     }
 
     public function ByCategory($slug)

@@ -13,6 +13,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 Route::post('/notification', [OrderController::class, 'notification'])->name('midtrans.notification');
 

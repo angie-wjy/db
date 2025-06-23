@@ -160,7 +160,7 @@ class OrderController extends Controller
 
     public function ShowCheckOut($orderId)
     {
-        $order = Order::with(['delivery', 'orderDetails.product'])
+        $order = Order::with(['ship', 'orderDetails.product'])
             ->where('id', $orderId)
             ->where('customers_id', Auth::id())
             ->first();

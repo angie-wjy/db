@@ -30,9 +30,9 @@ class Order extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function delivery()
+    public function ship()
     {
-        return $this->hasOne(Delivery::class, 'orders_id');
+        return $this->hasOne(Ship::class, 'orders_id');
     }
 
     public function branch()

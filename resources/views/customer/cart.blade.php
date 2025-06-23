@@ -244,7 +244,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <form action="{{ route('customer.checkout') }}" method="POST" id="pickupMethodForm">
+                        <form action="{{ route('customer.ship') }}" method="POST" id="pickupMethodForm">
                             @csrf
                             <input type="hidden" name="delivery_method" value="pick up">
                             <div class="modal-body">
@@ -268,7 +268,7 @@
             <div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <form action="{{ route('customer.checkout') }}" method="POST" id="deliveryMethodForm">
+                    <form action="{{ route('customer.ship') }}" method="POST" id="deliveryMethodForm">
                         @csrf
                         <input type="hidden" name="delivery_method" value="delivery">
                         <div class="modal-content">

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Employee;
 use App\Models\Order;
-use App\Models\Delivery;
+use App\Models\Ship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 use Midtrans\Snap;
-use Midtrans\Notification; // Pastikan ini ada
+use Midtrans\Notification;
 
 class OrderController extends Controller
 {
@@ -22,7 +23,7 @@ class OrderController extends Controller
         Config::$is3ds = true;
     }
 
-    public function CheckOut(Request $request)
+    public function Ship(Request $request)
     {
         $request->validate([
             'delivery_method' => 'required|in:pick up,delivery',
@@ -66,20 +67,36 @@ class OrderController extends Controller
         }
 
         // kurangi stok barang
+        // foreach ($cart as $item) {
+        //     $product = $item['product'];
+        //     $product->stock -= $item['stock'];
+        //     $product->save();
+        // }
+
         foreach ($cart as $item) {
-            $product = $item['product'];
-            $product->quantity -= $item['quantity'];
-            $product->save();
+            $product = \App\Models\Product::find($item['id']);
+
+            if ($product) {
+                $product->stock -= $item['quantity'];
+
+                if ($product->stock < 0) {
+                    $product->stock = 0;
+                }
+
+                $product->save();
+            } else {
+                Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
+            }
         }
 
         // Simpan data delivery
-        $delivery = new Delivery();
-        $delivery->type = $request->delivery_method;
-        $delivery->address = isset($request->address) ? $request->address : null;
-        $delivery->status = 'on progress';
-        $delivery->resi = null;
-        $delivery->orders_id = $order->id;
-        $delivery->save();
+        $ship = new Ship();
+        $ship->type = $request->delivery_method;
+        $ship->address = isset($request->address) ? $request->address : null;
+        $ship->status = 'on progress';
+        $ship->resi = null;
+        $ship->orders_id = $order->id;
+        $ship->save();
 
         session()->forget('cart');
 
@@ -209,7 +226,6 @@ class OrderController extends Controller
             // Kirim respons non-200 jika ada error serius (Midtrans mungkin akan retry)
             return response('Error', 500);
         }
-
     }
 
     public function OrderCheckReady($orderId)

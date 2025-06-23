@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomerHasAddress;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -91,8 +93,33 @@ class CustomerController extends Controller
         return response()->json($customer_has_address);
     }
 
-    public function AddressIndex(){
+    public function AddressIndex()
+    {
         $customer_has_address = CustomerHasAddress::where('customer_id', auth()->user()->id)->get();
         return response()->json($customer_has_address);
+    }
+
+    public function Profile()
+    {
+        $customer = Auth::guard('customer')->user();
+
+        // Retrieve all orders associated with the customer
+        // Using 'customers_id' column based on your Order model
+        $orders = Order::where('customers_id', $customer->id)
+            ->with(['orderDetails.product', 'ship']) // Changed from 'items' to 'orderDetails.product'
+            ->orderBy('created_at', 'desc')
+            ->paginate(5); // Using pagination for better performance, adjust as needed
+
+        return view('customer.profile.index', compact('customer', 'orders'));
+    }
+
+    public function ShowOrder($id)
+    {
+        $customer = Auth::guard('customer')->user();
+        $order = Order::where('id', $id)
+            ->where('customers_id', $customer->id)
+            ->with(['orderDetails.product', 'ship'])
+            ->firstOrFail();
+        return view('customer.order.show', compact('order'));
     }
 }

@@ -2,7 +2,7 @@
 @section('title', 'Checkout')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container py-4"><br>
         <h2 class="mb-4">Checkout</h2>
 
         <div class="row">

@@ -48,6 +48,9 @@ Route::get('/customer/home', function () {
 
 
 Route::middleware(['auth:customer'])->group(function () {
+    Route::get('/profile', [CustomerController::class, 'Profile'])->name('customer.profile.index');
+    Route::get('/orders/{id}', [CustomerController::class, 'ShowOrder'])->name('customer.order.show');
+
     Route::get('/cart', [CartController::class, 'CartIndex']);
     Route::post('/customer/address/create', [CustomerController::class, 'AddressAdd'])->name('customer.address.create');
     Route::get('/customer/address/index', [CustomerController::class, 'AddressIndex'])->name('customer.address.index');
@@ -61,7 +64,7 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::delete('/cart/remove/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
 
     Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
-    Route::post('/customer/checkout', [OrderController::class, 'CheckOut'])->name('customer.checkout');
+    Route::post('/customer/ship', [OrderController::class, 'Ship'])->name('customer.ship');
     Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::get('/customer/payment/{orderId}', [OrderController::class, 'Payment'])->name('customer.payment');
     Route::post('/customer/payment/{orderId}', [OrderController::class, 'SubmitPayment'])->name('customer.payment.submit');

@@ -42,14 +42,15 @@
         <ul class="nav_links">
             <li class="link"><a href="#">Home</a></li>
             <li class="link dropdown">
-                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     Category
                 </a>
                 <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
                     {{-- for categories --}}
                     @foreach ($categories as $category)
-                        <a class="dropdown-item py-2" href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
+                        <a class="dropdown-item py-2"
+                            href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
                     @endforeach
                 </div>
             </li>
@@ -65,7 +66,8 @@
             @isset(Auth::guard('customer')->user()->id)
                 <div class="nav_icons">
                     <span>
-                        <a href="#"><i class="ri-user-line"> Hi, {{ Auth::guard('customer')->user()->name }} </i></a>
+                        <a href="{{ route('customer.profile.index') }}"><i class="ri-user-line"> Hi,
+                                {{ Auth::guard('customer')->user()->name }} </i></a>
                     </span>
                     <span>
                         <a href="/cart"><i class="ri-shopping-bag-line">Cart</i></a>

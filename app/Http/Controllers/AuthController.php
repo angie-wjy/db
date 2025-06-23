@@ -19,11 +19,11 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        // if (!$user || !Hash::check($request->password, $user->password)) {
-        //     throw ValidationException::withMessages([
-        //         'email' => ['The provided credentials are incorrect.'],
-        //     ]);
-        // }
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
         if ($user->role == 'admin'){
             Auth::guard("admin")->login($user);
             return redirect()->route('admin.dashboard');

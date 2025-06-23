@@ -675,23 +675,22 @@ class AdminController extends Controller
 
     public function OrderPackIndex(Request $request)
     {
-        $orders = Order::with('customer')->where('status', 'pack')->get();
+        $orders = Order::with('customer')->where('status', 'checked')->get();
         return view('admin.order.pack.index', compact('orders'));
     }
 
     public function OrderPacked($id)
     {
         $order = Order::findOrFail($id);
-        $order->is_packed = true;
         $order->status = 'packed';
         $order->save();
 
-        return redirect()->route('admin.send-orders.index')->with('success', 'Order marked as packed and ready to send!');
+        return redirect()->back()->with('success', 'Order marked as packed and ready to send!');
     }
 
     public function OrderSendIndex(Request $request)
     {
-        $orders = Order::with('customer')->where('status', 'send')->get();
+        $orders = Order::with('customer')->where('status', 'packed')->get();
         return view('admin.order.send.index', compact('orders'));
     }
 

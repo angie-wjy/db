@@ -69,6 +69,8 @@
                                                 <span class="badge bg-success">Completed</span>
                                             @elseif($order->status == 'cancelled')
                                                 <span class="badge bg-danger">Cancelled</span>
+                                            @elseif($order->status == 'approved_shipping')
+                                                <span class="badge bg-info">Approved Shipping</span>
                                             @else
                                                 <span class="badge bg-secondary">{{ ucfirst($order->status) }}</span>
                                             @endif

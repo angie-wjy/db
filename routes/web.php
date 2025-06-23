@@ -21,7 +21,7 @@ Route::get('/', function () {
     $products = Product::withCount(['orders as total_qty' => function ($query) {
         $query->select(DB::raw('SUM(quantity) as total_qty'));
     }])->orderBy('total_qty', 'desc')->take(3)->get();
-    
+
     $categories = Category::with('products')->get();
     return view('welcome', compact('products', 'categories'));
 })->name('welcome');

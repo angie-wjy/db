@@ -2,12 +2,13 @@
 @section('title', 'Detail Product')
 @section('content')
     <div class="content">
+        <br><br>
         <div class="card mb-3 mx-auto p-5"
             style="max-width: 1000px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded-start shadow-sm" alt="..."
-                        style="border-radius: 10px; object-fit: cover; height: 400px;">
+                    <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded-start shadow-sm"
+                        alt="..." style="border-radius: 10px; object-fit: cover; height: 400px;">
                 </div>
                 <div class="col-md-6">
                     <div class="card-body">
@@ -17,7 +18,10 @@
                         <p class="card-text" style="font-weight: bold; font-size: 2rem; color: #e60012;">
                             Rp.{{ number_format($product->price, 0, 0, '.') }}</p>
 
-                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p>
+                        {{-- <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p> --}}
+                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">
+                            Stock : {{ $product->stock }}
+                        </p>
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Description</p>
                         <p class="card-text" style="font-size: 1.1rem; color: #777; line-height: 1.6;">
                             {{ $product->description }}

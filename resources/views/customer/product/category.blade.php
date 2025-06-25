@@ -15,9 +15,9 @@
                 <button type="submit"
                     class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-white rounded-md text-sm font-semibold shadow">
                     Cari
-                </button>
-            </form>
-        </div>
+                    </button>
+                </form>
+            </div>
 
         {{-- Filter Sort --}}
         <div class="flex flex-wrap gap-3 mb-6">
@@ -26,7 +26,7 @@
             <a href="?sort=bestseller" class="btn-filter">Best Seller</a>
             <a href="?sort=PRICE_UP" class="btn-filter">Price: Low to High</a>
             <a href="?sort=PRICE_DOWN" class="btn-filter">Price: High to Low</a>
-        </div>
+            </div>
 
 
         {{-- Grid Produk --}}
@@ -37,9 +37,10 @@
                     <a href="/product/detail/{{ $prod->id }}" class="flex flex-col h-full">
                         {{-- Gambar dengan ukuran tetap --}}
                         <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <img src="{{ asset('storage/' . $prod->image) }}" alt="{{ $prod->name }}"
+                            <img src="{{ asset('storage/' . $prod->image) }}"
+                                alt="{{ $prod->name }}"
                                 class="max-h-full max-w-full object-contain p-2">
-                        </div>
+                            </div>
 
                         {{-- Konten card --}}
                         <div class="p-3 flex flex-col justify-between flex-grow">
@@ -47,18 +48,19 @@
                                 {{ Str::limit($prod->name, 40) }}</h3>
                             <p class="text-orange-600 font-bold text-sm text-center">
                                 Rp{{ number_format($prod->price, 0, ',', '.') }}
-                            </p>
-                        </div>
-                    </a>
-                </div>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
             @endforeach
-        </div>
+            </div>
 
         {{-- Pagination --}}
         <div class="mt-8 flex justify-center">
             {{ $dataProd->links('pagination::tailwind') }}
+            </div>
         </div>
-    </div>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- Tailwind Utilities --}}

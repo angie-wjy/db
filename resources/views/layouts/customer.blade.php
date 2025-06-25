@@ -19,6 +19,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
         </script>
     <link rel="stylesheet" href="{{ asset('assets/css/welcome.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Smile Gift Shop</title>
 </head>
 

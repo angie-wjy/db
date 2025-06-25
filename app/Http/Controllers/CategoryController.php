@@ -8,13 +8,11 @@ use App\Models\Product;
 
 class CategoryController extends Controller
 {
-    // Menampilkan semua kategori
     public function index()
     {
         return response()->json(Category::all());
     }
 
-    // Menambahkan kategori baru
     public function store(Request $request)
     {
         $request->validate([
@@ -28,7 +26,6 @@ class CategoryController extends Controller
         return response()->json($category, 201);
     }
 
-    // Menampilkan kategori berdasarkan ID
     public function show($id)
     {
         $category = Category::find($id);
@@ -38,7 +35,6 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
-    // Memperbarui kategori berdasarkan ID
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
@@ -129,11 +125,8 @@ class CategoryController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
+        $dataProd = $query->filter(request(['search', 'sort']))->paginate(15)->appends(request()->query());
 
-        // 7. Dapatkan Produk dengan Pagination
-        $dataProd = $query->paginate(12)->withQueryString(); // withQueryString() penting untuk pagination dengan filter
-
-        // 8. Kirim data ke view
         return view('customer.product.category', compact('selectedCategory', 'dataCat', 'dataProd'));
     }
 }

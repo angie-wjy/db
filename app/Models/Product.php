@@ -61,4 +61,33 @@ class Product extends Model
             ->withPivot('quantity', 'price')
             ->withTimestamps();
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        // Filter by search
+        if (!empty($filters['search'])) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%');
+        }
+
+        // Filter by sort
+        if (!empty($filters['sort'])) {
+            switch ($filters['sort']) {
+                case 'popular':
+                    $query->orderByDesc('views'); // ganti sesuai field views jika ada
+                    break;
+                case 'latest':
+                    $query->orderByDesc('created_at');
+                    break;
+                case 'bestseller':
+                    $query->orderByDesc('sold'); // ganti sesuai field sold jika ada
+                    break;
+                case 'PRICE_UP':
+                    $query->orderBy('price');
+                    break;
+                case 'PRICE_DOWN':
+                    $query->orderByDesc('price');
+                    break;
+            }
+        }
+    }
 }

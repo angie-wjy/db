@@ -73,11 +73,13 @@ Route::middleware(['auth:customer'])->group(function () {
 
     Route::get('/checkout/payment/{id}', [OrderController::class, 'Payment'])->name('customer.checkout.payment');
     Route::get('/product/search', [ProductController::class, 'search']);
-    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
-    Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
-    Route::get('/product/topsell', [ProductController::class, 'TopSell']);
 
     Route::get('/category/{slug}', [CategoryController::class, 'ShowBySlug'])->name('category.show');
+    Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
+
+    Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
+    Route::get('/product/topsell', [ProductController::class, 'TopSell']);
 });
 
 // Admin routes
@@ -147,6 +149,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/order/send/index', [AdminController::class, 'OrderSendIndex'])->name('admin.order.send.index');
     Route::put('/order/{id}/approve-shipping', [AdminController::class, 'OrderAccShip'])->name('admin.order.approveShipping');
     Route::put('/order/{id}/reject-shipping', [AdminController::class, 'OrderRejectShip'])->name('admin.order.rejectShipping');
+    route::get('/admin/order/completed/index', [AdminController::class, 'OrderCompleteIndex'])->name('admin.order.completed.index');
 
     Route::get('/admin/user/index', [AdminController::class, 'UserIndex'])->name('admin.user.index');
     Route::get('/admin/user/add', [AdminController::class, 'UserAdd'])->name('admin.user.add');

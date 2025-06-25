@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -67,12 +68,72 @@ class CategoryController extends Controller
         return response()->json(['message' => 'Category deleted successfully']);
     }
 
-    public function ShowBySlug($slug)
+    // public function ShowBySlug($slug)
+    // {
+    //     $category = Category::where('slug', $slug)->first();
+    //     if (!$category) {
+    //         return response()->json(['message' => 'Category not found'], 404);
+    //     }
+    //     return response()->json($category);
+    // }
+
+    public function ShowBySlug(Request $request, $slug)
     {
-        $category = Category::where('slug', $slug)->first();
-        if (!$category) {
-            return response()->json(['message' => 'Category not found'], 404);
+        // 1. Dapatkan kategori yang sedang aktif (dari slug URL)
+        $selectedCategory = Category::where('slug', $slug)->firstOrFail();
+
+        // 2. Ambil semua kategori untuk sidebar filter
+        $dataCat = Category::all();
+
+        // 3. Mulai query produk berdasarkan kategori yang dipilih
+        $query = Product::whereHas('category', function ($q) use ($selectedCategory) {
+            $q->where('id', $selectedCategory->id); // Filter berdasarkan ID kategori yang ditemukan
+        });
+
+        // 4. Terapkan Filter Tambahan dari Request (checkbox kategori di sidebar)
+        if ($request->has('cat') && is_array($request->input('cat'))) {
+            $selectedFilterCodes = $request->input('cat');
+            // Jika checkbox kategori dipilih, override filter awal dengan yang dipilih di checkbox
+            // Atau, jika Anda ingin memfilter *di dalam* kategori slug yang sedang aktif,
+            // maka pastikan $selectedCategory->code juga ada di $selectedFilterCodes
+            $query->whereHas('category', function ($q) use ($selectedFilterCodes) {
+                $q->whereIn('code', $selectedFilterCodes);
+            });
         }
-        return response()->json($category);
+        // Jika tidak ada filter 'cat' dari request, produk sudah difilter berdasarkan $selectedCategory->id
+        // Jadi tidak perlu 'else' di sini
+
+        // 5. Terapkan Filter Rentang Harga
+        if ($request->has('price')) {
+            $maxPrice = (float)$request->input('price');
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        // 6. Terapkan Pengurutan
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+            switch ($sort) {
+                case 'PRICE_UP':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'PRICE_DOWN':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'DATE_UP':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                // Default ke pengurutan tertentu jika tidak ada yang cocok
+            }
+        } else {
+            // Pengurutan default jika tidak ada parameter 'sort'
+            $query->orderBy('created_at', 'desc');
+        }
+
+
+        // 7. Dapatkan Produk dengan Pagination
+        $dataProd = $query->paginate(12)->withQueryString(); // withQueryString() penting untuk pagination dengan filter
+
+        // 8. Kirim data ke view
+        return view('customer.product.category', compact('selectedCategory', 'dataCat', 'dataProd'));
     }
 }

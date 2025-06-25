@@ -8,6 +8,8 @@
     <link rel="icon" href="../assets/logo_smile.png" type="image/x-icon" />
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
         WebFont.load({
@@ -168,8 +170,8 @@
                                         </a>
                                     </li>
                                     <li
-                                        class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.index') }}">
+                                        class="nav-item {{ request()->routeIs('admin.order.completed.index') ? 'active' : '' }}">
+                                        <a href="{{ route('admin.order.completed.index') }}">
                                             <span class="sub-item">Completed Order</span>
                                         </a>
                                     </li>

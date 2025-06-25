@@ -1,8 +1,33 @@
 @extends('layouts.backoffice')
-
 @section('title', 'Orders')
-
 @section('content')
+    <style>
+        .btn-custom {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 1.5;
+            min-width: 120px;
+            height: 38px;
+            font-size: 1rem;
+        }
+
+        .btn-custom:hover {
+            opacity: 0.9;
+        }
+
+        .btn-custom-info {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+    </style>
+
     <div class="page-inner">
         <div class="page-header">
             <h3 class="fw-bold mb-3">Smile Gift Shop</h3>
@@ -79,9 +104,9 @@
                                         {{-- <td>{{ $order->employee_id }}</td> --}}
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn-custom btn-custom-info" data-bs-toggle="modal"
                                                 data-bs-target="#orderDetailModal{{ $order->id }}">
-                                                View
+                                                <i class="ri-eye-line"></i> View Details
                                             </button>
                                         </td>
                                     </tr>

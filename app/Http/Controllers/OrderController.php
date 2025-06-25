@@ -233,7 +233,7 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId);
         $order->update(['status' => 'checked']);
         return redirect()->route('admin.order.check.index')
-            ->with('success', 'Order telah siap untuk diambil.');
+            ->with('success', 'The order is ready to be collected.');
     }
 
     public function OrderCheckNotReady($orderId)
@@ -241,7 +241,7 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId);
         $order->update(['status' => 'canceled']);
         return redirect()->route('admin.order.check.index')
-            ->with('success', 'Order telah siap untuk diambil.');
+            ->with('success', 'The order is ready to be collected.');
     }
 
     public function CheckOutSuccess(Request $request)

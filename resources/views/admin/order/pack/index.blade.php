@@ -1,8 +1,33 @@
 @extends('layouts.backoffice')
-
 @section('title', 'Order Pack')
-
 @section('content')
+    <style>
+        .btn-custom {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 1.5;
+            min-width: 120px;
+            height: 38px;
+            font-size: 1rem;
+        }
+
+        .btn-custom:hover {
+            opacity: 0.9;
+        }
+
+        .btn-custom-success {
+            background-color: #10b981;
+            color: #ffffff;
+        }
+    </style>
+
     <div class="page-inner">
         <div class="page-header">
             <h3 class="fw-bold mb-3">Order Pack</h3>
@@ -54,8 +79,10 @@
                                                 class="d-inline">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-success btn-sm">Next (Send
-                                                    Order)</button>
+                                                <button type="submit" class="btn-custom btn-custom-success">
+                                                    <i class="ri-send-plane-line"></i>Ready
+                                                </button>
+
                                             </form>
                                         </td>
                                     </tr>
@@ -70,6 +97,8 @@
 @endsection
 
 @push('scripts')
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
     <script>
         $(document).ready(function() {
             $('#multi-filter-select').DataTable({

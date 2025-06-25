@@ -638,7 +638,7 @@ class AdminController extends Controller
     {
         // $order = Order::with(['customer', 'orderDetails.product'])->findOrFail($id);
         // return view('admin.orders.show', compact('order'));
-        $order = Order::with(['products', 'delivery'])->findOrFail($id);
+        $order = Order::with(['products', 'ship'])->findOrFail($id);
         return view('customer.checkout', compact('order'));
     }
 
@@ -716,6 +716,12 @@ class AdminController extends Controller
     {
         $orders = Order::where('status', 'packed')->get();
         return view('admin.orders.approve-shipping', compact('orders'));
+    }
+
+    public function OrderCompleteIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'approved_shipping')->get();
+        return view('admin.order.completed.index', compact('orders'));
     }
 
     public function UserIndex(Request $request)

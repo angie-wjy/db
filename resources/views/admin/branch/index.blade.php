@@ -83,7 +83,6 @@
                                                             onclick="return confirm('Are you sure you want to delete this branch?')">Delete</button>
                                                     </form>
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>

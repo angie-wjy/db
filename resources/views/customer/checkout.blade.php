@@ -56,7 +56,7 @@
                         {{-- <p><strong>Status:</strong> {{ $order->delivery->status ?? '-' }}</p> --}}
                         {{-- <p><strong>Tracking Number:</strong> {{ $order->delivery->resi ?? '-' }}</p> --}}
 
-                        @if ($order->ship->type === 'delivery')
+                        @if ($order->ship?->type === 'delivery')
                             <p><strong>Address:</strong> {{ $order->ship->address ?? '-' }}</p>
                         @endif
                     </div>
@@ -84,32 +84,26 @@
 
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {
-            // SnapToken tersedia di variabel `snapToken` yang dilewatkan dari controller
+            // SnapToken is available in the `snapToken` variable passed from the controller
             snap.pay('{{ $snapToken }}', {
-                // onSuccess: function(result){
-                //     /* You may add your own implementation here */
-                //     alert("Pembayaran berhasil!"); console.log(result);
-                // },
                 onSuccess: function(result) {
-                    alert("Pembayaran berhasil!");
+                    alert("Payment successful!");
                     window.location.href =
-                        "{{ route('customer.checkout.success') }}"; // redirect ke halaman pesanan
+                        "{{ route('customer.checkout.success') }}"; // redirect to order page
                 },
                 onPending: function(result) {
-                    /* You may add your own implementation here */
-                    alert("Pembayaran tertunda!");
+                    alert("Payment is pending!");
                     console.log(result);
                 },
                 onError: function(result) {
-                    /* You may add your own implementation here */
-                    alert("Pembayaran gagal!");
+                    alert("Payment failed!");
                     console.log(result);
                 },
                 onClose: function() {
-                    /* You may add your own implementation here */
-                    alert('Anda menutup popup tanpa menyelesaikan pembayaran');
+                    alert('You closed the popup without completing the payment');
                 }
             });
         };
     </script>
+
 @endsection

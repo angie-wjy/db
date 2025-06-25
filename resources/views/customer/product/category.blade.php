@@ -7,14 +7,14 @@
 
         {{-- Header + Search Bar --}}
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-            <h2 class="text-2xl font-bold text-gray-800">Daftar Produk</h2>
+            <h2 class="text-2xl font-bold text-gray-800">List Product</h2>
 
             <form method="GET" action="" class="flex items-center gap-2">
-                <input type="text" name="search" placeholder="Cari produk..."
+                <input type="text" name="search" placeholder="Search..."
                     class="w-64 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-yellow-300 focus:border-yellow-400 text-sm">
                 <button type="submit"
                     class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-white rounded-md text-sm font-semibold shadow">
-                    Cari
+                    Search
                     </button>
                 </form>
             </div>

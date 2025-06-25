@@ -125,7 +125,7 @@ class CategoryController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $dataProd = $query->filter(request(['search', 'sort']))->paginate(15)->appends(request()->query());
+        $dataProd = $query->filter(request(['search', 'sort']))->paginate(10)->appends(request()->query());
 
         return view('customer.product.category', compact('selectedCategory', 'dataCat', 'dataProd'));
     }

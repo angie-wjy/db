@@ -382,7 +382,7 @@
 
             function pickup() {
                 div_branches.empty();
-                if ('   ' in navigator) {
+                if ('geolocation' in navigator) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                         var user_location = L.latLng(position.coords.latitude, position.coords.longitude);
 

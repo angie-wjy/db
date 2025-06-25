@@ -22,10 +22,16 @@
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">
                             Stock : {{ $product->stock }}
                         </p>
-                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Description</p>
-                        <p class="card-text" style="font-size: 1.1rem; color: #777; line-height: 1.6;">
-                            {{ $product->description }}
-                        </p>
+
+                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px; margin-bottom: 5px;">
+                            Description</p>
+                        <ul style="font-size: 1.1rem; color: #666; margin-left: 20px;">
+                            @foreach (explode("\n", $product->description) as $point)
+                                @if (trim($point) != '')
+                                    <li style="margin-bottom: 5px;">{{ ltrim(trim($point), '- ') }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
 
                         <form action="{{ route('customer.product.add', $product->id) }}" method="post" class="mt-4">
                             @csrf

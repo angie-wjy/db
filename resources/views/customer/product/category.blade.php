@@ -21,12 +21,13 @@
 
         {{-- Filter Sort --}}
         <div class="flex flex-wrap gap-3 mb-6">
-            <a href="?sort=popular" class="btn-filter">Populer</a>
-            <a href="?sort=latest" class="btn-filter">Terbaru</a>
-            <a href="?sort=bestseller" class="btn-filter">Terlaris</a>
-            <a href="?sort=PRICE_UP" class="btn-filter">Harga Naik</a>
-            <a href="?sort=PRICE_DOWN" class="btn-filter">Harga Turun</a>
+            <a href="?sort=popular" class="btn-filter">Popular</a>
+            <a href="?sort=latest" class="btn-filter">Newest</a>
+            <a href="?sort=bestseller" class="btn-filter">Best Seller</a>
+            <a href="?sort=PRICE_UP" class="btn-filter">Price: Low to High</a>
+            <a href="?sort=PRICE_DOWN" class="btn-filter">Price: High to Low</a>
         </div>
+
 
         {{-- Grid Produk --}}
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5">
@@ -36,7 +37,7 @@
                     <a href="/product/detail/{{ $prod->id }}" class="flex flex-col h-full">
                         {{-- Gambar dengan ukuran tetap --}}
                         <div class="h-40 bg-gray-100 flex items-center justify-center">
-                            <img src="{{ asset('images/produk/' . $prod->image) }}" alt="{{ $prod->name }}"
+                            <img src="{{ asset('storage/' . $prod->image) }}" alt="{{ $prod->name }}"
                                 class="max-h-full max-w-full object-contain p-2">
                         </div>
 
@@ -58,7 +59,7 @@
             {{ $dataProd->links('pagination::tailwind') }}
         </div>
     </div>
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- Tailwind Utilities --}}
     <style>

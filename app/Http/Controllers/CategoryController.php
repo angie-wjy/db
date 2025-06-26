@@ -127,6 +127,10 @@ class CategoryController extends Controller
 
         $dataProd = $query->filter(request(['search', 'sort']))->paginate(10)->appends(request()->query());
 
+        // 7. Dapatkan Produk dengan Pagination
+        $dataProd = $query->paginate(10)->withQueryString(); // withQueryString() penting untuk pagination dengan filter
+
+        // 8. Kirim data ke view
         return view('customer.product.category', compact('selectedCategory', 'dataCat', 'dataProd'));
     }
 }

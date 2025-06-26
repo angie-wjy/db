@@ -3,7 +3,7 @@
 @section('title', 'Category')
 
 @section('content')
-    <div class="px-6 py-6">
+    <div class="px-6 py-2">
 
         {{-- Header + Search Bar --}}
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
@@ -54,19 +54,22 @@
                     </div>
             @endforeach
             </div>
-
-        {{-- Pagination --}}
-        <div class="mt-8 flex justify-center">
-            {{ $dataProd->links('pagination::tailwind') }}
-            </div>
+    </div>
+    
+    {{-- Pagination --}}
+    <div class="mt-8 flex justify-center">
+        {{ $dataProd->links('pagination::tailwind') }}
         </div>
-
+    </div>
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- Tailwind Utilities --}}
     <style>
         .btn-filter {
             @apply px-4 py-2 bg-gray-100 hover:bg-yellow-300 text-sm text-gray-700 rounded transition shadow-sm;
+        }
+        nav {
+            position: static !important;
         }
     </style>
 @endsection

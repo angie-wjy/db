@@ -22,8 +22,7 @@
     <title>Smile Gift Shop</title>
 </head>
 
-<body>
-    {{-- @include('component.nav_customer') --}}
+<body><br>
     <nav>
         @auth
             <div class="nav_logo">
@@ -41,19 +40,7 @@
 
         <ul class="nav_links">
             <li class="link"><a href="#">Home</a></li>
-            <li class="link dropdown">
-                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    Category
-                </a>
-                <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
-                    {{-- for categories --}}
-                    @foreach ($categories as $category)
-                        <a class="dropdown-item py-2"
-                            href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
-                    @endforeach
-                </div>
-            </li>
+            <li class="link"><a href="/home#categories">Category</a></li>
             <li class="link"><a href="#">Pages</a></li>
             <li class="link" style="margin-right: 10px;"><a href="#">Contact</a></li>
         </ul>
@@ -121,7 +108,7 @@
             @endforeach
     </section>
 
-    <section class="section_container categories_container">
+    <section id="categories" class="section_container categories_container">
         <h2 class="section_header">Categories</h2>
         <p class="section_subheader">
             Explore a diverse range of charming items, from cozy pillows and adorable plush toys to stylish bags,
@@ -134,13 +121,15 @@
                         @if ($c->products->isNotEmpty())
                             <img src="{{ asset($c->products->first()->image) }}" alt="{{ $c->name }}">
                         @else
-                            <img src="{{ asset('default-image.jpg') }}" alt="No image available">
+                            <img src="{{ asset('storage/' . $p->image) }}" alt="No image available">
                         @endif
                         <h4>{{ $c->brand }}</h4>
                     </div>
                 </a>
             @endforeach
+        </div>
     </section>
+
 
     <section class="section_container hero_container">
         {{-- <h2 class="section_header">Trend</h2> --}}

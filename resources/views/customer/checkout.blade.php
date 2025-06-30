@@ -4,10 +4,10 @@
     <div class="container py-4">
         <header class="section_container mb-8 mt-2 w-full">
             <div class="header_content text-center max-w-2xl mx-auto">
-                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-xs sm:text-sm mb-1">
+                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-xs sm:text-sm mb-5">
                     CHECKOUT
                 </h4>
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+                <h1 class="text-xl sm:text-5xl font-bold text-gray-900 mb-3">
                     Complete Your Order
                 </h1>
                 <p class="text-gray-600 text-sm sm:text-base leading-relaxed">

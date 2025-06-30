@@ -100,7 +100,7 @@ class OrderController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('customer.checkout.show', $order->id)
+        return redirect()->route('customer.checkout-success', $order->id)
             ->with('success', 'Order berhasil dibuat!');
     }
 
@@ -166,7 +166,8 @@ class OrderController extends Controller
             ->first();
 
         if (!$order) {
-            return redirect()->route('customer.checkout')->with('error', 'Order tidak ditemukan.');
+            return redirect()->route('customer.checkout.show', $orderId)
+                ->with('error', 'Order tidak ditemukan.');
         }
 
         $total_amount = 0;
@@ -244,10 +245,12 @@ class OrderController extends Controller
             ->with('success', 'The order is ready to be collected.');
     }
 
-    public function CheckOutSuccess(Request $request)
+    public function CheckOutSuccess($orderId)
     {
+        $order = Order::findOrFail($orderId);
         return view('customer.checkout-success', compact('order'));
     }
+
 
     public function Payment(Request $request, $orderId)
     {

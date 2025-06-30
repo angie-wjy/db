@@ -63,13 +63,13 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/cart/minus/{product_id}', [CartItemController::class, 'CartMinus'])->name('cart.minus');
     Route::delete('/cart/remove/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
 
-    Route::get('/checkout/success', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
+    Route::get('/checkout/success/{orderId}', [OrderController::class, 'CheckOutSuccess'])->name('customer.checkout.success');
+    Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
     Route::post('/customer/ship', [OrderController::class, 'Ship'])->name('customer.ship');
     Route::get('/customer/checkout', [OrderController::class, 'CheckOutForm'])->name('customer.checkout.form');
     Route::get('/customer/payment/{orderId}', [OrderController::class, 'Payment'])->name('customer.payment');
     Route::post('/customer/payment/{orderId}', [OrderController::class, 'SubmitPayment'])->name('customer.payment.submit');
     Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-    Route::get('/checkout/{orderId}', [OrderController::class, 'ShowCheckOut'])->name('customer.checkout.show');
 
     Route::get('/checkout/payment/{id}', [OrderController::class, 'Payment'])->name('customer.checkout.payment');
     Route::get('/product/search', [ProductController::class, 'search']);

@@ -27,6 +27,9 @@ class AuthController extends Controller
         if ($user->role == 'admin'){
             Auth::guard("admin")->login($user);
             return redirect()->route('admin.dashboard');
+        }else if ($user->role == 'employee'){
+            Auth::guard("employee")->login($user);
+            return redirect()->route('employee.dashboard');
         }else if ($user->role == 'customer'){
             Auth::guard("customer")->login($user);
             return redirect()->route('welcome');

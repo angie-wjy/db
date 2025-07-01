@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -157,6 +158,13 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/user/edit/{id}', [AdminController::class, 'UserEdit'])->name('admin.user.edit');
     Route::put('/admin/user/update/{id}', [AdminController::class, 'UserUpdate'])->name('admin.user.update');
     Route::delete('/admin/user/{id}', [AdminController::class, 'UserDelete'])->name('admin.user.delete');
+});
+
+Route::middleware(['auth:employee'])->group(function () {
+    Route::get('/employee/dashboard', [EmployeeController::class, 'Dashboard'])->name('employee.dashboard');
+    Route::get('/employee/order/index', [EmployeeController::class, 'OrderAll'])->name('employee.order.index');
+    Route::get('/employee/order/show/{id}', [EmployeeController::class, 'OrderShow'])->name('employee.order.show');
+    Route::put('/employee/orders/{order}/approve', [EmployeeController::class, 'OrderApprove'])->name('employee.order.approve');
 });
 // Route::get('/admin/product', [AdminController::class, 'product']);
 // Route::get('/admin/add-user', [AdminController::class, 'addUserForm']);

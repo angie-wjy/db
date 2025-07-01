@@ -1,5 +1,5 @@
 @extends('layouts.backoffice')
-@section('title', 'Users')
+@section('title', 'Dashboard')
 @section('content')
     <div class="page-inner">
         <div class="page-header">
@@ -14,7 +14,7 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Users</a>
+                    <a href="#">Dashboard</a>
                 </li>
             </ul>
         </div>
@@ -23,22 +23,20 @@
             <div class="card">
                 <div class="card-header">
                     <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <h4 class="card-title">Users</h4>
-                        <a href="{{ route('admin.user.add') }}">
-                            <button class="btn btn-primary">Add User +</button>
-                        </a>
+                        <h4 class="card-title">Dashboard</h4>
                     </div>
                 </div>
-                <div class="card-body">
-                    @if (session('success'))
-                        <p class="alert alert-success">{{ session('success') }}</p>
-                    @endif
-                    @if (session('error'))
-                        <p class="alert alert-danger">{{ session('error') }}</p>
-                    @endif
-                    <div class="table-responsive">
-                        <table id="multi-filter-select" class="display table table-striped table-hover">
-                            <thead>
+            </div>
+            <div class="card-body">
+                @if (session('success'))
+                    <p class="alert alert-success">{{ session('success') }}</p>
+                @endif
+                @if (session('error'))
+                    <p class="alert alert-danger">{{ session('error') }}</p>
+                @endif
+                <div class="table-responsive">
+                    <table id="multi-filter-select" class="display table table-striped table-hover">
+                        {{-- <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Username</th>
@@ -47,6 +45,7 @@
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
+                                    <th>Employee ID</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -60,18 +59,19 @@
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Address</th>
+                                    <th>Employee ID</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
-                            </tfoot>
-                            <tbody>
+                            </tfoot> --}}
+                        {{-- <tbody>
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>
-                                            @if($user->role == 'admin')
+                                            @if ($user->role == 'admin')
                                                 <span class="badge bg-primary">Admin</span>
                                             @elseif($user->role == 'employee')
                                                 <span class="badge bg-warning text-dark">Employee</span>
@@ -83,7 +83,10 @@
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->address }}</td>
+                                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{ $user->address }}
+                                        </td>
+                                        <td>{{ $user->employee_id }}</td>
                                         <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <a href="{{ route('admin.user.edit', $user->id) }}">
@@ -99,9 +102,8 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            </tbody> --}}
+                    </table>
                 </div>
             </div>
         </div>

@@ -23,8 +23,25 @@ Route::get('/', function () {
         $query->select(DB::raw('SUM(quantity) as total_qty'));
     }])->orderBy('total_qty', 'desc')->take(3)->get();
 
+    // select 3 trending products
+    $trending_product = Product::withCount(['orders as total_qty' => function ($query) {
+        $query->select(DB::raw('SUM(quantity) as total_qty'));
+    }])->orderBy('total_qty', 'desc')->take(8)->get();
+
+    // select b.*, sum(ohb.amount) from bundles b join products_has_bundles phb on (b.id = phb.bundles_id) join orders_has_bundles ohb on (b.id = ohb.bundles_id);
+    $trending_bundle = DB::table('bundles')
+        ->select('bundles.id', 'bundles.name', 'bundles.price', DB::raw('SUM(orders_has_bundles.amount) as total_qty'))
+        ->join('products_has_bundles', 'bundles.id', '=', 'products_has_bundles.bundles_id')
+        ->join('orders_has_bundles', 'bundles.id', '=', 'orders_has_bundles.bundles_id')
+        ->groupBy('bundles.id', 'bundles.name', 'bundles.price')
+        ->orderBy('total_qty', 'desc')
+        ->take(3)
+        ->get();
+
+    // print_r($trending_product->toArray());
+
     $categories = Category::with('products')->get();
-    return view('welcome', compact('products', 'categories'));
+    return view('welcome', compact('products', 'categories', 'trending_product', 'trending_bundle'));
 })->name('welcome');
 
 

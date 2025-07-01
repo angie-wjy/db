@@ -40,7 +40,20 @@
 
         <ul class="nav_links">
             <li class="link"><a href="#">Home</a></li>
-            <li class="link"><a href="/home#categories">Category</a></li>
+            {{-- <li class="link"><a href="/home#categories">Category</a></li> --}}
+            <li class="link dropdown">
+                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Category
+                </a>
+                <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
+                    {{-- for categories --}}
+                    @foreach ($categories as $category)
+                        <a class="dropdown-item py-2"
+                            href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
+                    @endforeach
+                </div>
+            </li>
             <li class="link"><a href="#">Pages</a></li>
             <li class="link" style="margin-right: 10px;"><a href="#">Contact</a></li>
         </ul>

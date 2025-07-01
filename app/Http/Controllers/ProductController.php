@@ -74,14 +74,6 @@ class ProductController extends Controller
         // return view('customer.product.detail', compact('product'));
     }
 
-    public function ByCategory($slug)
-    {
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('category_id', $category->id)->get();
-
-        return view('customer.product.category', compact('category', 'products'));
-    }
-
     public function RestockForm($id)
     {
         $product = Product::findOrFail($id);

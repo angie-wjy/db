@@ -16,10 +16,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-Route::post('/notification', [OrderController::class, 'notification'])->name('midtrans.notification');
+Route::post('/notification', [OrderController::class, 'Notification'])->name('midtrans.notification');
 
 Route::get('/', function () {
-    // select 3 product topsell, table orders_has_products have product_id and qty, select product_id, sum(qty) as total_qty from orders_has_products group by product_id order by total_qty desc limit 3
     $products = Product::withCount(['orders as total_qty' => function ($query) {
         $query->select(DB::raw('SUM(quantity) as total_qty'));
     }])->orderBy('total_qty', 'desc')->take(3)->get();
@@ -56,8 +55,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/customer/address/create', [CustomerController::class, 'AddressAdd'])->name('customer.address.create');
     Route::get('/customer/address/index', [CustomerController::class, 'AddressIndex'])->name('customer.address.index');
 
-    Route::post('/customer/product/add/{id}', [ProductController::class, 'ProductAdd'])->name('customer.product.add');
-
     // Route::delete('/cart/remove/{cart_id}/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
     Route::post('/cart/update/{cart_id}/{product_id}', [CartItemController::class, 'CartUpdate'])->name('cart.update');
     Route::post('/cart/plus/{product_id}', [CartItemController::class, 'CartPlus'])->name('cart.plus');
@@ -77,8 +74,7 @@ Route::middleware(['auth:customer'])->group(function () {
 
     Route::get('/category/{slug}', [CategoryController::class, 'ShowBySlug'])->name('category.show');
     Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-    Route::get('/product/category/{slug}', [ProductController::class, 'ByCategory'])->name('customer.product.category');
-
+    Route::post('/customer/product/add/{id}', [ProductController::class, 'ProductAdd'])->name('customer.product.add');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
 });

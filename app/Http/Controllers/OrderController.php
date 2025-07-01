@@ -35,7 +35,6 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Keranjang belanja kosong.');
         }
 
-        // $cartItems = Cart::where('user_id', auth()->id())->with('product')->get();
         $cart = session('cart', []);
 
         $totalHarga = 0;
@@ -207,7 +206,7 @@ class OrderController extends Controller
     }
 
 
-    public function notification(Request $request)
+    public function Notification(Request $request)
     {
         try {
             $notif = new Notification();
@@ -250,7 +249,6 @@ class OrderController extends Controller
         $order = Order::findOrFail($orderId);
         return view('customer.checkout-success', compact('order'));
     }
-
 
     public function Payment(Request $request, $orderId)
     {

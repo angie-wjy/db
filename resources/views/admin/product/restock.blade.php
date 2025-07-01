@@ -7,9 +7,6 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Restock Product</h4>
-                </div>
                 <div class="card-body">
                     <form action="{{ route('admin.product.restock.store') }}" method="POST">
                         @csrf

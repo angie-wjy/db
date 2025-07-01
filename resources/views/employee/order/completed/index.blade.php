@@ -1,4 +1,4 @@
-@extends('layouts.backoffice')
+@extends('layouts.employee')
 
 @section('title', 'Completed Orders')
 

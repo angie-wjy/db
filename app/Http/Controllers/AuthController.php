@@ -54,6 +54,7 @@ class AuthController extends Controller
                 'password' => ['The password confirmation does not match.'],
             ]);
         }
+
         $role = str_ends_with($request->email, '@admin.id') ? 'admin' : 'customer';
 
         $user = User::create([

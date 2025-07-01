@@ -66,8 +66,8 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
-                        <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                            <a href="{{ route('admin.dashboard') }}">
+                        <li class="nav-item {{ request()->routeIs('employee.dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('employee.dashboard') }}">
                                 <i class="fas fa-home"></i>
                                 <p class="sub-item">Dashboard</p>
                             </a>
@@ -87,38 +87,38 @@
                             </a>
                             <div class="collapse" id="ddorders">
                                 <ul class="nav nav-collapse">
-                                    <li class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.index') }}">
+                                    <li class="nav-item {{ request()->routeIs('employee.order.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.index') }}">
                                             <span class="sub-item">All Order</span>
                                         </a>
                                     </li>
                                     {{-- <li
-                                        class="nav-item {{ request()->routeIs('admin.order.new.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.new.index') }}">
+                                        class="nav-item {{ request()->routeIs('employee.order.new.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.new.index') }}">
                                             <span class="sub-item">New Request Order</span>
                                         </a>
                                     </li> --}}
                                     <li
-                                        class="nav-item {{ request()->routeIs('admin.order.check.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.check.index') }}">
+                                        class="nav-item {{ request()->routeIs('employee.order.check.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.check.index') }}">
                                             <span class="sub-item">Check Order</span>
                                         </a>
                                     </li>
                                     <li
-                                        class="nav-item {{ request()->routeIs('admin.order.pack.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.pack.index') }}">
+                                        class="nav-item {{ request()->routeIs('employee.order.pack.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.pack.index') }}">
                                             <span class="sub-item">Pack Order</span>
                                         </a>
                                     </li>
                                     <li
-                                        class="nav-item {{ request()->routeIs('admin.order.send.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.send.index') }}">
+                                        class="nav-item {{ request()->routeIs('employee.order.send.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.send.index') }}">
                                             <span class="sub-item">Send Order</span>
                                         </a>
                                     </li>
                                     <li
-                                        class="nav-item {{ request()->routeIs('admin.order.completed.index') ? 'active' : '' }}">
-                                        <a href="{{ route('admin.order.completed.index') }}">
+                                        class="nav-item {{ request()->routeIs('employee.order.completed.index') ? 'active' : '' }}">
+                                        <a href="{{ route('employee.order.completed.index') }}">
                                             <span class="sub-item">Completed Order</span>
                                         </a>
                                     </li>
@@ -199,58 +199,6 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="message-notif-scroll scrollbar-outer">
-                                            <div class="notif-center">
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="/assets/img/jm_denis.jpg" alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Jimmy Denis</span>
-                                                        <span class="block"> How are you ? </span>
-                                                        <span class="time">5 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="/assets/img/chadengle.jpg" alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Chad</span>
-                                                        <span class="block"> Ok, Thanks ! </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="/assets/img/mlane.jpg" alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Jhon Doe</span>
-                                                        <span class="block">
-                                                            Ready for the meeting today...
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="/assets/img/talha.jpg" alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Talha</span>
-                                                        <span class="block"> Hi, Apa Kabar ? </span>
-                                                        <span class="time">17 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="see-all" href="javascript:void(0);">See all messages<i
-                                                class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item topbar-icon dropdown hidden-caret">
@@ -259,130 +207,6 @@
                                     <i class="fa fa-bell"></i>
                                     <span class="notification">4</span>
                                 </a>
-                                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-                                    <li>
-                                        <div class="dropdown-title">
-                                            You have 4 new notification
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="notif-scroll scrollbar-outer">
-                                            <div class="notif-center">
-                                                <a href="#">
-                                                    <div class="notif-icon notif-primary">
-                                                        <i class="fa fa-user-plus"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block"> New user registered </span>
-                                                        <span class="time">5 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-icon notif-success">
-                                                        <i class="fa fa-comment"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block">
-                                                            Rahmad commented on admin
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="/assets/img/profile2.jpg" alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block">
-                                                            Reza send messages to you
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-icon notif-danger">
-                                                        <i class="fa fa-heart"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block"> Farrah liked admin </span>
-                                                        <span class="time">17 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="see-all" href="javascript:void(0);">See all notifications<i
-                                                class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item topbar-icon dropdown hidden-caret">
-                                <a class="nav-link" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                                    <i class="fas fa-layer-group"></i>
-                                </a>
-                                <div class="dropdown-menu quick-actions animated fadeIn">
-                                    <div class="quick-actions-header">
-                                        <span class="title mb-1">Quick Actions</span>
-                                        <span class="subtitle op-7">Shortcuts</span>
-                                    </div>
-                                    <div class="quick-actions-scroll scrollbar-outer">
-                                        <div class="quick-actions-items">
-                                            <div class="row m-0">
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-danger rounded-circle">
-                                                            <i class="far fa-calendar-alt"></i>
-                                                        </div>
-                                                        <span class="text">Calendar</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-warning rounded-circle">
-                                                            <i class="fas fa-map"></i>
-                                                        </div>
-                                                        <span class="text">Maps</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-info rounded-circle">
-                                                            <i class="fas fa-file-excel"></i>
-                                                        </div>
-                                                        <span class="text">Reports</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-success rounded-circle">
-                                                            <i class="fas fa-envelope"></i>
-                                                        </div>
-                                                        <span class="text">Emails</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-primary rounded-circle">
-                                                            <i class="fas fa-file-invoice-dollar"></i>
-                                                        </div>
-                                                        <span class="text">Invoice</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-secondary rounded-circle">
-                                                            <i class="fas fa-credit-card"></i>
-                                                        </div>
-                                                        <span class="text">Payments</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
 
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"

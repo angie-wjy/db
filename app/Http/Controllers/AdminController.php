@@ -15,6 +15,7 @@ use App\Models\ProductTheme;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -739,13 +740,25 @@ class AdminController extends Controller
     {
         try {
             $request->validate([
+                'username' => 'required|string|max:255|unique:users',
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
+                'phone' => 'required|string',
+                'address' => 'nullable|string',
+                'role' => 'required|in:admin,employee,customer',
                 'password' => 'required|string|min:8|confirmed',
             ]);
 
-            $user = User::create($request->all());
-            // return redirect()->back()->with('success', 'User created successfully');
+            $user = User::create([
+                'username' => $request->username,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'role' => $request->role,
+                'password' => Hash::make($request->password),
+            ]);
+
             return redirect()->route('admin.user.index')->with('success', 'User created successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to create user: ' . $e->getMessage());

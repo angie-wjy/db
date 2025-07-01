@@ -162,7 +162,11 @@ Route::middleware(['auth:admin'])->group(function () {
 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeController::class, 'Dashboard'])->name('employee.dashboard');
-    Route::get('/employee/order/index', [EmployeeController::class, 'OrderAll'])->name('employee.order.index');
+    Route::get('/employee/order/index', [EmployeeController::class, 'OrderIndex'])->name('employee.order.index');
+    Route::get('/employee/order/check/index', [EmployeeController::class, 'OrderCheckIndex'])->name('employee.order.check.index');
+    Route::get('/employee/order/pack/index', [EmployeeController::class, 'OrderPackIndex'])->name('employee.order.pack.index');
+    Route::get('/employee/order/send/index', [EmployeeController::class, 'OrderSendIndex'])->name('employee.order.send.index');
+    Route::get('/employee/order/completed/index', [EmployeeController::class, 'OrderCompleteIndex'])->name('employee.order.completed.index');
     Route::get('/employee/order/show/{id}', [EmployeeController::class, 'OrderShow'])->name('employee.order.show');
     Route::put('/employee/orders/{order}/approve', [EmployeeController::class, 'OrderApprove'])->name('employee.order.approve');
 });

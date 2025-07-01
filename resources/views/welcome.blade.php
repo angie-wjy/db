@@ -133,36 +133,18 @@
 
     <section class="section_container hero_container">
         {{-- <h2 class="section_header">Trend</h2> --}}
-        <div class="hero_card">
-            <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="hero">
-            <div class="hero_content">
-                <div>
-                    <p>2024 Trend</p>
-                    <h4>Labubu</h4>
+        @foreach ($trending_bundle as $b)
+            <div class="hero_card">
+                {{-- <img src="{{ asset('storage/' . $b->image) }}" alt="hero"> --}}
+                <div class="hero_content">
+                    <div>
+                        <p>Trend</p>
+                        <h4>{{ $b->name }}</h4>
+                    </div>
+                    <a href="#">Discover More +</a>
                 </div>
-                <a href="#">Discover More +</a>
             </div>
-        </div>
-        <div class="hero_card">
-            <img src="{{ asset('assets/capybara_bird.jpg') }}" alt="hero">
-            <div class="hero_content">
-                <div>
-                    <p>2024 Trend</p>
-                    <h4>Sanrio</h4>
-                </div>
-                <a href="#">Discover More +</a>
-            </div>
-        </div>
-        <div class="hero_card">
-            <img src="{{ asset('assets/capybara_carrot.jpg') }}" alt="hero">
-            <div class="hero_content">
-                <div>
-                    <p>2024 Trend</p>
-                    <h4>Lotso</h4>
-                </div>
-                <a href="#">Discover More +</a>
-            </div>
-        </div>
+        @endforeach
     </section>
 
     <section class="section_container product_container">
@@ -171,118 +153,22 @@
             Discover the Cutest Picks: Elevate Your Collection with Our Curated Selection of Adorable Plush Toys!
         </p>
         <div class="product_grid">
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
+            @foreach ($trending_product as $p)
+                <div class="product_card">
+                    <img src="{{ asset($p->image) }}" alt="product">
+                    <div class="product_card_content">
+                        <div class="product_rating">
+                            <span><i class="ri-star-fill"></i></span>
+                            <span><i class="ri-star-fill"></i></span>
+                            <span><i class="ri-star-fill"></i></span>
+                            <span><i class="ri-star-half-line"></i></span>
+                            <span><i class="ri-star-line"></i></span>
+                        </div>
+                        <h4>{{ $p->name }}</h4>
+                        <p>{{ number_format($p->price, 0, ',', '.') }}</p>
                     </div>
-                    <h4>Boneka Capybara Baseball</h4>
-                    <p>75.000 <s>100.000</s></p>
                 </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
-            <div class="product_card">
-                <img src="{{ asset('assets/capybara_baseball.jpg') }}" alt="product">
-                <div class="product_card_content">
-                    <div class="product_rating">
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-fill"></i></span>
-                        <span><i class="ri-star-half-line"></i></span>
-                        <span><i class="ri-star-line"></i></span>
-                    </div>
-                    <h4>Boneka Lotso Giant</h4>
-                    <p>319.900 <s>255.920</s></p>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="product_btn">
             <button class="btn">Load More</button>

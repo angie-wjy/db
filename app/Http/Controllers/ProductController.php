@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bundle;
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductSize;
 use App\Models\ProductTheme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -93,5 +96,29 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->route('admin.product.index')->with('success', 'Product restocked successfully.');
+    }
+
+    public function ShowBundles()
+    {
+        $bundles = Bundle::with('products')->get();
+        return view('welcome', compact('bundles'));
+    }
+
+    public function BuyBundle($id)
+    {
+        $bundle = Bundle::with('products')->findOrFail($id);
+        $cart = Cart::firstOrCreate([
+            'customers_id' => auth()->user()->id,
+            'status' => 'cart'
+        ]);
+
+        foreach ($bundle->products as $product) {
+            $cartItem = $cart->cartItems()->updateOrCreate(
+                ['products_id' => $product->id],
+                ['quantity' => \DB::raw('quantity + ' . $product->pivot->quantity)]
+            );
+        }
+
+        return redirect()->route('customer.checkout.form')->with('success', 'Bundle added to cart!');
     }
 }

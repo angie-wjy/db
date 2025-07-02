@@ -75,6 +75,7 @@
             @endisset
         </div>
     </nav>
+
     <header class="section_container header_container">
         <div class="header_content">
             <h4>UP TO 20% DISCOUNT ON</h4>
@@ -108,6 +109,72 @@
             @endforeach
     </section>
 
+    {{-- <section class="section_container deals_container">
+        <div class="deals_image">
+            <img src="{{ asset($p->image) }}" alt="deals">
+        </div>
+        <div class="deals_content">
+            <h5>Get Up To 20% Discount</h5>
+            <h4>Deals Of This Month</h4>
+            <p>Our Plush Toy Deals of the Month are here to bring joy without breaking the bank. Discover a curated
+                collection of adorable stuffed animals, pillows, and novelty items, all handpicked to brighten any
+                space or make the perfect gift.</p>
+            <div class="deals_countdown">
+                <div class="deals_countdown_card">
+                    <h4>14</h4>
+                    <p>Days</p>
+                </div>
+                <div class="deals_countdown_card">
+                    <h4>20</h4>
+                    <p>Hours</p>
+                </div>
+                <div class="deals_countdown_card">
+                    <h4>15</h4>
+                    <p>Mins</p>
+                </div>
+                <div class="deals_countdown_card">
+                    <h4>05</h4>
+                    <p>Secs</p>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+
+    {{-- @if (isset($bundles) && $bundles->count()) --}}
+        @foreach ($bundles as $bundle)
+            <section class="section_container deals_container">
+                <div class="deals_image_group">
+                    @foreach ($bundle->products as $product)
+                        <div class="deals_image">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="deals_content">
+                    <h5 style="color: #f97316;">Special Bundle Offer!</h5>
+                    <h4 style="font-size: 2rem;">{{ $bundle->name }}</h4>
+
+                    <ul>
+                        @foreach ($bundle->products as $product)
+                            <li>🧸 {{ $product->name }} ({{ $product->pivot->quantity }} pcs)</li>
+                        @endforeach
+                    </ul>
+
+                    <p>
+                        ✅ Bundle Price: <strong>Rp{{ number_format($bundle->price, 0, ',', '.') }}</strong>
+                    </p>
+
+                    <form action="{{ route('customer.bundle.buy', $bundle->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success mt-2">Buy This Bundle</button>
+                    </form>
+                </div>
+            </section>
+        @endforeach
+    {{-- @endif --}}
+
+
     <section id="categories" class="section_container categories_container">
         <h2 class="section_header">Categories</h2>
         <p class="section_subheader">
@@ -140,7 +207,6 @@
                 </div>
             </a>
         </div>
-
     </section>
 
 
@@ -188,36 +254,6 @@
         </div>
     </section>
 
-    <section class="section_container deals_container">
-        <div class="deals_image">
-            <img src="{{ asset($p->image) }}" alt="deals">
-        </div>
-        <div class="deals_content">
-            <h5>Get Up To 20% Discount</h5>
-            <h4>Deals Of This Month</h4>
-            <p>Our Plush Toy Deals of the Month are here to bring joy without breaking the bank. Discover a curated
-                collection of adorable stuffed animals, pillows, and novelty items, all handpicked to brighten any
-                space or make the perfect gift.</p>
-            <div class="deals_countdown">
-                <div class="deals_countdown_card">
-                    <h4>14</h4>
-                    <p>Days</p>
-                </div>
-                <div class="deals_countdown_card">
-                    <h4>20</h4>
-                    <p>Hours</p>
-                </div>
-                <div class="deals_countdown_card">
-                    <h4>15</h4>
-                    <p>Mins</p>
-                </div>
-                <div class="deals_countdown_card">
-                    <h4>05</h4>
-                    <p>Secs</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="feature" class="section_container banner_container">
         <div class="banner_card">

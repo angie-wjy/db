@@ -349,6 +349,7 @@ class AdminController extends Controller
         }
     }
 
+
     public function BranchIndex(Request $request)
     {
         $branches = Branch::all();

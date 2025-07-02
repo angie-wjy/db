@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bundle;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomerHasAddress;
@@ -24,7 +25,8 @@ class CustomerController extends Controller
     {
         $products = Product::all();
         $categories = Category::with('products')->get();
-        return view('welcome', compact('products', 'categories'));
+        $bundles = Bundle::with('products')->get();
+        return view('welcome', compact('products', 'categories', 'bundles'));
     }
 
     // public function cart(Request $request)

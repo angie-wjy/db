@@ -94,6 +94,10 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::post('/customer/product/add/{id}', [ProductController::class, 'ProductAdd'])->name('customer.product.add');
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
+
+    Route::get('/bundles', [ProductController::class, 'ShowBundles'])->name('customer.bundles');
+    Route::post('/bundle/buy/{id}', [ProductController::class, 'BuyBundle'])->name('customer.bundle.buy');
+
 });
 
 // Admin routes

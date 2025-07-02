@@ -87,7 +87,7 @@ class EmployeeController extends Controller
 
     public function OrderCompleteIndex(Request $request)
     {
-        $orders = Order::with('customer')->where('status', 'approved_shipping')->get();
+        $orders = Order::with('customer')->where('status', 'shipping')->get();
         return view('employee.order.completed.index', compact('orders'));
     }
 }

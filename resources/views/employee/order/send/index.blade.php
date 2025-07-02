@@ -1,4 +1,4 @@
-@extends('layouts.employee')
+@extends('layouts.backoffice')
 @section('title', 'Approve Shipping')
 @section('content')
     <style>
@@ -41,6 +41,10 @@
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item">
+                    <a href="#">Orders</a>
+                </li>
+                <li class="separator">
                 <li class="nav-item"><a href="#">Approve Shipping</a></li>
             </ul>
         </div>
@@ -88,15 +92,6 @@
                                                 @method('PUT')
                                                 <button type="submit" class="btn-custom btn-custom-success">
                                                     <i class="ri-check-line"></i> Approve
-                                                </button>
-
-                                            </form>
-                                            <form action="{{ route('admin.order.rejectShipping', $order->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn-custom btn-custom-danger">
-                                                    <i class="ri-close-line"></i> Reject
                                                 </button>
 
                                             </form>

@@ -14,6 +14,12 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
+                    <a href="#">Sizes</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
                     <a href="#">Edit Size</a>
                 </li>
             </ul>
@@ -35,7 +41,8 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="name">Size Name</label>
-                            <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $size->name) }}" required>
+                            <input type="text" class="form-control" name="name" id="name"
+                                value="{{ old('name', $size->name) }}" required>
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror

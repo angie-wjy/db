@@ -142,7 +142,7 @@
                                 <ul class="nav nav-collapse">
                                     <li class="nav-item {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.index') }}">
-                                            <span class="sub-item">All Order</span>
+                                            <span class="sub-item">All Orders</span>
                                         </a>
                                     </li>
                                     {{-- <li
@@ -154,25 +154,25 @@
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.order.check.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.check.index') }}">
-                                            <span class="sub-item">Check Order</span>
+                                            <span class="sub-item">Check Orders</span>
                                         </a>
                                     </li>
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.order.pack.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.pack.index') }}">
-                                            <span class="sub-item">Pack Order</span>
+                                            <span class="sub-item">Pack Orders</span>
                                         </a>
                                     </li>
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.order.send.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.send.index') }}">
-                                            <span class="sub-item">Send Order</span>
+                                            <span class="sub-item">Send Orders</span>
                                         </a>
                                     </li>
                                     <li
                                         class="nav-item {{ request()->routeIs('admin.order.completed.index') ? 'active' : '' }}">
                                         <a href="{{ route('admin.order.completed.index') }}">
-                                            <span class="sub-item">Completed Order</span>
+                                            <span class="sub-item">Completed Orders</span>
                                         </a>
                                     </li>
                                 </ul>

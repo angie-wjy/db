@@ -14,7 +14,13 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Add Theme</a>
+                    <a href="#">Themes</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Add Themes</a>
                 </li>
             </ul>
         </div>
@@ -39,7 +45,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Add Theme</button>
+                        <button type="submit" class="btn btn-primary mt-3">Add</button>
                     </form>
                 </div>
             </div>

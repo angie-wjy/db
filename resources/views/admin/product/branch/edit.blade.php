@@ -9,7 +9,7 @@
             <li class="separator"><i class="icon-arrow-right"></i></li>
             <li class="nav-item"><a href="{{ route('admin.product.branch.index') }}">Branch Products</a></li>
             <li class="separator"><i class="icon-arrow-right"></i></li>
-            <li class="nav-item">Edit</li>
+            <li class="nav-item">Edit Branch Products</li>
         </ul>
     </div>
     <div class="card">

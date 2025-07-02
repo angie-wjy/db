@@ -61,8 +61,8 @@
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Code</span>
-                                                    <input type="text" class="form-control" id="code"
-                                                        name="code" required value="{{ old('code') }}">
+                                                    <input type="text" class="form-control" id="code" name="code"
+                                                        required value="{{ old('code') }}">
                                                 </div>
                                                 @error('code')
                                                     <p class="alert alert-danger">{{ $message }}</p>
@@ -71,33 +71,20 @@
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Name</span>
-                                                    <input type="text" class="form-control" id="name"
-                                                        name="name" required value="{{ old('name') }}">
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        required value="{{ old('name') }}">
                                                 </div>
                                                 @error('name')
                                                     <p class="alert alert-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col">
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">Price</span>
-                                                    <input type="text" class="form-control" id="price"
-                                                        name="price" required value="{{ old('price') }}">
+                                                    <input type="text" class="form-control" id="price" name="price"
+                                                        required value="{{ old('price') }}">
                                                 </div>
                                                 @error('price')
-                                                    <p class="alert alert-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="col">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">Stock</span>
-                                                    <input type="number" class="form-control" id="stock" name="stock"
-                                                        min="0" required value="{{ old('stock') }}">
-                                                </div>
-                                                @error('stock')
                                                     <p class="alert alert-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
@@ -109,9 +96,10 @@
                                                     <span class="input-group-text">Category</span>
                                                     <select class="form-select" aria-label="Default select example"
                                                         id="category" name="categories_id" required>
-                                                        <option value="">Select Category</option> {{-- Translated --}}
+                                                        <option value="">Select Category</option>
                                                         @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}" {{ old('categories_id') == $category->id ? 'selected' : '' }}>
+                                                            <option value="{{ $category->id }}"
+                                                                {{ old('categories_id') == $category->id ? 'selected' : '' }}>
                                                                 {{ $category->name }}
                                                             </option>
                                                         @endforeach
@@ -128,7 +116,8 @@
                                                         id="theme" name="product_themes_id" required>
                                                         <option value="">Select Theme</option> {{-- Translated --}}
                                                         @foreach ($themes as $theme)
-                                                            <option value="{{ $theme->id }}" {{ old('product_themes_id') == $theme->id ? 'selected' : '' }}>
+                                                            <option value="{{ $theme->id }}"
+                                                                {{ old('product_themes_id') == $theme->id ? 'selected' : '' }}>
                                                                 {{ $theme->name }}
                                                             </option>
                                                         @endforeach
@@ -145,7 +134,8 @@
                                                         id="size" name="product_sizes_id" required>
                                                         <option value="">Select Size</option> {{-- Translated --}}
                                                         @foreach ($sizes as $size)
-                                                            <option value="{{ $size->id }}" {{ old('product_sizes_id') == $size->id ? 'selected' : '' }}>
+                                                            <option value="{{ $size->id }}"
+                                                                {{ old('product_sizes_id') == $size->id ? 'selected' : '' }}>
                                                                 {{ $size->name }}
                                                             </option>
                                                         @endforeach
@@ -157,7 +147,8 @@
                                             </div>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="deskripsi" name="description" id="description" style="height: 100px" required>{{ old('description') }}</textarea>
+                                            <textarea class="form-control" placeholder="deskripsi" name="description" id="description" style="height: 100px"
+                                                required>{{ old('description') }}</textarea>
                                             <label for="description">Description</label>
                                         </div>
                                         @error('description')
@@ -165,7 +156,8 @@
                                         @enderror
                                         <div class="mb-3">
                                             <label for="image" style="font-weight: bold;color: black;">Image</label>
-                                            <input class="form-control" type="file" id="image" name="image" required>
+                                            <input class="form-control" type="file" id="image" name="image"
+                                                required>
                                         </div>
                                         @error('image')
                                             <p class="alert alert-danger">{{ $message }}</p>

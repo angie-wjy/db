@@ -241,7 +241,7 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId);
         $order->update(['status' => 'canceled']);
         return redirect()->route('admin.order.check.index')
-            ->with('success', 'The order is ready to be collected.');
+            ->with('success', 'The order has been canceled.');
     }
 
     public function CheckOutSuccess($orderId)

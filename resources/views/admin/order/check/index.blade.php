@@ -46,6 +46,11 @@
                     <a href="#"><i class="icon-home"></i></a>
                 </li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item">
+                    <a href="#">Orders</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
                 <li class="nav-item"><a href="#">Check Orders</a></li>
             </ul>
         </div>

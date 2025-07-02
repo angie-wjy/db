@@ -14,6 +14,12 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
+                    <a href="#">Sizes</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
                     <a href="#">Add Size</a>
                 </li>
             </ul>

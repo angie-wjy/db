@@ -13,6 +13,12 @@
                 <li class="separator">
                     <i class="icon-arrow-right"></i>
                 </li>
+                 <li class="nav-item">
+                    <a href="#">Themes</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
                 <li class="nav-item">
                     <a href="#">Edit Theme</a>
                 </li>

@@ -34,6 +34,10 @@
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item">
+                    <a href="#">Orders</a>
+                </li>
+                <li class="separator">
                 <li class="nav-item"><a href="#">Order Pack</a></li>
             </ul>
         </div>
@@ -97,7 +101,7 @@
 @endsection
 
 @push('scripts')
-<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <script>
         $(document).ready(function() {

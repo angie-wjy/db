@@ -182,6 +182,7 @@ Route::middleware(['auth:employee'])->group(function () {
     Route::get('/employee/order/completed/index', [EmployeeController::class, 'OrderCompleteIndex'])->name('employee.order.completed.index');
     Route::get('/employee/order/show/{id}', [EmployeeController::class, 'OrderShow'])->name('employee.order.show');
     Route::put('/employee/orders/{order}/approve', [EmployeeController::class, 'OrderApprove'])->name('employee.order.approve');
+    Route::put('/order/{id}/approve-shipping', [EmployeeController::class, 'OrderAccShip'])->name('admin.order.approveShipping');
 });
 // Route::get('/admin/product', [AdminController::class, 'product']);
 // Route::get('/admin/add-user', [AdminController::class, 'addUserForm']);

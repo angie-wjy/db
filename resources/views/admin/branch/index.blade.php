@@ -16,9 +16,6 @@
                 <li class="nav-item">
                     <a href="#">Products</a>
                 </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
             </ul>
         </div>
         <div class="row">

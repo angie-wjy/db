@@ -512,7 +512,7 @@ class AdminController extends Controller
 
             $theme = ProductTheme::create($request->all());
             // return redirect()->back()->with('success', 'Theme created successfully');
-            return redirect()->route('admin.product.theme.index')->with('success', 'Theme created successfully');
+            return redirect()->route('admin.product.theme.index')->with('success', 'Theme Created Successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to create theme: ' . $e->getMessage());
         }
@@ -698,7 +698,7 @@ class AdminController extends Controller
     public function OrderAccShip($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 'approved_shipping';
+        $order->status = 'shipping';
         $order->save();
 
         return back()->with('success', 'Shipping approved successfully.');

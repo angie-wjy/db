@@ -19,30 +19,75 @@ class EmployeeController extends Controller
         return view('employee.dashboard');
     }
 
-    public function OrderIndex()
+    public function OrderApprove($id)
     {
-        $orders = Order::with(['customer', 'products'])->latest()->get();
-        return view('employee.order.index', compact('orders'));
-        // return view('employee.order.index');
+        $order = Order::findOrFail($id);
+
+        if ($order->status !== 'new') {
+            return redirect()->back()->with('error', 'Only new orders can be approved.');
+        }
+
+        $order->status = 'processed';
+        $order->is_ready_stock = true;
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order approved and moved to processed!');
     }
 
-    public function OrderCheckIndex()
+    public function OrderCheckIndex(Request $request)
     {
-        return view('employee.order.check.index');
+        $orders = Order::with('customer')->where('status', 'paid')->get();
+        return view('employee.order.check.index', compact('orders'));
     }
 
-    public function OrderPackIndex()
+    public function OrderPackIndex(Request $request)
     {
-        return view('employee.order.pack.index');
+        $orders = Order::with('customer')->where('status', 'checked')->get();
+        return view('employee.order.pack.index', compact('orders'));
     }
 
-    public function OrderSendIndex()
+    public function OrderPacked($id)
     {
-        return view('employee.order.send.index');
+        $order = Order::findOrFail($id);
+        $order->status = 'packed';
+        $order->save();
+
+        return redirect()->back()->with('success', 'Order marked as packed and ready to send!');
     }
 
-    public function OrderCompleteIndex()
+    public function OrderSendIndex(Request $request)
     {
-        return view('employee.order.completed.index');
+        $orders = Order::with('customer')->where('status', 'packed')->get();
+        return view('employee.order.send.index', compact('orders'));
+    }
+
+    public function OrderAccShip($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'shipping';
+        $order->save();
+
+        return back()->with('success', 'Shipping approved successfully.');
+    }
+
+    public function OrderRejectShip($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 'shipping_rejected';
+        $order->save();
+
+        return back()->with('success', 'Shipping has been rejected.');
+    }
+
+    public function showApproveShipping()
+    {
+        $orders = Order::where('status', 'packed')->get();
+        return view('employee.orders.approve-shipping', compact('orders'));
+    }
+
+    public function OrderCompleteIndex(Request $request)
+    {
+        $orders = Order::with('customer')->where('status', 'approved_shipping')->get();
+        return view('employee.order.completed.index', compact('orders'));
     }
 }

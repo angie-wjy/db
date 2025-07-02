@@ -1,5 +1,5 @@
 @extends('layouts.backoffice')
-@section('title', 'Orders')
+@section('title', 'All Orders')
 @section('content')
     <style>
         .btn-custom {
@@ -37,13 +37,15 @@
                 </li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
                 <li class="nav-item"><a href="#">Orders</a></li>
+                <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item"><a href="#">All Orders</a></li>
             </ul>
         </div>
 
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Orders</h4>
+                    <h4 class="card-title">All Orders</h4>
                 </div>
                 <div class="card-body">
                     @if (session('success'))

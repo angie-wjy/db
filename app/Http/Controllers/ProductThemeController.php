@@ -31,7 +31,7 @@ class ProductThemeController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.product.theme.index')->with('success', 'Product Theme created successfully!');
+        return redirect()->route('admin.product.theme.index')->with('success', 'Product Theme Created Successfully!');
     }
 
     // Menampilkan form untuk mengedit Product Theme

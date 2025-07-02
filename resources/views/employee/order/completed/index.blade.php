@@ -1,8 +1,7 @@
-@extends('layouts.employee')
-
+@extends('layouts.backoffice')
 @section('title', 'Completed Orders')
 
-@section('content')
+@secton('content')
     <style>
         .btn-custom {
             display: inline-block;
@@ -36,6 +35,10 @@
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item">
+                    <a href="#">Orders</a>
+                </li>
+                <li class="separator">
                 <li class="nav-item"><a href="#">Completed Orders</a></li>
             </ul>
         </div>

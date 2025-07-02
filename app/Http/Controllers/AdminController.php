@@ -698,7 +698,7 @@ class AdminController extends Controller
     public function OrderAccShip($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 'approval_shipping';
+        $order->status = 'shipping';
         $order->save();
 
         return back()->with('success', 'Shipping approved successfully.');

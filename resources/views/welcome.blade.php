@@ -141,7 +141,7 @@
     </section> --}}
 
     {{-- @if (isset($bundles) && $bundles->count()) --}}
-        @foreach ($bundles as $bundle)
+        {{-- @foreach ($bundles as $bundle)
             <section class="section_container deals_container">
                 <div class="deals_image_group">
                     @foreach ($bundle->products as $product)
@@ -171,7 +171,7 @@
                     </form>
                 </div>
             </section>
-        @endforeach
+        @endforeach --}}
     {{-- @endif --}}
 
 

@@ -6,24 +6,22 @@
     <div
         class="container mx-auto max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out py-6 px-4 sm:px-8">
 
-        {{-- Hero Header --}}
         <header class="section_container mb-8 mt-2 w-full">
-            {{-- Added w-full to ensure it takes up full available width --}}
-            <div class="header_content text-center max-w-2xl mx-auto">
-                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-xs sm:text-sm mb-1">WELCOME BACK</h4>
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Hello, {{ $customer->name }}</h1>
-                <p class="text-gray-600 text-sm sm:text-base">{{ $customer->email }}</p>
-                <p class="text-gray-500 text-xs italic mb-2">Joined since: {{ $customer->created_at->format('d M Y') }}</p>
-                <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+            <div class="header_content text-center max-w-2xl mx-auto break-words">
+                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-sm mb-1">WELCOME BACK</h4><br>
+                <h1 class="text-3xl font-bold text-gray-900 mb-1">Hello, {{ $customer->name }}</h1><br>
+                <p class="text-gray-600">{{ $customer->email }}</p>
+                <p class="text-gray-500 text-xs italic mb-3">Joined since: {{ $customer->created_at->format('d M Y') }}</p>
+                <p class="text-gray-600 leading-relaxed text-base">
                     Manage your profile and review your order history here. We're happy to have you back!
                 </p>
             </div>
         </header>
 
+
         {{-- Order History --}}
         <div class="mt-12 pt-8 border-t border-gray-200">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">My Order History</h2>
-            {{-- Adjusted text size for section title --}}
 
             @if ($orders->isEmpty())
                 <div class="p-6 text-center bg-gray-50 rounded-xl shadow-inner">
@@ -71,10 +69,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-
-                <div class="mt-4 d-flex justify-content-center">
-                    {{ $orders->links('pagination::tailwind') }}
                 </div>
             @endif
         </div>

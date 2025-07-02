@@ -545,11 +545,27 @@ body {
     color: var(--text-light);
 }
 
-.instagram_grid {
+.store_grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    max-width: 400px;
+    margin-top: 10px;
 }
+
+.store_grid img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: white;
+    transition: transform 0.2s ease;
+}
+
+.store_grid img:hover {
+    transform: scale(1.05);
+}
+
 
 .footer_bar {
     padding: 1rem;
@@ -559,4 +575,21 @@ body {
     border-top: 2px solid var(--extra-light);
 }
 
-*/
+
+
+*/.footer_bar a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.store_links a {
+    display: inline-block;
+    margin: 5px 0;
+    color: #fff;
+    /* atau warna sesuai tema */
+    text-decoration: none;
+}
+
+.store_links a:hover {
+    text-decoration: underline;
+}

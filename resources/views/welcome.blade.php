@@ -47,7 +47,6 @@
                     Category
                 </a>
                 <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
-                    {{-- for categories --}}
                     @foreach ($categories as $category)
                         <a class="dropdown-item py-2"
                             href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
@@ -188,17 +187,16 @@
         </div>
     </section>
 
-    <section class="section_container deals_container">
+    {{-- <section class="section_container deals_container">
         <div class="deals_image">
-            <img src="" alt="deals">
+            <img src="{{ asset($p->image) }}" alt="deals">
         </div>
         <div class="deals_content">
             <h5>Get Up To 20% Discount</h5>
             <h4>Deals Of This Month</h4>
             <p>Our Plush Toy Deals of the Month are here to bring joy without breaking the bank. Discover a curated
                 collection of adorable stuffed animals, pillows, and novelty items, all handpicked to brighten any
-                space
-                or make the perfect gift.</p>
+                space or make the perfect gift.</p>
             <div class="deals_countdown">
                 <div class="deals_countdown_card">
                     <h4>14</h4>
@@ -218,7 +216,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="section_container banner_container">
         <div class="banner_card">
@@ -245,11 +243,7 @@
             <h4>CONTACT INFO</h4>
             <p>
                 <span><i class="ri-map-pin-2-fill"></i></span>
-                123, London Bridge Street, London
-            </p>
-            <p>
-                <span><i class="ri-mail-fill"></i></span>
-                support@Lebaba.com
+                Surabaya, East Java, Indonesia
             </p>
             <p>
                 <span><i class="ri-phone-fill"></i></span>
@@ -257,30 +251,20 @@
             </p>
         </div>
         <div class="footer_col">
-            <h4>COMPANY</h4>
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Work With Us</a>
-            <a href="#">Our Blog</a>
-            <a href="#">Terms & Conditions</a>
-        </div>
-        <div class="footer_col">
-            <h4>USEFUL LINK</h4>
-            <a href="#">Help</a>
-            <a href="#">Track My Order</a>
-            <a href="#">Men</a>
-            <a href="#">Women</a>
-            <a href="#">Dresses</a>
-        </div>
-        <div class="footer_col">
             <h4>E-Commerce</h4>
-            <div class="instagram_grid">
-                <img src="assets/instagram-1.jpg" alt="instagram" />
-                <img src="assets/instagram-2.jpg" alt="instagram" />
-                <img src="assets/instagram-3.jpg" alt="instagram" />
-                <img src="assets/instagram-4.jpg" alt="instagram" />
-                <img src="assets/instagram-5.jpg" alt="instagram" />
-                <img src="assets/instagram-6.jpg" alt="instagram" />
+            <div class="store_grid">
+                <a href="https://www.tiktok.com/@smilegiftshop_ol?_t=8aexavzloqc&_r=1">
+                    <img src="assets/tiktok.png" alt="Tiktok Shop" />
+                </a>
+                <a href="https://www.instagram.com/toko_smile?igshid=YmMyMTA2M2Y%3D">
+                    <img src="assets/instagram.jpg" alt="Instagram" />
+                </a>
+                <a href="https://tokopedia.link/smilegiftolshop">
+                    <img src="assets/tokopedia.png" alt="Tokopedia" />
+                </a>
+                <a href="https://shopee.co.id/smilegiftshop_ol">
+                    <img src="assets/shopee.png" alt="Shopee" />
+                </a>
             </div>
         </div>
     </footer>

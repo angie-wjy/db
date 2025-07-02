@@ -1,7 +1,6 @@
 @extends('layouts.backoffice')
 @section('title', 'Completed Orders')
-
-@secton('content')
+@section('content')
     <style>
         .btn-custom {
             display: inline-block;
@@ -35,10 +34,8 @@
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                 <li class="separator"><i class="icon-arrow-right"></i></li>
-                <li class="nav-item">
-                    <a href="#">Orders</a>
-                </li>
-                <li class="separator">
+                <li class="nav-item"><a href="#">Orders</a></li>
+                <li class="separator"></li>
                 <li class="nav-item"><a href="#">Completed Orders</a></li>
             </ul>
         </div>
@@ -87,27 +84,29 @@
         </div>
     </div>
 @endsection
-
 @push('scripts')
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#multi-filter-select').DataTable({
                 pageLength: 10,
-                initComplete: function () {
-                    this.api().columns().every(function () {
+                initComplete: function() {
+                    this.api().columns().every(function() {
                         var column = this;
-                        var select = $('<select class="form-select form-select-sm"><option value=""></option></select>')
+                        var select = $(
+                                '<select class="form-select form-select-sm"><option value=""></option></select>'
+                                )
                             .appendTo($(column.footer()).empty())
-                            .on('change', function () {
+                            .on('change', function() {
                                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
                                 column
                                     .search(val ? '^' + val + '$' : '', true, false)
                                     .draw();
                             });
 
-                        column.data().unique().sort().each(function (d, j) {
-                            select.append('<option value="' + d + '">' + d + '</option>')
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>')
                         });
                     });
                 }

@@ -104,13 +104,10 @@ class CustomerController extends Controller
     public function Profile()
     {
         $customer = Auth::guard('customer')->user();
-
-        // Retrieve all orders associated with the customer
-        // Using 'customers_id' column based on your Order model
         $orders = Order::where('customers_id', $customer->id)
-            ->with(['orderDetails.product', 'ship']) // Changed from 'items' to 'orderDetails.product'
+            ->with(['orderDetails.product', 'ship'])
             ->orderBy('created_at', 'desc')
-            ->paginate(5); // Using pagination for better performance, adjust as needed
+            ->paginate(5);
 
         return view('customer.profile.index', compact('customer', 'orders'));
     }

@@ -1,90 +1,6 @@
 @extends('layouts.customer')
-
 @section('title', 'My Profile - ' . $customer->name)
-
 @section('content')
-    <div
-        class="container mx-auto max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out py-6 px-4 sm:px-8">
-
-        <header class="section_container mb-8 mt-2 w-full">
-            <div class="header_content text-center max-w-2xl mx-auto break-words">
-                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-sm mb-1">WELCOME BACK</h4><br>
-                <h1 class="text-3xl font-bold text-gray-900 mb-1">Hello, {{ $customer->name }}</h1><br>
-                <p class="text-gray-600">{{ $customer->email }}</p>
-                <p class="text-gray-500 text-xs italic mb-3">Joined since: {{ $customer->created_at->format('d M Y') }}</p>
-                <p class="text-gray-600 leading-relaxed text-base">
-                    Manage your profile and review your order history here. We're happy to have you back!
-                </p>
-            </div>
-        </header>
-
-
-        {{-- Order History --}}
-        <div class="mt-12 pt-8 border-t border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">My Order History</h2>
-
-            @if ($orders->isEmpty())
-                <div class="p-6 text-center bg-gray-50 rounded-xl shadow-inner">
-                    <p class="text-gray-600 text-lg">You don't have any order history yet.</p>
-                    <a href="/"
-                        class="btn-gradient inline-block mt-6 py-2.5 px-5 rounded-lg text-base font-semibold text-white shadow-md hover:shadow-lg transition">Start
-                        Shopping</a>
-                </div>
-            @else
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    @foreach ($orders as $order)
-                        <div class="col">
-                            <div class="card h-100 p-4 shadow-sm rounded-lg">
-                                <div class="mb-3">
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <h5 class="fw-semibold mb-0">Order #{{ $order->id }}</h5>
-                                        @php
-                                            $shipStatus = $order->ship->status ?? 'N/A';
-                                            $statusClass = match ($shipStatus) {
-                                                'on progress' => 'status-on-progress',
-                                                'ready' => 'status-ready',
-                                                'finish' => 'status-finish',
-                                                default => 'status-cancelled',
-                                            };
-                                        @endphp
-                                        <span class="status-badge {{ $statusClass }}">
-                                            {{ ucwords(str_replace('_', ' ', $shipStatus)) }}
-                                        </span>
-                                    </div>
-                                    <p class="text-muted small mb-1">Order Date:
-                                        {{ $order->created_at->format('d M Y, H:i') }}</p>
-                                    <p class="fw-bold mb-1 text-dark">Total:
-                                        Rp{{ number_format($order->total ?? 0, 0, ',', '.') }}</p>
-                                    @if ($order->ship?->resi)
-                                        <p class="text-muted small mb-1">Tracking Number: <span
-                                                class="fw-semibold text-primary">{{ $order->ship->resi }}</span></p>
-                                    @endif
-                                    @if ($order->ship?->address)
-                                        <p class="text-muted small">Shipping Address: {{ $order->ship->address }}
-                                        </p>
-                                    @endif
-                                </div>
-                                <a href="{{ route('customer.order.show', $order->id) }}" class="btn btn-primary w-100">View
-                                    Details</a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-
-        {{-- Back Button --}}
-        <div class="bg-gray-50 px-8 py-6 sm:px-10 sm:py-8 border-t border-gray-200 mt-12">
-            <div class="text-center">
-                <a href="/"
-                    class="text-indigo-700 hover:text-indigo-900 text-base sm:text-lg font-medium flex items-center justify-center hover:scale-105 transition">
-                    <i class="ri-arrow-left-line mr-2"></i> Back to Homepage
-                </a>
-                <br><br><br><br>
-            </div>
-        </div>
-    </div>
-
     <style>
         .btn-gradient {
             background-image: linear-gradient(to right, #6366f1, #8b5cf6);
@@ -127,5 +43,138 @@
             background-color: #fee2e2;
             color: #991b1b;
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-item {
+            margin: 0 0.25rem;
+        }
+
+        .page-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            /* gray-300 */
+            border-radius: 0.25rem;
+            color: #4a5568;
+            /* gray-700 */
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #edf2f7;
+            /* gray-200 */
+            color: #2d3748;
+            /* gray-800 */
+        }
+
+        .page-item.active .page-link {
+            background-color: #4f46e5;
+            /* indigo-600 */
+            border-color: #4f46e5;
+            /* indigo-600 */
+            color: #ffffff;
+        }
+
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f7fafc;
+            /* gray-100 */
+        }
     </style>
+    <div
+        class="container mx-auto max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out py-6 px-4 sm:px-8">
+
+        <header class="section_container mb-8 mt-2 w-full">
+            <div class="header_content text-center max-w-2xl mx-auto break-words">
+                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-sm mb-1">WELCOME BACK</h4><br>
+                <h1 class="text-3xl font-bold text-gray-900 mb-1">Hello, {{ $customer->name }}</h1><br>
+                <p class="text-gray-600">{{ $customer->email }}</p>
+                <p class="text-gray-500 text-xs italic mb-3">Joined since: {{ $customer->created_at->format('d M Y') }}</p>
+                <p class="text-gray-600 leading-relaxed text-base">
+                    Manage your profile and review your order history here. We're happy to have you back!
+                </p>
+            </div>
+        </header>
+
+        {{-- Order History --}}
+        <div class="mt-12 pt-8 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">My Order History</h2>
+
+            @if ($orders->isEmpty())
+                <div class="p-6 text-center bg-gray-50 rounded-xl shadow-inner">
+                    <p class="text-gray-600 text-lg">You don't have any order history yet.</p>
+                    <a href="/"
+                        class="btn-gradient inline-block mt-6 py-2.5 px-5 rounded-lg text-base font-semibold text-white shadow-md hover:shadow-lg transition">Start
+                        Shopping</a>
+                </div>
+            @else
+                <div class="mb-4 text-center text-gray-600">
+                    Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of {{ $orders->total() }} results
+                </div>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach ($orders as $order)
+                        <div class="col">
+                            <div class="card h-100 p-4 shadow-sm rounded-lg">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h5 class="fw-semibold mb-0">Order #{{ $order->id }}</h5>
+                                        @php
+                                            $shipStatus = $order->ship->status ?? 'N/A';
+                                            $statusClass = match ($shipStatus) {
+                                                'on progress' => 'status-on-progress',
+                                                'ready' => 'status-ready',
+                                                'finish' => 'status-finish',
+                                                default => 'status-cancelled',
+                                            };
+                                        @endphp
+                                        <span class="status-badge {{ $statusClass }}">
+                                            {{ ucwords(str_replace('_', ' ', $shipStatus)) }}
+                                        </span>
+                                    </div>
+                                    <p class="text-muted small mb-1">Order Date:
+                                        {{ $order->created_at->format('d M Y, H:i') }}</p>
+                                    <p class="fw-bold mb-1 text-dark">Total:
+                                        Rp{{ number_format($order->total ?? 0, 0, ',', '.') }}</p>
+                                    @if ($order->ship?->resi)
+                                        <p class="text-muted small mb-1">Tracking Number: <span
+                                                class="fw-semibold text-primary">{{ $order->ship->resi }}</span></p>
+                                    @endif
+                                    @if ($order->ship?->address)
+                                        <p class="text-muted small">Shipping Address: {{ $order->ship->address }}
+                                        </p>
+                                    @endif
+                                </div>
+                                <a href="{{ route('customer.order.show', $order->id) }}" class="btn btn-primary w-100">View
+                                    Details</a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="mt-8 text-center">
+                    {{ $orders->links() }}
+                </div>
+            @endif
+        </div>
+
+        {{-- Back Button --}}
+        <div class="bg-gray-50 px-8 py-6 sm:px-10 sm:py-8 border-t border-gray-200 mt-12">
+            <div class="text-center">
+                <a href="/"
+                    class="text-indigo-700 hover:text-indigo-900 text-base sm:text-lg font-medium flex items-center justify-center hover:scale-105 transition">
+                    <i class="ri-arrow-left-line mr-2"></i> Back to Homepage
+                </a>
+                <br><br><br><br>
+            </div>
+        </div>
+    </div>
 @endsection

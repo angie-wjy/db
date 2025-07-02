@@ -698,7 +698,7 @@ class AdminController extends Controller
     public function OrderAccShip($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 'shipping';
+        $order->status = 'approval_shipping';
         $order->save();
 
         return back()->with('success', 'Shipping approved successfully.');
@@ -716,7 +716,7 @@ class AdminController extends Controller
     public function showApproveShipping()
     {
         $orders = Order::where('status', 'packed')->get();
-        return view('admin.orders.approve-shipping', compact('orders'));
+        return view('admin.orders.approveShipping', compact('orders'));
     }
 
     public function OrderCompleteIndex(Request $request)

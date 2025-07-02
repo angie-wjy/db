@@ -77,9 +77,6 @@
                                             <a href="{{ route('admin.product.edit', $product->id) }}">
                                                 <button class="btn btn-primary">Edit</button>
                                             </a>
-                                            <a href="{{ route('admin.product.restock.form', $product->id) }}">
-                                                <button class="btn btn-warning">Restock</button>
-                                            </a>
                                             <form action="{{ route('admin.product.delete', $product->id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf

@@ -76,13 +76,19 @@ class OrderController extends Controller
             $product = \App\Models\Product::find($item['id']);
 
             if ($product) {
-                $product->stock -= $item['quantity'];
+                $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
 
-                if ($product->stock < 0) {
-                    $product->stock = 0;
+                if ($branchProduct) {
+                    $branchProduct->pivot->stock -= $item['quantity'];
+
+                    if ($branchProduct->pivot->stock < 0) {
+                        $branchProduct->pivot->stock = 0;
+                    }
+
+                    $branchProduct->pivot->save();
+                } else {
+                    Log::warning("Produk dengan ID {$item['id']} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
                 }
-
-                $product->save();
             } else {
                 Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
             }
@@ -99,7 +105,7 @@ class OrderController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('customer.checkout.success', $order->id)
+        return redirect()->route('customer.checkout.form', $order->id)
             ->with('success', 'Order berhasil dibuat!');
     }
 
@@ -119,7 +125,7 @@ class OrderController extends Controller
 
     public function CheckOutForm()
     {
-        $order = Order::with(['delivery', 'products'])->where('customers_id', Auth::id())
+        $order = Order::with(['ship', 'products'])->where('customers_id', Auth::id())
             ->latest()
             ->first();
 

@@ -40,21 +40,9 @@
 
         <ul class="nav_links">
             <li class="link"><a href="#">Home</a></li>
-            {{-- <li class="link"><a href="/home#categories">Category</a></li> --}}
-            <li class="link dropdown">
-                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    Category
-                </a>
-                <div class="dropdown-menu border-0 shadow rounded" aria-labelledby="dropdownMenuButton">
-                    @foreach ($categories as $category)
-                        <a class="dropdown-item py-2"
-                            href="{{ route('category.show', $category->slug) }}">{{ $category->name }}</a>
-                    @endforeach
-                </div>
-            </li>
-            <li class="link"><a href="#">Pages</a></li>
-            <li class="link" style="margin-right: 10px;"><a href="#">Contact</a></li>
+            <li class="link"><a href="#categories">Category</a></li>
+            <li class="link"><a href="#feature">Feature</a></li>
+            <li class="link" style="margin-right: 10px;"><a href="#contact">Contact</a></li>
         </ul>
 
         <div class="nav_right">
@@ -127,19 +115,32 @@
             stationery, mugs, and bottles. Add a touch of fun and functionality to your everyday life today!
         </p>
         <div class="categories_grid">
-            @foreach ($categories as $c)
-                <a href="/product/category/{{ $c->code }}">
-                    <div class="categories_card">
-                        @if ($c->products->isNotEmpty())
-                            <img src="{{ asset($c->products->first()->image) }}" alt="{{ $c->name }}">
-                        @else
-                            <img src="{{ asset('storage/' . $p->image) }}" alt="No image available">
-                        @endif
-                        <h4>{{ $c->brand }}</h4>
-                    </div>
-                </a>
-            @endforeach
+            <a href="{{ route('category.show', 'bag') }}">
+                <div class="categories_card">
+                    <img src="{{ asset('assets/bag.png') }}" alt="Bag">
+                    <h4>Bag</h4>
+                </div>
+            </a>
+            <a href="{{ route('category.show', 'doll') }}">
+                <div class="categories_card">
+                    <img src="{{ asset('assets/doll.jpg') }}" alt="Doll">
+                    <h4>Doll</h4>
+                </div>
+            </a>
+            <a href="{{ route('category.show', 'fancy') }}">
+                <div class="categories_card">
+                    <img src="{{ asset('assets/fancy.png') }}" alt="Fancy">
+                    <h4>Fancy</h4>
+                </div>
+            </a>
+            <a href="{{ route('category.show', 'pillow') }}">
+                <div class="categories_card">
+                    <img src="{{ asset('assets/pillow.png') }}" alt="Pillow">
+                    <h4>Pillow</h4>
+                </div>
+            </a>
         </div>
+
     </section>
 
 
@@ -167,7 +168,7 @@
         <div class="product_grid">
             @foreach ($trending_product as $p)
                 <div class="product_card">
-                    <img src="{{ asset($p->image) }}" alt="product">
+                    <img src="{{ asset('storage/' . $p->image) }}" alt="product">
                     <div class="product_card_content">
                         <div class="product_rating">
                             <span><i class="ri-star-fill"></i></span>
@@ -187,7 +188,7 @@
         </div>
     </section>
 
-    {{-- <section class="section_container deals_container">
+    <section class="section_container deals_container">
         <div class="deals_image">
             <img src="{{ asset($p->image) }}" alt="deals">
         </div>
@@ -216,9 +217,9 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
 
-    <section class="section_container banner_container">
+    <section id="feature" class="section_container banner_container">
         <div class="banner_card">
             <span><i class="ri-truck-line"></i></span>
             <h4>Delivery & Pick Up</h4>
@@ -238,7 +239,7 @@
         </div>
     </section>
 
-    <footer class="section_container footer_container">
+    <footer id="contact" class="section_container footer_container">
         <div class="footer_col">
             <h4>CONTACT INFO</h4>
             <p>
@@ -258,7 +259,7 @@
                 </a>
                 <a href="https://www.instagram.com/toko_smile?igshid=YmMyMTA2M2Y%3D">
                     <img src="assets/instagram.jpg" alt="Instagram" />
-                </a>
+                </a><br>
                 <a href="https://tokopedia.link/smilegiftolshop">
                     <img src="assets/tokopedia.png" alt="Tokopedia" />
                 </a>

@@ -33,7 +33,7 @@
                         Shopping</a>
                 </div>
             @else
-                <div class="row row-cols-1 row-cols-md-3 g-4"> {{-- Bootstrap-style layout with spacing --}}
+                <div class="row row-cols-1 row-cols-md-3 g-4">
                     @foreach ($orders as $order)
                         <div class="col">
                             <div class="card h-100 p-4 shadow-sm rounded-lg">

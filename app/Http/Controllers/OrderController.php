@@ -105,7 +105,7 @@ class OrderController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('customer.checkout.success', $order->id)
+        return redirect()->route('customer.checkout.form', $order->id)
             ->with('success', 'Order berhasil dibuat!');
     }
 

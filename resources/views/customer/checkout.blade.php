@@ -86,7 +86,7 @@
                 onSuccess: function(result) {
                     alert("Payment successful!");
                     window.location.href =
-                        "{{ route('customer.checkout.success') }}";
+                        "{{ route('customer.checkout.success', $order->id) }}";
                 },
                 onPending: function(result) {
                     alert("Payment is pending!");

@@ -41,13 +41,14 @@ class BundleController extends Controller
         return view('welcome', compact('bundles'));
     }
 
-    public function BuyBundle($id)
+    public function BundleBuy($id)
     {
         $bundle = Bundle::with('products')->findOrFail($id);
         $cart = Cart::firstOrCreate([
-            'customers_id' => auth()->user()->id,
+            'customer_user_id' => auth()->user()->id,
             'status' => 'cart'
         ]);
+
 
         foreach ($bundle->products as $product) {
             $cartItem = $cart->cartItems()->updateOrCreate(

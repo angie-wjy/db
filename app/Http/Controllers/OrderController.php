@@ -81,27 +81,49 @@ class OrderController extends Controller
         //     $product->save();
         // }
 
-        // foreach ($cart as $item) {
-        //     $product = \App\Models\Product::find($item['id']);
+        foreach ($cart as $item) {
+            if (str_starts_with($item['id'], 'bundle_')) {
+                // Jika item adalah bundle, kita perlu mengaitkan produk bundle
+                $bundle = \App\Models\Bundle::find(str_replace('bundle_', '', $item['id']));
+                if ($bundle) {
+                    foreach ($bundle->products as $product) {
+                        $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
+                        if ($branchProduct) {
+                            $branchProduct->pivot->stock -= $item['quantity'];
+                            if ($branchProduct->pivot->stock < 0) {
+                                $branchProduct->pivot->stock = 0;
+                            }
+                            $branchProduct->pivot->save();
+                        } else {
+                            Log::warning("Produk dengan ID {$product->id} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
+                        }
+                    }
+                } else {
+                    Log::warning("Bundle dengan ID " . str_replace('bundle_', '', $item['id']) . " tidak ditemukan.");
+                }
+                continue;
+            }
 
-        //     if ($product) {
-        //         $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
+            $product = \App\Models\Product::find($item['id']);
 
-        //         if ($branchProduct) {
-        //             $branchProduct->pivot->stock -= $item['quantity'];
+            if ($product) {
+                $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
 
-        //             if ($branchProduct->pivot->stock < 0) {
-        //                 $branchProduct->pivot->stock = 0;
-        //             }
+                if ($branchProduct) {
+                    $branchProduct->pivot->stock -= $item['quantity'];
 
-        //             $branchProduct->pivot->save();
-        //         } else {
-        //             Log::warning("Produk dengan ID {$item['id']} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
-        //         }
-        //     } else {
-        //         Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
-        //     }
-        // }
+                    if ($branchProduct->pivot->stock < 0) {
+                        $branchProduct->pivot->stock = 0;
+                    }
+
+                    $branchProduct->pivot->save();
+                } else {
+                    Log::warning("Produk dengan ID {$item['id']} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
+                }
+            } else {
+                Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
+            }
+        }
 
         // Simpan data delivery
         $ship = new Ship();

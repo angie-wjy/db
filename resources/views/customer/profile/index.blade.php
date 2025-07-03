@@ -160,9 +160,9 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="mt-8 text-center">
+                {{-- <div class="mt-8 text-center">
                     {{ $orders->links() }}
-                </div>
+                </div> --}}
             @endif
         </div>
 

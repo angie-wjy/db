@@ -1,11 +1,7 @@
 @extends('layouts.customer')
-
 @section('title', 'Category')
-
 @section('content')
     <div class="px-6 py-2">
-
-        {{-- Header + Search Bar --}}
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
             <h2 class="text-2xl font-bold text-gray-800">List Product</h2>
 
@@ -55,7 +51,7 @@
             @endforeach
             </div>
     </div>
-    
+
     {{-- Pagination --}}
     <div class="mt-8 flex justify-center">
         {{ $dataProd->links('pagination::tailwind') }}

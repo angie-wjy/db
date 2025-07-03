@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BundleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Models\Bundle;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,9 @@ Route::get('/', function () {
     // print_r($trending_product->toArray());
 
     $categories = Category::with('products')->get();
-    return view('welcome', compact('products', 'categories', 'trending_product', 'trending_bundle'));
+
+    $bundles = Bundle::with('products')->get();
+    return view('welcome', compact('products', 'categories', 'trending_product', 'trending_bundle', 'bundles'));
 })->name('welcome');
 
 
@@ -56,12 +60,6 @@ Route::get('/register', function () {
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 Route::post('/signout', [AuthController::class, 'signout'])->name('signout');
-
-
-// Customer routes
-Route::get('/customer/home', function () {
-    return view('customer.home');
-})->name('customer.home');
 
 
 Route::middleware(['auth:customer'])->group(function () {
@@ -95,9 +93,9 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/product/detail/{id}', [ProductController::class, 'ProductDetail'])->name('product.detail');
     Route::get('/product/topsell', [ProductController::class, 'TopSell']);
 
-    Route::get('/bundles', [ProductController::class, 'ShowBundles'])->name('customer.bundles');
-    Route::post('/bundle/buy/{id}', [ProductController::class, 'BuyBundle'])->name('customer.bundle.buy');
-
+    Route::get('/bundles/list', [BundleController::class, 'BundleIndex'])->name('customer.bundle.index');
+    Route::get('/bundles', [BundleController::class, 'BundleShow'])->name('customer.bundle.show');
+    Route::post('/bundle/buy/{id}', [BundleController::class, 'BundleBuy'])->name('customer.bundle.buy');
 });
 
 // Admin routes

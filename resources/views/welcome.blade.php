@@ -140,17 +140,17 @@
         </div>
     </section> --}}
 
-    {{-- @if (isset($bundles) && $bundles->count()) --}}
-        {{-- @foreach ($bundles as $bundle)
+    @if (isset($bundles) && $bundles->count())
+        @foreach ($bundles as $bundle)
             <section class="section_container deals_container">
-                <div class="deals_image_group">
+                <div class="deals_image_group d-flex">
                     @foreach ($bundle->products as $product)
-                        <div class="deals_image">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        <div class="deals_image me-2">
+                            <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
+                                style="width: 100px; height: 100px; object-fit: cover;">
                         </div>
                     @endforeach
                 </div>
-
                 <div class="deals_content">
                     <h5 style="color: #f97316;">Special Bundle Offer!</h5>
                     <h4 style="font-size: 2rem;">{{ $bundle->name }}</h4>
@@ -165,15 +165,25 @@
                         ✅ Bundle Price: <strong>Rp{{ number_format($bundle->price, 0, ',', '.') }}</strong>
                     </p>
 
-                    <form action="{{ route('customer.bundle.buy', $bundle->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-success mt-2">Buy This Bundle</button>
-                    </form>
+                    <div class="d-flex gap-2 mt-3">
+                        {{-- Tombol Buy --}}
+                        <form action="{{ route('customer.bundle.buy', $bundle->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success">
+                                Buy This Bundle
+                            </button>
+                        </form>
+
+                        {{-- Tombol Lihat Semua Bundle --}}
+                        <a href="{{ route('customer.bundle.index') }}" class="btn btn-outline-secondary">
+                            See All Bundles
+                        </a>
+                    </div>
+
                 </div>
             </section>
-        @endforeach --}}
-    {{-- @endif --}}
-
+        @endforeach
+    @endif
 
     <section id="categories" class="section_container categories_container">
         <h2 class="section_header">Categories</h2>

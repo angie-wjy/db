@@ -3,39 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bundle;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BundleController extends Controller
 {
-    public function index()
+    public function BundleIndex(Request $request)
     {
-        $bundles = Bundle::all();
-        return response()->json($bundles);
+        $query = Bundle::with('products');
+
+        if ($request->has('sort')) {
+            $sort = $request->input('sort');
+            switch ($sort) {
+                case 'PRICE_UP':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'PRICE_DOWN':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'NAME':
+                    $query->orderBy('name', 'asc');
+                    break;
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $bundles = $query->paginate(10)->withQueryString();
+
+        return view('customer.bundle.index', compact('bundles'));
     }
 
-    public function store(Request $request)
+    public function ShowBundles()
     {
-        $bundle = Bundle::create($request->all());
-        return response()->json($bundle);
+        $bundles = Bundle::with('products')->get();
+        return view('welcome', compact('bundles'));
     }
 
-    public function show($id)
+    public function BuyBundle($id)
     {
-        $bundle = Bundle::findOrFail($id);
-        return response()->json($bundle);
-    }
+        $bundle = Bundle::with('products')->findOrFail($id);
+        $cart = Cart::firstOrCreate([
+            'customers_id' => auth()->user()->id,
+            'status' => 'cart'
+        ]);
 
-    public function update(Request $request, $id)
-    {
-        $bundle = Bundle::findOrFail($id);
-        $bundle->update($request->all());
-        return response()->json($bundle);
-    }
+        foreach ($bundle->products as $product) {
+            $cartItem = $cart->cartItems()->updateOrCreate(
+                ['products_id' => $product->id],
+                ['quantity' => \DB::raw('quantity + ' . $product->pivot->quantity)]
+            );
+        }
 
-    public function destroy($id)
-    {
-        $bundle = Bundle::findOrFail($id);
-        $bundle->delete();
-        return response()->json(['message' => 'Bundle deleted successfully']);
+        return redirect()->route('customer.checkout.form')->with('success', 'Bundle added to cart!');
     }
 }

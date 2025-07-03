@@ -243,7 +243,7 @@
         </p>
         <div class="product_grid">
             @foreach ($trending_product as $p)
-                <div class="product_card">
+                <a class="product_card" href="/product/detail/{{ $p->id }}">
                     <img src="{{ asset('storage/' . $p->image) }}" alt="product">
                     <div class="product_card_content">
                         <div class="product_rating">
@@ -256,7 +256,7 @@
                         <h4>{{ $p->name }}</h4>
                         <p>{{ number_format($p->price, 0, ',', '.') }}</p>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
         <div class="product_btn">

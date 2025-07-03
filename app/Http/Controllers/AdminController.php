@@ -631,7 +631,7 @@ class AdminController extends Controller
 
     public function OrderAll(Request $request)
     {
-        $orders = Order::with('customer')->get();
+        $orders = Order::with('customer', 'bundles')->get();
         return view('admin.order.index', compact('orders'));
         // return view('admin.order.index');
     }

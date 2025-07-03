@@ -242,7 +242,6 @@ class OrderController extends Controller
         return view('customer.checkout', compact('order', 'snapToken'));
     }
 
-
     public function Notification(Request $request)
     {
         try {

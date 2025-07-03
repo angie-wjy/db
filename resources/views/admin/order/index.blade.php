@@ -187,6 +187,15 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @foreach ($o->bundles as $b)
+                                    <tr>
+                                        <td>{{ $b->name }}</td>
+                                        <td>{{ $b->pivot->amount }}</td>
+                                        <td>Rp{{ number_format($b->pivot->price, 0, ',', '.') }}</td>
+                                        <td>Rp{{ number_format($b->pivot->price * $b->pivot->amount, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <p><b>Total:</b> Rp{{ number_format($order->total, 0, ',', '.') }}</p>

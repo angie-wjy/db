@@ -519,10 +519,8 @@ body {
 
 .footer_container {
     width: 100vw;
-    max-width: 100vw;
-    ;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    justify-content: center;
     gap: 2rem;
 }
 

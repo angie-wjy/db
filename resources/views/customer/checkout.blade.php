@@ -40,6 +40,15 @@
                                     <span class="text-end">Rp{{ number_format($product->pivot->price, 0, ',', '.') }}</span>
                                 </li>
                             @endforeach
+                            @foreach ($order->bundles as $bundles)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {{ $bundles->name }} <br>
+                                        <small>Qty: {{ $bundles->pivot->amount }}</small>
+                                    </div>
+                                    <span class="text-end">Rp{{ number_format($bundles->pivot->price, 0, ',', '.') }}</span>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

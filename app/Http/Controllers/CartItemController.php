@@ -37,21 +37,6 @@ class CartItemController extends Controller
         return back()->with('success', 'Item updated');
     }
 
-    public function CartUpdate(Request $request, $cart_id, $product_id)
-    {
-        $request->validate([
-            'jumlah' => 'required|integer|min:1',
-        ]);
-
-        $cartItem = CartItem::where('cart_id', $cart_id)->where('product_id', $product_id)->first();
-        if (!$cartItem) {
-            return response()->json(['message' => 'Cart item not found'], 404);
-        }
-
-        $cartItem->update(['jumlah' => $request->jumlah]);
-        return response()->json(['message' => 'Cart item updated', 'data' => $cartItem]);
-    }
-
     public function CartDelete($product_id)
     {
         $cart = session()->get('cart', []);

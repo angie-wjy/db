@@ -35,8 +35,6 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Keranjang belanja kosong.');
         }
 
-        $cart = session('cart', []);
-
         $totalHarga = 0;
         foreach ($cart as $item) {
             $totalHarga += $item['price'] * $item['quantity'];
@@ -59,6 +57,17 @@ class OrderController extends Controller
         $order->save();
 
         foreach ($cart as $item) {
+            if (str_starts_with($item['id'], 'bundle_')) {
+                // Jika item adalah bundle, kita perlu mengaitkan produk bundle
+                $bundle = \App\Models\Bundle::find(str_replace('bundle_', '', $item['id']));
+                if ($bundle) {
+                    $order->bundles()->attach($bundle->id, [
+                        'amount' => $item['quantity'],
+                        'price' => $item['price'],
+                    ]);
+                    continue;
+                }
+            }
             $order->products()->attach($item['id'], [
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
@@ -72,27 +81,27 @@ class OrderController extends Controller
         //     $product->save();
         // }
 
-        foreach ($cart as $item) {
-            $product = \App\Models\Product::find($item['id']);
+        // foreach ($cart as $item) {
+        //     $product = \App\Models\Product::find($item['id']);
 
-            if ($product) {
-                $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
+        //     if ($product) {
+        //         $branchProduct = $product->branches()->where('branches_id', $order->branches_id)->first();
 
-                if ($branchProduct) {
-                    $branchProduct->pivot->stock -= $item['quantity'];
+        //         if ($branchProduct) {
+        //             $branchProduct->pivot->stock -= $item['quantity'];
 
-                    if ($branchProduct->pivot->stock < 0) {
-                        $branchProduct->pivot->stock = 0;
-                    }
+        //             if ($branchProduct->pivot->stock < 0) {
+        //                 $branchProduct->pivot->stock = 0;
+        //             }
 
-                    $branchProduct->pivot->save();
-                } else {
-                    Log::warning("Produk dengan ID {$item['id']} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
-                }
-            } else {
-                Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
-            }
-        }
+        //             $branchProduct->pivot->save();
+        //         } else {
+        //             Log::warning("Produk dengan ID {$item['id']} tidak ditemukan di cabang dengan ID {$order->branches_id}.");
+        //         }
+        //     } else {
+        //         Log::warning("Produk dengan ID {$item['id']} tidak ditemukan saat mengurangi stok.");
+        //     }
+        // }
 
         // Simpan data delivery
         $ship = new Ship();
@@ -125,7 +134,7 @@ class OrderController extends Controller
 
     public function CheckOutForm()
     {
-        $order = Order::with(['ship', 'products'])->where('customers_id', Auth::id())
+        $order = Order::with(['ship', 'products', 'bundles'])->where('customers_id', Auth::id())
             ->latest()
             ->first();
 

@@ -71,7 +71,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/customer/address/index', [CustomerController::class, 'AddressIndex'])->name('customer.address.index');
 
     // Route::delete('/cart/remove/{cart_id}/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');
-    Route::post('/cart/update/{cart_id}/{product_id}', [CartItemController::class, 'CartUpdate'])->name('cart.update');
     Route::post('/cart/plus/{product_id}', [CartItemController::class, 'CartPlus'])->name('cart.plus');
     Route::post('/cart/minus/{product_id}', [CartItemController::class, 'CartMinus'])->name('cart.minus');
     Route::delete('/cart/remove/{product_id}', [CartItemController::class, 'CartDelete'])->name('cart.remove');

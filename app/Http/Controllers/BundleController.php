@@ -44,19 +44,21 @@ class BundleController extends Controller
     public function BundleBuy($id)
     {
         $bundle = Bundle::with('products')->findOrFail($id);
-        $cart = Cart::firstOrCreate([
-            'customer_user_id' => auth()->user()->id,
-            'status' => 'cart'
-        ]);
+        $cart = session()->get('cart', []);
 
-
-        foreach ($bundle->products as $product) {
-            $cartItem = $cart->cartItems()->updateOrCreate(
-                ['products_id' => $product->id],
-                ['quantity' => \DB::raw('quantity + ' . $product->pivot->quantity)]
-            );
+        if (isset($cart['bundle_' . $id])) {
+            $cart['bundle_' . $id]['quantity'] ++;
+        } else {
+            $cart['bundle_' . $id] = [
+                'id' => 'bundle_' . $bundle->id,
+                'name' => $bundle->name,
+                'quantity' => 1,
+                'price' => $bundle->price,
+                'image' => $bundle->image,
+            ];
         }
 
-        return redirect()->route('customer.checkout.form')->with('success', 'Bundle added to cart!');
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product has been successfully added to the cart!');
     }
 }

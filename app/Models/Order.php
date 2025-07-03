@@ -62,6 +62,14 @@ class Order extends Model
             ->withTimestamps();
     }
 
+    // bundle
+    public function bundles()
+    {
+        return $this->belongsToMany(Bundle::class, 'orders_has_bundles', 'orders_id', 'bundles_id')
+            ->withPivot('amount', 'price')
+            ->withTimestamps();
+    }
+
     public function orderDetails()
     {
         return $this->hasMany(OrdersHasProducts::class, 'orders_id');

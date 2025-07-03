@@ -58,7 +58,7 @@ class ProductController extends Controller
         }
 
         $cart = session()->get('cart', []);
-        $amount = $request->input('amount', 1);
+        $amount = $request->input('jumlah', 1);
 
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] += $amount;

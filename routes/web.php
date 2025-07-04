@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 Route::post('/notification', [OrderController::class, 'Notification'])->name('midtrans.notification');
 
 Route::get('/', function () {
+    // Top Selling
     $products = Product::withCount(['orders as total_qty' => function ($query) {
         $query->select(DB::raw('SUM(quantity) as total_qty'));
     }])->orderBy('total_qty', 'desc')->take(3)->get();

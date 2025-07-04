@@ -1,7 +1,5 @@
 @extends('layouts.customer')
-
 @section('title', 'Order #' . $order->id . ' - Details')
-
 @section('content')
     <div
         class="container mx-auto max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out py-6 px-4 sm:px-8">
@@ -9,7 +7,8 @@
         {{-- Order Details Header --}}
         <header class="section_container mb-8 mt-2 w-full">
             <div class="header_content text-center max-w-2xl mx-auto">
-                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-xs sm:text-sm mb-1">ORDER DETAILS</h4><br>
+                <h4 class="uppercase text-indigo-600 tracking-wide font-semibold text-xs sm:text-sm mb-1">ORDER DETAILS</h4>
+                <br>
                 <h1 class="text-3xl font-bold text-gray-900 mb-1">Order #{{ $order->id }}</h1><br>
                 <p class="text-gray-600 text-sm sm:text-base mb-2">Placed on: {{ $order->created_at->format('d M Y, H:i') }}
                 </p>
@@ -66,12 +65,13 @@
                     <div class="card-header bg-white border-bottom-0">
                         <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Products in this Order</h2>
                     </div>
-                    @if ($order->orderDetails->isEmpty())
+                    @if ($order->orderDetails->isEmpty() && $order->bundles->isEmpty())
                         <div class="p-6 text-center bg-gray-50 rounded-xl shadow-inner">
                             <p class="text-gray-600 text-lg">No products found for this order.</p>
                         </div>
                     @else
                         <div class="space-y-4">
+                            {{-- Produk satuan --}}
                             @foreach ($order->orderDetails as $detail)
                                 <div class="flex items-center bg-gray-50 p-4 rounded-lg shadow-sm">
                                     <div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-md overflow-hidden mr-4">
@@ -81,14 +81,16 @@
                                         @else
                                             <div
                                                 class="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                                                No Image</div>
+                                                No Image
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="flex-grow">
                                         <h4 class="font-semibold text-gray-900">{{ $detail->product->name }}</h4>
                                         <p class="text-gray-600 text-sm">Quantity: {{ $detail->quantity }}</p>
                                         <p class="text-gray-800 font-medium">
-                                            Rp{{ number_format($detail->price ?? 0, 0, ',', '.') }} each</p>
+                                            Rp{{ number_format($detail->price ?? 0, 0, ',', '.') }} each
+                                        </p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-gray-900 font-bold">Total Item:
@@ -97,8 +99,43 @@
                                     </div>
                                 </div>
                             @endforeach
+
+                            {{-- Bundle --}}
+                            @foreach ($order->bundles as $bundle)
+                                <div class="flex items-start bg-orange-50 p-4 rounded-lg shadow-sm">
+                                    <div class="flex-shrink-0 mr-4">
+                                        @if ($bundle->products->first()?->image)
+                                            <img src="{{ asset('storage/' . $bundle->products->first()->image) }}"
+                                                alt="{{ $bundle->name }}" class="w-20 h-20 object-cover rounded-md">
+                                        @else
+                                            <div
+                                                class="w-20 h-20 bg-gray-200 flex items-center justify-center rounded-md text-xs text-gray-400">
+                                                No Image
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-semibold text-orange-600">{{ $bundle->name }} <span
+                                                class="text-sm text-gray-500">(Bundle)</span></h4>
+                                        <ul class="text-sm text-gray-700 list-disc list-inside">
+                                            @foreach ($bundle->products as $product)
+                                                <li>{{ $product->name }} ({{ $product->pivot->quantity }} pcs)</li>
+                                            @endforeach
+                                        </ul>
+                                        <p class="mt-2 text-gray-800 font-medium">
+                                            Bundle Price: Rp{{ number_format($bundle->price ?? 0, 0, ',', '.') }}
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-gray-900 font-bold">Total Bundle:
+                                            Rp{{ number_format($bundle->price ?? 0, 0, ',', '.') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     @endif
+
                 </div>
             </div>
 

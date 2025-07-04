@@ -31,18 +31,6 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function TopSell()
-    {
-        $products = Product::select('products.*', FacadesDB::raw('SUM(orders_items.quantity) as total_sold'))
-            ->join('orders_items', 'products.id', '=', 'orders_items.product_id')
-            ->groupBy('products.id')
-            ->orderByDesc('total_sold')
-            ->take(3)
-            ->get();
-
-        return view('welcome', compact('products'));
-    }
-
     public function ProductDetail($id)
     {
         $product = Product::with('category', 'branches')->findOrFail($id);

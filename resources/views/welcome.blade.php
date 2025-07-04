@@ -141,13 +141,13 @@
     </section> --}}
 
     @if (isset($bundles) && $bundles->count())
-        @foreach ($bundles as $bundle)
+        @foreach ($bundles->take(1) as $bundle)
             <section class="section_container deals_container">
                 <div class="deals_image_group d-flex">
                     @foreach ($bundle->products as $product)
-                        <div class="deals_image me-2">
-                            <img src="{{ asset('storage/' . $p->image) }}" alt="{{ $p->name }}"
-                                style="width: 100px; height: 100px; object-fit: cover;">
+                        <div class="deals_image"
+                            style="width: 100px; height: 100px; border-radius: 8px; margin-right: 30px; align-items: center; justify-content: center;display: flex; margin-bottom: 10rem; margin-left: 10px;">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                         </div>
                     @endforeach
                 </div>
@@ -220,11 +220,11 @@
     </section>
 
 
-    <section class="section_container hero_container">
-        {{-- <h2 class="section_header">Trend</h2> --}}
+    {{-- <section class="section_container hero_container">
+        <h2 class="section_header">Trend</h2>
         @foreach ($trending_bundle as $b)
             <div class="hero_card">
-                {{-- <img src="{{ asset('storage/' . $b->image) }}" alt="hero"> --}}
+                <img src="{{ asset('storage/' . $b->image) }}" alt="hero">
                 <div class="hero_content">
                     <div>
                         <p>Trend</p>
@@ -234,7 +234,7 @@
                 </div>
             </div>
         @endforeach
-    </section>
+    </section> --}}
 
     <section class="section_container product_container">
         <h2 class="section_header">Trending Products</h2>

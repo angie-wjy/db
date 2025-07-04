@@ -19,6 +19,12 @@ class EmployeeController extends Controller
         return view('employee.dashboard');
     }
 
+    public function OrderIndex(Request $request)
+    {
+        $orders = Order::with('customer')->get();
+        return view('employee.order.index', compact('orders'));
+    }
+
     public function OrderApprove($id)
     {
         $order = Order::findOrFail($id);

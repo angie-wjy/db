@@ -30,14 +30,15 @@ class BundleController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $bundles = $query->paginate(10)->withQueryString();
+        $bundles = $query->paginate(8)->withQueryString();
 
         return view('customer.bundle.index', compact('bundles'));
     }
 
     public function ShowBundles()
     {
-        $bundles = Bundle::with('products')->get();
+        // $bundles = Bundle::with('products')->get();
+        $bundles = Bundle::with('products')->take(1)->get();
         return view('welcome', compact('bundles'));
     }
 

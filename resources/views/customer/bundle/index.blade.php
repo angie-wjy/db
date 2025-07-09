@@ -27,6 +27,7 @@
         {{-- Grid Bundles --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
             @foreach ($bundles as $bundle)
+            {{-- @dd($bundles) --}}
                 <div class="bg-white border border-gray-200 rounded-xl shadow hover:shadow-lg transition duration-200 overflow-hidden p-4 flex flex-col justify-between">
                     <div class="flex gap-2 mb-3 overflow-x-auto">
                         @foreach ($bundle->products as $product)

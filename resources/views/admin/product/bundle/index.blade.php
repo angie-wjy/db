@@ -57,6 +57,7 @@
                             </tfoot>
                             <tbody>
                                 @foreach ($bundles as $bundle)
+                                {{-- @dd($bundle->products) --}}
                                     <tr>
                                         <td>{{ $bundle->id }}</td>
                                         <td>{{ $bundle->name }}</td>

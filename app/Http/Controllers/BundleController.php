@@ -40,6 +40,7 @@ class BundleController extends Controller
         // $bundles = Bundle::with('products')->get();
         $bundles = Bundle::with('products')->take(1)->get();
         return view('welcome', compact('bundles'));
+dd($bundles);
     }
 
     public function BundleBuy($id)

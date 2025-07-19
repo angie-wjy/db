@@ -42,7 +42,6 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Price</th>
-                                    <th>Stock</th>
                                     <th>Desc</th>
                                     <th>Image</th>
                                     <th>Created At</th>
@@ -54,7 +53,6 @@
                                     <th>Code</th>
                                     <th>Name</th>
                                     <th>Price</th>
-                                    <th>Stock</th>
                                     <th>Desc</th>
                                     <th>Image</th>
                                     <th>Created At</th>
@@ -67,7 +65,6 @@
                                         <td>{{ $product->code }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ number_format($product->price, 0, ',', '.') }}</td>
-                                        <td>{{ $product->stock }}</td>
                                         <td
                                             style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                             {{ $product->description }}</td>

@@ -271,7 +271,7 @@ class AdminController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
             ]);
-            dd($bundle);
+            // dd($bundle);
             foreach ($request->products as $index => $productId) {
                 $products_has_bundles = ProductsHasBundles::create([
                     'bundles_id' => $bundle->id,

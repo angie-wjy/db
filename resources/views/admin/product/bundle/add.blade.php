@@ -66,14 +66,17 @@
                                         <select name="products[]" class="form-select" required>
                                             <option value="">-- Select Product --</option>
                                             @foreach ($products as $product)
-                                                <option value="{{ $product->id }}">{{ $product->name }} (Stock:
-                                                    {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }})</option>
+                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <label class="form-label">Quantity</label>
                                         <input type="number" name="quantities[]" class="form-control" min="1" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Price</label>
+                                        <input type="number" name="prices[]" class="form-control" min="1" required>
                                     </div>
                                     <div class="col-md-2 d-flex align-items-end">
                                         <button type="button" class="btn btn-danger remove-btn">Remove</button>

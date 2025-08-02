@@ -277,6 +277,7 @@ class AdminController extends Controller
                     'bundles_id' => $bundle->id,
                     'products_id' => $productId,
                     'quantity' => $request->quantities[$index],
+                    'price'   => $request->prices[$index]
                 ]);
             }
             return redirect()->route('admin.product.bundle.index')->with('success', 'Bundle created successfully');

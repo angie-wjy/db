@@ -18,10 +18,22 @@
                         <p class="card-text" style="font-weight: bold; font-size: 2rem; color: #e60012;">
                             Rp.{{ number_format($product->price, 0, 0, '.') }}</p>
 
-                        {{-- <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p> --}}
-                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">
+                        {{-- select branch --}}
+                        <div class="mb-3">
+                            <label for="branchSelect" class="form-label" style="font-size: 1.2rem; color: #555;">
+                                Branch</label>
+                            <select class="form-select" id="branchSelect" name="branch_id"
+                                style="border-radius: 5px; font-size: 1.1rem;" onchange="updateStockInfo()">
+                                @foreach ($product->branches as $branch)
+                                    <option value="{{ $branch->id }}">{{ $branch->mall }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;" id="stockInfo">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p>
+                        {{-- <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">
                             Stock : {{ isset($product->stock) ? $product->stock : 0 }}
-                        </p>
+                        </p> --}}
 
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px; margin-bottom: 5px;">
                             Description</p>
@@ -41,7 +53,7 @@
                                 <input type="number" min="1" value="1" name="jumlah" class="form-control"
                                     style="max-width: 6rem; border-radius: 5px;">
                                 <button type="submit" class="btn btn-warning"
-                                    style="border-radius: 5px; font-weight: bold; padding-left: 20px; padding-right: 20px;" {{ !isset($product->stock) || $product->stock > 0  ? "disabled" : "" }}>
+                                    style="border-radius: 5px; font-weight: bold; padding-left: 20px; padding-right: 20px;">
                                     <i class="ri-shopping-cart-line">Add to cart</i>
                                 </button>
                             </div>
@@ -51,4 +63,19 @@
             </div>
         </div>
     </div>
+
+<script>
+    function updateStockInfo() {
+        const branchSelect = document.getElementById('branchSelect');
+        const stockInfo = document.getElementById('stockInfo');
+        const selectedBranchId = branchSelect.value;
+
+        // Find the selected branch's stock
+        const selectedBranch = @json($product->branches).find(branch => branch.id == selectedBranchId);
+        const stock = selectedBranch ? selectedBranch.pivot.stock : 0;
+
+        // Update the stock information
+        stockInfo.textContent = `Stock : ${stock}`;
+    }
+</script>
 @endsection

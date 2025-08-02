@@ -19,7 +19,8 @@ class ProductsHasBundles extends Model
     protected $fillable = [
         'products_id',
         'bundles_id',
-        'quantity'
+        'quantity',
+        'price'
     ];
 
     public function products()

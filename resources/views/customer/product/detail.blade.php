@@ -20,7 +20,7 @@
 
                         {{-- <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">Stock : {{ isset($product->branches[0]->pivot->stock) ? $product->branches[0]->pivot->stock : 0 }}</p> --}}
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px;">
-                            Stock : {{ $product->stock }}
+                            Stock : {{ isset($product->stock) ? $product->stock : 0 }}
                         </p>
 
                         <p class="card-text" style="font-size: 1.2rem; color: #555; margin-top: 20px; margin-bottom: 5px;">
@@ -41,7 +41,7 @@
                                 <input type="number" min="1" value="1" name="jumlah" class="form-control"
                                     style="max-width: 6rem; border-radius: 5px;">
                                 <button type="submit" class="btn btn-warning"
-                                    style="border-radius: 5px; font-weight: bold; padding-left: 20px; padding-right: 20px;">
+                                    style="border-radius: 5px; font-weight: bold; padding-left: 20px; padding-right: 20px;" {{ !isset($product->stock) || $product->stock > 0  ? "disabled" : "" }}>
                                     <i class="ri-shopping-cart-line">Add to cart</i>
                                 </button>
                             </div>
